@@ -3,7 +3,13 @@
     "ms-python.black-formatter",
     "ms-python.isort",
     "ms-python.vscode-pylance",
-    "ms-python.python",
-    "ms-python.debugpy"
+    "ms-python.debugpy",
+    "junstyle.vscode-django-support",
+    "cstrap.python-snippets",
+    "kevinrose.vsc-python-indent",
+    "njqdev.vscode-python-typehint",
+    "oderwat.indent-rainbow",
+    "batisteo.vscode-django",
+    "thebarkman.vscode-djaneiro",
   ]
 }
