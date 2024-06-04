@@ -38,7 +38,7 @@ urlpatterns = [
     path("biblioteca/", include("biblioteca.urls")),
     path("emergencia/", include("emergencia.urls")),
     path("organizacion/", include("organizacion.urls")),
-    path("gestion-comunicacional/", include("gestion_comunicacional.urls")),
+    path("gestion-comunicacional/", include(("gestion_comunicacional.urls", "gc"))),
 ]
 
 if settings.ENABLE_DEBUG_TOOLBAR:

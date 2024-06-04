@@ -5,10 +5,13 @@ from django.urls import include, path
 from .info.InfoController import InfoController
 
 urlpatterns = [
-    path("", InfoController.as_view(), name="gc-index"),
-    path("social-media/", include("gestion_comunicacional.social_media.urls")),
-    path("social-activity/", include("gestion_comunicacional.social_activity.urls")),
-    path("equipament/", include("gestion_comunicacional.equipament.urls")),
+    path("", InfoController.as_view(), name="info"),
+    path("social-media/", include(("gestion_comunicacional.social_media.urls", "sm"))),
+    path(
+        "social-activity/",
+        include(("gestion_comunicacional.social_activity.urls", "sa")),
+    ),
+    path("equipament/", include(("gestion_comunicacional.equipament.urls", "eq"))),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

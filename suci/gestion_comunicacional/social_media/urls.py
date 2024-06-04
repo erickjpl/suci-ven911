@@ -14,7 +14,7 @@ urlpatterns = [
     path(
         "account",
         ListSocialMediaAccount.as_view(),
-        name="gc-listing-social-media-account",
+        name="listing-account",
     ),
     path(
         "account/<str:accion>",

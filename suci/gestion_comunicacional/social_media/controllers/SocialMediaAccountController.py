@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import (
     CreateView,
@@ -15,7 +15,7 @@ from gestion_comunicacional.social_media.services.SocialMediaAccountService impo
 
 class ListSocialMediaAccount(LoginRequiredMixin, ListView):
     login_url = "login"
-    template_name = "gc/social-media-account.html"
+    template_name = "gc/social-media/listing-account.html"
 
     def __init__(self):
         self.service = SocialMediaAccountService()

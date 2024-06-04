@@ -11,8 +11,7 @@
     <i class="fa-solid fa-magnifying-glass"></i>
     <input type="text" name="search" placeholder="Buscar">
     <button type="submit" class="btn">Consultar</button>
-    <button type="button" class="btn"
-      onclick="location.href=`{% url 'gc-listing-social-media-account' %}`">Limpiar</button>
+    <button type="button" class="btn" onclick="location.href=`{% url 'gc:sm:listing-account' %}`">Limpiar</button>
   </div>
 </form>
 {% endblock %}
