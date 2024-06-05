@@ -11,7 +11,21 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+import random
+import string
 import sys
+
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
+
+from .template import THEME_LAYOUT_DIR, THEME_VARIABLES
+
+# Template Settings
+# ------------------------------------------------------------------------------
+THEME_LAYOUT_DIR = THEME_LAYOUT_DIR
+THEME_VARIABLES = THEME_VARIABLES
+
 
 # from pathlib import Path
 
@@ -19,17 +33,28 @@ import sys
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Default URL on which Django application runs for specific environment
+BASE_URL = os.environ.get("BASE_URL", default="http://127.0.0.1:8000")
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-t#&s(2=)83@)v9@8$5eok0)e@r$zzz3m4nw*3^1e9(*e0oloef"
+# SECRET_KEY = "django-insecure-t#&s(2=)83@)v9@8$5eok0)e@r$zzz3m4nw*3^1e9(*e0oloef"
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    SECRET_KEY = "".join(random.choice(string.ascii_lowercase) for i in range(32))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.environ.get("DEBUG", "True").lower() in ["true", "yes", "1"]
 
-ALLOWED_HOSTS = []
+# https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+
+# Current DJANGO_ENVIRONMENT
+ENVIRONMENT = os.environ.get("DJANGO_ENVIRONMENT", default="local")
 
 INTERNAL_IPS = ["127.0.0.1", "::1"]
 
@@ -80,6 +105,13 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+            "libraries": {
+                "theme": "templates.sneat.tags.theme",
+            },
+            "builtins": [
+                "django.templatetags.static",
+                "templates.sneat.tags.theme",
+            ],
         },
     },
 ]
@@ -90,36 +122,35 @@ WSGI_APPLICATION = "suci.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
-}
-
 # To use another database, set the DB_BACKEND environment variable.
-if os.environ.get("DB_BACKEND", "").lower() == "postgresql":
+if os.environ.get("DB_BACKEND").lower() == "postgresql":
     # See docs/contributing for instructions on configuring PostgreSQL.
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": "suci",
-            "USER": "suci-postgress",
-            "PASSWORD": "sucipass",
+            "NAME": os.environ.get("DB_BACKEND", default="suci_ven911").lower(),
+            "USER": os.environ.get("DB_BACKEND", default="suci").lower(),
+            "PASSWORD": os.environ.get("DB_BACKEND", default="123456").lower(),
         }
     }
-if os.environ.get("DB_BACKEND", "").lower() == "mysql":
+if os.environ.get("DB_BACKEND").lower() == "mysql":
     # See docs/contributing for instructions on configuring MySQL/MariaDB.
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
-            "NAME": "suci",
-            "USER": "suci-mysql",
-            "PASSWORD": "sucipass",
+            "NAME": os.environ.get("DB_BACKEND", default="suci_ven911").lower(),
+            "USER": os.environ.get("DB_BACKEND", default="suci").lower(),
+            "PASSWORD": os.environ.get("DB_BACKEND", default="123456").lower(),
         }
     }
 
+if os.environ.get("DB_BACKEND", default="sqlite").lower() == "sqlite":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

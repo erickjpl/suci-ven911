@@ -1,145 +1,118 @@
-var $ = jQuery.noConflict();
+/**
+ * Main
+ */
 
-jQuery(document).ready(function ($) {
-  "use strict";
+'use strict';
 
-  [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function (el) {
-    new SelectFx(el);
+let menu, animate;
+
+(function () {
+  // Initialize menu
+  //-----------------
+
+  let layoutMenuEl = document.querySelectorAll('#layout-menu');
+  layoutMenuEl.forEach(function (element) {
+    menu = new Menu(element, {
+      orientation: 'vertical',
+      closeChildren: false
+    });
+    // Change parameter to true if you want scroll animation
+    window.Helpers.scrollToActive((animate = false));
+    window.Helpers.mainMenu = menu;
   });
 
-  jQuery('.selectpicker').selectpicker;
-
-  $('.search-trigger').on('click', function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    $('.search-trigger').parent('.header-left').addClass('open');
-  });
-
-  $('.search-close').on('click', function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-    $('.search-trigger').parent('.header-left').removeClass('open');
-  });
-
-  $('.equal-height').matchHeight({
-    property: 'max-height'
-  });
-
-  // Counter Number
-  $('.count').each(function () {
-    $(this).prop('Counter', 0).animate({
-      Counter: $(this).text()
-    }, {
-      duration: 3000,
-      easing: 'swing',
-      step: function (now) {
-        $(this).text(Math.ceil(now));
-      }
+  // Initialize menu togglers and bind click on each
+  let menuToggler = document.querySelectorAll('.layout-menu-toggle');
+  menuToggler.forEach(item => {
+    item.addEventListener('click', event => {
+      event.preventDefault();
+      window.Helpers.toggleCollapsed();
     });
   });
 
-  // Menu Trigger
-  $('#menuToggle').on('click', function (event) {
-    var windowWidth = $(window).width();
-    if (windowWidth < 1010) {
-      $('body').removeClass('open');
-      if (windowWidth < 760) {
-        $('#left-panel').slideToggle();
+  // Display menu toggle (layout-menu-toggle) on hover with delay
+  let delay = function (elem, callback) {
+    let timeout = null;
+    elem.onmouseenter = function () {
+      // Set timeout to be a timer which will invoke callback after 300ms (not for small screen)
+      if (!Helpers.isSmallScreen()) {
+        timeout = setTimeout(callback, 300);
       } else {
-        $('#left-panel').toggleClass('open-menu');
+        timeout = setTimeout(callback, 0);
       }
-    } else {
-      $('body').toggleClass('open');
-      $('#left-panel').removeClass('open-menu');
-    }
-  });
+    };
 
-  $(".menu-item-has-children.dropdown").each(function () {
-    $(this).on('click', function () {
-      var $temp_text = $(this).children('.dropdown-toggle').html();
-      $(this).children('.sub-menu').prepend('<li class="subtitle">' + $temp_text + '</li>');
+    elem.onmouseleave = function () {
+      // Clear any timers set to timeout
+      document.querySelector('.layout-menu-toggle').classList.remove('d-block');
+      clearTimeout(timeout);
+    };
+  };
+  if (document.getElementById('layout-menu')) {
+    delay(document.getElementById('layout-menu'), function () {
+      // not for small screen
+      if (!Helpers.isSmallScreen()) {
+        document.querySelector('.layout-menu-toggle').classList.add('d-block');
+      }
     });
+  }
+
+  // Display in main menu when menu scrolls
+  let menuInnerContainer = document.getElementsByClassName('menu-inner'),
+    menuInnerShadow = document.getElementsByClassName('menu-inner-shadow')[0];
+  if (menuInnerContainer.length > 0 && menuInnerShadow) {
+    menuInnerContainer[0].addEventListener('ps-scroll-y', function () {
+      if (this.querySelector('.ps__thumb-y').offsetTop) {
+        menuInnerShadow.style.display = 'block';
+      } else {
+        menuInnerShadow.style.display = 'none';
+      }
+    });
+  }
+
+  // Init helpers & misc
+  // --------------------
+
+  // Init BS Tooltip
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
   });
 
-  // Load Resize 
-  $(window).on("load resize", function (event) {
-    var windowWidth = $(window).width();
-    if (windowWidth < 1010) {
-      $('body').addClass('small-device');
+  // Accordion active class
+  const accordionActiveFunction = function (e) {
+    if (e.type == 'show.bs.collapse' || e.type == 'show.bs.collapse') {
+      e.target.closest('.accordion-item').classList.add('active');
     } else {
-      $('body').removeClass('small-device');
+      e.target.closest('.accordion-item').classList.remove('active');
     }
+  };
+
+  const accordionTriggerList = [].slice.call(document.querySelectorAll('.accordion'));
+  const accordionList = accordionTriggerList.map(function (accordionTriggerEl) {
+    accordionTriggerEl.addEventListener('show.bs.collapse', accordionActiveFunction);
+    accordionTriggerEl.addEventListener('hide.bs.collapse', accordionActiveFunction);
   });
-});
 
-function abrir_modal_edicion (url) {
-  $('#edicion').load(url, function () {
-    $(this).modal('show');
-  });
-}
+  // Auto update layout based on screen size
+  window.Helpers.setAutoUpdate(true);
 
-function abrir_modal_creacion (url) {
-  $('#creacion').load(url, function () {
-    $(this).modal('show');
-  });
-}
+  // Toggle Password Visibility
+  window.Helpers.initPasswordToggle();
 
-function abrir_modal_eliminacion (url) {
-  $('#eliminacion').load(url, function () {
-    $(this).modal('show');
-  });
-}
+  // Speech To Text
+  window.Helpers.initSpeechToText();
 
-function cerrar_modal_creacion () {
-  $('#creacion').modal('hide');
-}
+  // Manage menu expanded/collapsed with templateCustomizer & local storage
+  //------------------------------------------------------------------
 
-function cerrar_modal_edicion () {
-  $('#edicion').modal('hide');
-}
-
-function cerrar_modal_eliminacion () {
-  $('#eliminacion').modal('hide');
-}
-
-function activarBoton () {
-  if ($('#boton_creacion').prop('disabled')) {
-    $('#boton_creacion').prop('disabled', false);
-  } else {
-    $('#boton_creacion').prop('disabled', true);
+  // If current layout is horizontal OR current window screen is small (overlay menu) than return from here
+  if (window.Helpers.isSmallScreen()) {
+    return;
   }
-}
 
-function mostrarErroresCreacion (errores) {
-  $('#errores').html("");
-  let error = "";
-  for (let item in errores.responseJSON.error) {
-    error += '<div class = "alert alert-danger" <strong>' + errores.responseJSON.error[item] + '</strong></div>';
-  }
-  $('#errores').append(error);
-}
+  // If current layout is vertical and current window screen is > small
 
-function mostrarErroresEdicion (errores) {
-  $('#erroresEdicion').html("");
-  let error = "";
-  for (let item in errores.responseJSON.error) {
-    error += '<div class = "alert alert-danger" <strong>' + errores.responseJSON.error[item] + '</strong></div>';
-  }
-  $('#erroresEdicion').append(error);
-}
-
-function notificacionError (mensaje) {
-  Swal.fire({
-    title: 'Error!',
-    text: mensaje,
-    icon: 'error'
-  })
-}
-
-function notificacionSuccess (mensaje) {
-  Swal.fire({
-    title: 'Buen Trabajo!',
-    text: mensaje,
-    icon: 'success'
-  })
-}
+  // Auto update menu collapsed/expanded based on the themeConfig
+  window.Helpers.setCollapsed(true, false);
+})();

@@ -110,3 +110,18 @@ python manage.py makemigrations
 ```
 python ./gestion_comunicacional/setup.py sdist 
 ```
+
+### Levantar el contenedor docker
+```
+# - postgres
+docker-compose up -d
+
+# verifica los contenedores
+docker-compose ps
+
+# conectarnos a la db 
+psql -h localhost -p 5432 -U suci -d suci_ven911
+
+# detener los contenedores
+docker-compose down
+```

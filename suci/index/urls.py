@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import include, path
+
 from . import views
 
 urlpatterns = [
@@ -9,4 +10,5 @@ urlpatterns = [
     path("403", views.loginf403, name="403"),
     path("correo", views.correo, name="correo"),
     path("recuperar-password", views.recuperar, name="recuperar-password"),
+    path("auth/", include(("index.authentication.urls", "auth"))),
 ]

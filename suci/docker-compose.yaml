@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: suci_ven911_postgres
+    image: postgres:16.3-alpine3.20
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE}
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/postgres:/var/lib/postgresql/data
