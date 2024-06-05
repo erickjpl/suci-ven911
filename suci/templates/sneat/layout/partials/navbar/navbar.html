@@ -33,7 +33,7 @@
     <ul class="navbar-nav flex-row align-items-center ms-auto">
       <!-- Place this tag where you want the button to render. -->
       <li class="nav-item lh-1 me-3">
-        <a
+        {% comment %} <a
           class="github-button"
           href="{% get_theme_variables 'git_repository' %}"
           data-icon="octicon-star"
@@ -41,7 +41,7 @@
           data-show-count="true"
           aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
           >Star</a
-        >
+        > {% endcomment %}
       </li>
 
       <!-- User -->
@@ -53,7 +53,7 @@
         >
           <div class="avatar avatar-online">
             <img
-              src="{% static 'img/avatars/1.png' %}"
+              src="{% static 'img/admin.png' %}"
               alt
               class="w-px-40 h-auto rounded-circle"
             />
@@ -66,14 +66,14 @@
                 <div class="flex-shrink-0 me-3">
                   <div class="avatar avatar-online">
                     <img
-                      src="{% static 'img/avatars/1.png' %}"
+                      src="{% static 'img/admin.png' %}"
                       alt
                       class="w-px-40 h-auto rounded-circle"
                     />
                   </div>
                 </div>
                 <div class="flex-grow-1">
-                  <span class="fw-medium d-block">John Doe</span>
+                  <span class="fw-medium d-block">{{ user.username | upper }}</span>
                   <small class="text-muted">Admin</small>
                 </div>
               </div>
@@ -110,10 +110,13 @@
             <div class="dropdown-divider"></div>
           </li>
           <li>
-            <a class="dropdown-item" href="javascript:void(0);">
-              <i class="bx bx-power-off me-2"></i>
-              <span class="align-middle">Log Out</span>
-            </a>
+            <form action="{% url 'auth:logout' %}" method="post">
+              {% csrf_token %}
+              <button class="dropdown-item" type="submit">
+                <i class="bx bx-power-off me-2"></i>
+                <span class="align-middle">Cerrar sesión</span>
+              </button>
+            </form>
           </li>
         </ul>
       </li>
