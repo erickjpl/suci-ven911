@@ -11,25 +11,25 @@ from django.views.generic import (
 from gestion_comunicacional.social_media.services.SocialMediaAccountService import (
     SocialMediaAccountService,
 )
+from templates.sneat import TemplateLayout
 
 
 class ListSocialMediaAccount(LoginRequiredMixin, ListView):
     login_url = "login"
     template_name = "gc/social-media/listing-account.html"
+    context_object_name = "socialMediaAccounts"
 
     def __init__(self):
         self.service = SocialMediaAccountService()
 
-    def get(self, request):
-        page = request.GET.get("page") or 1
-        search = None
+    def get_context_data(self, **kwargs):
+        return TemplateLayout.init(self, super().get_context_data(**kwargs))
 
-        if "search" in request.GET:
-            search = request.GET["search"]
+    def get_queryset(self):
+        page = self.request.GET.get("page") or 1
+        search = self.request.GET.get("search") or None
 
-        entities = self.service.getAll(page, search)
-
-        return render(request, self.template_name, {"entities": entities})
+        return self.service.getAll(page, search)
 
 
 class CreateSocialMediaAccount(LoginRequiredMixin, CreateView):
