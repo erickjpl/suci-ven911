@@ -22,5 +22,8 @@ class SocialActivityEntity(models.Model):
     def __str__(self):
         return f"{self.activity_type} on {self.date}"
 
-    # class Meta:
-    #     db_table = "social_activities"
+    class Meta:
+        db_table = "gc_social_activities"
+        verbose_name = "Actividad social"
+        verbose_name_plural = "Actividades sociales"
+        ordering = ["activity_type"]

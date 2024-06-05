@@ -23,7 +23,7 @@ class SocialMediaAccountEntity(models.Model):
         return f"{self.platform} - {self.username}"
 
     class Meta:
-        db_table = "social_media_accounts"
+        db_table = "gc_social_media_accounts"
         verbose_name = "Red social"
         verbose_name_plural = "Redes sociales"
         ordering = ["platform"]

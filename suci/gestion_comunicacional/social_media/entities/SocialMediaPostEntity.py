@@ -34,7 +34,7 @@ class SocialMediaPostEntity(models.Model):
         return f"{self.post_type} - {self.status}"
 
     class Meta:
-        db_table = "social_media_posts"
+        db_table = "gc_social_media_posts"
         verbose_name = "Publicacion de red social"
         verbose_name_plural = "Publicaciones de redes sociales"
         ordering = ["account"]

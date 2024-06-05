@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import (
@@ -14,7 +14,8 @@ from gestion_comunicacional.social_media.services.SocialMediaAccountService impo
 from templates.sneat import TemplateLayout
 
 
-class ListSocialMediaAccount(LoginRequiredMixin, ListView):
+class ListSocialMediaAccount(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = "gc.equipament.view_logentry"
     template_name = "gc/social-media/listing-accounts.html"
     context_object_name = "socialMediaAccounts"
 

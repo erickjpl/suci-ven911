@@ -46,8 +46,8 @@ class UserEntity(AbstractUser, PermissionsMixin):
     )
 
     EMAIL_FIELD = "email"
-    USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["dni"]
+    USERNAME_FIELD = "dni"
+    REQUIRED_FIELDS = ["username", "email"]
 
     def get_image(self):
         if self.image:
