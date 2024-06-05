@@ -14,7 +14,6 @@ from gestion_comunicacional.equipament.services.EquipamentLoanService import (
 
 
 class ListEquipamentLoan(LoginRequiredMixin, ListView):
-    login_url = "login"
     template_name = "gc/equipament.html"
 
     def __init__(self):
@@ -33,7 +32,6 @@ class ListEquipamentLoan(LoginRequiredMixin, ListView):
 
 
 class CreateEquipamentLoan(LoginRequiredMixin, CreateView):
-    login_url = "login"
     template_name = "gc/equipament.html"
 
     def __init__(self):
@@ -46,7 +44,6 @@ class CreateEquipamentLoan(LoginRequiredMixin, CreateView):
 
 
 class ReadEquipamentLoan(LoginRequiredMixin, DetailView):
-    login_url = "login"
     template_name = "gc/equipament.html"
 
     def __init__(self):
@@ -62,7 +59,6 @@ class ReadEquipamentLoan(LoginRequiredMixin, DetailView):
 
 
 class UpdateEquipamentLoan(LoginRequiredMixin, UpdateView):
-    login_url = "login"
     template_name = "gc/equipament.html"
 
     def __init__(self):
@@ -75,7 +71,6 @@ class UpdateEquipamentLoan(LoginRequiredMixin, UpdateView):
 
 
 class DeleteEquipamentLoan(LoginRequiredMixin, DeleteView):
-    login_url = "login"
     template_name = "gc/equipament.html"
 
     def __init__(self):

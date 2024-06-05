@@ -1,0 +1,50 @@
+{% extends layout_path %}
+
+{% load static %}
+
+{% block title %}Equipos (GC){% endblock %}
+
+{% block breadcrumbs %}
+<span class="text-muted fw-light">
+  <a href="{% url 'gc:info' %}" class="text-muted fw-light">Gestión Comunicacional</a> /
+</span>
+<span class="">Equipos</span>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h5 class="card-header">Table Basic</h5>
+
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Equipo</th>
+          <th>Descripcion</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        {% for equipament in equipaments %}
+        <tr>
+          <td><strong>{{ equipament.id }}</strong></td>
+          <td>{{ equipament.name }}</td>
+          <td>{{ equipament.description }}</td>
+          <td>{{ equipament.status }}</td>
+          <td>
+            <a href="#" data-gc-sma-id="{{ equipament.id }}" data-gc-sma="{{ equipament }}" class="btn-update"
+              style="color: black;">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </a>&nbsp;&nbsp;&nbsp;
+
+            <a href="#" id="myBtnn2{{ equipament.id }}" style="color: black;"><i class="fa-solid fa-trash"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

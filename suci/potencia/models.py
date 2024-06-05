@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, PermissionsMixin
+
 
 class Incidencias(models.Model):
     Estado = models.CharField(max_length=30)

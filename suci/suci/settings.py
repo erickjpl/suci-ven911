@@ -26,6 +26,8 @@ from .template import THEME_LAYOUT_DIR, THEME_VARIABLES
 THEME_LAYOUT_DIR = THEME_LAYOUT_DIR
 THEME_VARIABLES = THEME_VARIABLES
 
+LOGIN_URL = "auth:login"
+AUTH_USER_MODEL = "paneluser.UserEntity"
 
 # from pathlib import Path
 
@@ -62,7 +64,7 @@ INTERNAL_IPS = ["127.0.0.1", "::1"]
 # Application definition
 
 INSTALLED_APPS = [
-    #'django.contrib.admin',
+    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -202,8 +204,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media").replace("\\", "/")
 MEDIA_URL = "/media/"
 
 # CSRF_TRUSTED_ORIGINS = ["https://19d7-150-188-246-2.ngrok-free.app/"]
-
-AUTH_USER_MODEL = "paneluser.Usuarios"
 
 CSRF_COOKIE_SECURE = True
 

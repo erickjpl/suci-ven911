@@ -8,10 +8,10 @@ class SocialActivityForm(ModelForm):
     class Meta:
         model = SocialActivityEntity
         fields = (
-            "activity_type",
             "date",
             "location",
-            "description",
+            "activity_type",
             "reason",
+            "description",
             "beneficiaries",
         )

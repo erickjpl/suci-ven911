@@ -104,7 +104,17 @@ pip freeze > requirements.txt
 ```
 ### Cuando se modifique o se cree un modelo ejecutar
 ```
-python manage.py makemigrations
+python manage.py makemigrations organizacion
+python manage.py makemigrations presupuesto
+python manage.py makemigrations index
+python manage.py makemigrations paneluser
+python manage.py makemigrations biblioteca
+python manage.py makemigrations seguridad
+python manage.py makemigrations planificacion
+python manage.py makemigrations rrhh
+python manage.py makemigrations emergencia
+python manage.py makemigrations potencia
+python manage.py makemigrations gc
 ```
 ### Packaging the Gestion Comunicacional Module
 ```

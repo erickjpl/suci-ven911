@@ -11,29 +11,27 @@ from django.views.generic import (
 from gestion_comunicacional.equipament.services.EquipamentService import (
     EquipamentService,
 )
+from templates.sneat import TemplateLayout
 
 
 class ListEquipament(LoginRequiredMixin, ListView):
-    login_url = "login"
-    template_name = "gc/equipament.html"
+    template_name = "gc/equipament/listing-equipaments.html"
+    context_object_name = "equipaments"
 
     def __init__(self):
         self.service = EquipamentService()
 
-    def get(self, request):
-        page = request.GET.get("page") or 1
-        search = None
+    def get_context_data(self, **kwargs):
+        return TemplateLayout.init(self, super().get_context_data(**kwargs))
 
-        if "search" in request.GET:
-            search = request.GET["search"]
+    def get_queryset(self):
+        page = self.request.GET.get("page") or 1
+        search = self.request.GET.get("search") or None
 
-        entities = self.service.getAll(page, search)
-
-        return render(request, self.template_name, {"entities": entities})
+        return self.service.getAll(page, search)
 
 
 class CreateEquipament(LoginRequiredMixin, CreateView):
-    login_url = "login"
     template_name = "gc/equipament.html"
 
     def __init__(self):
@@ -46,7 +44,6 @@ class CreateEquipament(LoginRequiredMixin, CreateView):
 
 
 class ReadEquipament(LoginRequiredMixin, DetailView):
-    login_url = "login"
     template_name = "gc/equipament.html"
 
     def __init__(self):
@@ -62,7 +59,6 @@ class ReadEquipament(LoginRequiredMixin, DetailView):
 
 
 class UpdateEquipament(LoginRequiredMixin, UpdateView):
-    login_url = "login"
     template_name = "gc/equipament.html"
 
     def __init__(self):
@@ -75,7 +71,6 @@ class UpdateEquipament(LoginRequiredMixin, UpdateView):
 
 
 class DeleteEquipament(LoginRequiredMixin, DeleteView):
-    login_url = "login"
     template_name = "gc/equipament.html"
 
     def __init__(self):

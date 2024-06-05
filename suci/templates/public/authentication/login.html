@@ -32,6 +32,7 @@
 
           <form id="formAuthentication" class="mb-3" method="POST">
             {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}" >
 
             <div class="mb-3">
               {% if form.error_messages %}

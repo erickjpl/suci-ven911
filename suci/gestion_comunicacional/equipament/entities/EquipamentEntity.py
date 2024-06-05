@@ -1,7 +1,8 @@
 from django.db import models
+from paneluser.BaseModel import BaseModel
 
 
-class EquipamentEntity(models.Model):
+class EquipamentEntity(BaseModel):
     STATUS_CHOICES = [
         ("available", "Available"),  # Disponible
         ("loaned", "Loaned"),  # Prestado

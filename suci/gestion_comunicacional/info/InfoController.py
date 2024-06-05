@@ -4,7 +4,7 @@ from templates.sneat import TemplateLayout
 
 
 class InfoController(LoginRequiredMixin, TemplateView):
-    login_url = "login"
+    login_url = "auth:login"
     template_name = "gc/index.html"
 
     def get_context_data(self, **kwargs):

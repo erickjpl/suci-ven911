@@ -15,8 +15,7 @@ from templates.sneat import TemplateLayout
 
 
 class ListSocialMediaAccount(LoginRequiredMixin, ListView):
-    login_url = "login"
-    template_name = "gc/social-media/listing-account.html"
+    template_name = "gc/social-media/listing-accounts.html"
     context_object_name = "socialMediaAccounts"
 
     def __init__(self):
@@ -33,7 +32,6 @@ class ListSocialMediaAccount(LoginRequiredMixin, ListView):
 
 
 class CreateSocialMediaAccount(LoginRequiredMixin, CreateView):
-    login_url = "login"
     template_name = "gc/social-media-account.html"
 
     def __init__(self):
@@ -46,7 +44,6 @@ class CreateSocialMediaAccount(LoginRequiredMixin, CreateView):
 
 
 class ReadSocialMediaAccount(LoginRequiredMixin, DetailView):
-    login_url = "login"
     template_name = "gc/social-media-account.html"
 
     def __init__(self):
@@ -62,7 +59,6 @@ class ReadSocialMediaAccount(LoginRequiredMixin, DetailView):
 
 
 class UpdateSocialMediaAccount(LoginRequiredMixin, UpdateView):
-    login_url = "login"
     template_name = "gc/social-media-account.html"
 
     def __init__(self):
@@ -75,7 +71,6 @@ class UpdateSocialMediaAccount(LoginRequiredMixin, UpdateView):
 
 
 class DeleteSocialMediaAccount(LoginRequiredMixin, DeleteView):
-    login_url = "login"
     template_name = "gc/social-media-account.html"
 
     def __init__(self):

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.views import LogoutView
 from django.urls import path, reverse_lazy
 from index.authentication.controllers.controller import AuthView
@@ -11,7 +12,7 @@ urlpatterns = [
     ),
     path(
         "logout",
-        LogoutView.as_view(next_page=reverse_lazy("auth:login")),
+        LogoutView.as_view(next_page=reverse_lazy(settings.LOGIN_URL)),
         name="logout",
     ),
     path(

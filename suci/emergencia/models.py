@@ -1,6 +1,5 @@
 from django.db import models
-from paneluser.models import Usuarios
-from django.utils import timezone
+from paneluser.BaseModel import BaseModel
 
 
 # Create your models here.
@@ -50,7 +49,7 @@ class OrganismoCompetente(models.Model):
         return self.nombre
 
 
-class Emergency(models.Model):
+class Emergency(BaseModel):
     denunciante = models.CharField(max_length=255)
     telefono_denunciante = models.CharField(max_length=255, blank=True)
     id_estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
@@ -62,8 +61,6 @@ class Emergency(models.Model):
     observaciones = models.TextField(blank=True)
     # Localizacion_sede soon
     datecompleted = models.DateTimeField(null=True, blank=True)
-    user = models.ForeignKey(Usuarios, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.denunciante + " by-" + self.user.username

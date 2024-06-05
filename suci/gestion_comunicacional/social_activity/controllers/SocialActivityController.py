@@ -11,29 +11,27 @@ from django.views.generic import (
 from gestion_comunicacional.social_activity.services.SocialActivityService import (
     SocialActivityService,
 )
+from templates.sneat import TemplateLayout
 
 
 class ListSocialActivity(LoginRequiredMixin, ListView):
-    login_url = "login"
-    template_name = "gc/social-activity.html"
+    template_name = "gc/social-activity/listing-activities.html"
+    context_object_name = "socialActivities"
 
     def __init__(self):
         self.service = SocialActivityService()
 
-    def get(self, request):
-        page = request.GET.get("page") or 1
-        search = None
+    def get_context_data(self, **kwargs):
+        return TemplateLayout.init(self, super().get_context_data(**kwargs))
 
-        if "search" in request.GET:
-            search = request.GET["search"]
+    def get_queryset(self):
+        page = self.request.GET.get("page") or 1
+        search = self.request.GET.get("search") or None
 
-        entities = self.service.getAll(page, search)
-
-        return render(request, self.template_name, {"entities": entities})
+        return self.service.getAll(page, search)
 
 
 class CreateSocialActivity(LoginRequiredMixin, CreateView):
-    login_url = "login"
     template_name = "gc/social-activity.html"
 
     def __init__(self):
@@ -46,7 +44,6 @@ class CreateSocialActivity(LoginRequiredMixin, CreateView):
 
 
 class ReadSocialActivity(LoginRequiredMixin, DetailView):
-    login_url = "login"
     template_name = "gc/social-activity.html"
 
     def __init__(self):
@@ -62,7 +59,6 @@ class ReadSocialActivity(LoginRequiredMixin, DetailView):
 
 
 class UpdateSocialActivity(LoginRequiredMixin, UpdateView):
-    login_url = "login"
     template_name = "gc/social-activity.html"
 
     def __init__(self):
@@ -75,7 +71,6 @@ class UpdateSocialActivity(LoginRequiredMixin, UpdateView):
 
 
 class DeleteSocialActivity(LoginRequiredMixin, DeleteView):
-    login_url = "login"
     template_name = "gc/social-activity.html"
 
     def __init__(self):
