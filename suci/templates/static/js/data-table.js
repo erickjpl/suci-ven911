@@ -1,5 +1,6 @@
-const listingAccount = (url) => {
-  $("#gc-sm-listing-account").DataTable({
+const setTBody = ({ url, columns, updateUrl, deleteUrl }) => {
+  console.info({ url, columns, updateUrl, deleteUrl })
+  $("#data-table").DataTable({
     resposive: true,
     autoWidth: false,
     destroy: true,
@@ -8,24 +9,20 @@ const listingAccount = (url) => {
       url: url,
       type: 'GET',
       data: {},
-      dataSrc: ''
+      dataSrc: '',
+      dataType: 'json',
+      contentType: 'application/json',
+      accepts: "application/json; charset=utf-8",
     },
-    columns: [
-      { "data": "id" },
-      { "data": "name" },
-      { "data": "description" },
-      { "data": "status" },
-      { "data": "created_by" },
-      { "data": "updated_by" },
-    ],
+    columns: columns,
     columnDefs: [
       {
         targets: [-1],
         class: 'text-center',
         orderable: false,
         render: function (data, type, row) {
-          let buttons = `<a href="{% url 'api-gc:eq:updater-equipament' %}' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="bx bx-edit-alt"></i></a>`;
-          buttons += '<a href="/equipament/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="bx bx-trash"></i></a>';
+          let buttons = `<a href="${updateUrl.replace('0', row.id)}/" class="btn btn-warning btn-xs btn-flat"><i class="bx bx-edit-alt"></i></a>`;
+          buttons += `<a href="${deleteUrl.replace('0', row.id)}/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="bx bx-trash"></i></a>`;
           return buttons;
         }
       },

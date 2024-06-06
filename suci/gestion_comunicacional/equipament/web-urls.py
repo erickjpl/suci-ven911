@@ -22,35 +22,35 @@ urlpatterns = [
     # BEGING Equipament
     path(
         "",
-        EquipamentView.as_view(template_name="gc/equipament/listing-equipaments.html"),
+        EquipamentView.as_view(template_name="gc/equipament/listing.html"),
         name="listing-equipament",
     ),
     path(
         "filter<str:filter>",
-        EquipamentView.as_view(template_name="gc/equipament/listing-equipaments.html"),
+        EquipamentView.as_view(template_name="gc/equipament/listing.html"),
         name="filter-equipament",
     ),
-    path(
-        "actualizar/<int:pk>",
-        EquipamentView.as_view(template_name="gc/equipament/listing-equipaments.html"),
-        name="updater-equipament",
-    ),
-    # END Equipament
     path(
         "crear",
         CreateEquipament.as_view(),
         name="create-equipament",
     ),
     path(
-        "detalle/<int:pk>",
+        "<int:pk>",
         ReadEquipament.as_view(),
         name="reader-equipament",
     ),
     path(
-        "eliminar/<int:pk>",
+        "<int:pk>/actualizar",
+        EquipamentView.as_view(template_name="gc/equipament/listing.html"),
+        name="updater-equipament",
+    ),
+    path(
+        "<int:pk>/eliminar",
         DeleteEquipament.as_view(),
         name="destroyer-equipament",
     ),
+    # END Equipament
     path(
         "loan",
         ListEquipamentLoan.as_view(),

@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.generic import (
     CreateView,
@@ -14,15 +14,17 @@ from gestion_comunicacional.social_media.services.SocialMediaAccountService impo
 from templates.sneat import TemplateLayout
 
 
-class ListSocialMediaAccount(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = "gc.equipament.view_logentry"
-    template_name = "gc/social-media/listing-accounts.html"
-    context_object_name = "socialMediaAccounts"
+class ListSocialMediaAccount(LoginRequiredMixin, ListView):
+    # class ListSocialMediaAccount(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    #     permission_required = "gc.equipament.view_logentry"
+    template_name = "gc/social-media/listing.html"
+    context_object_name = "accounts"
 
     def __init__(self):
         self.service = SocialMediaAccountService()
 
     def get_context_data(self, **kwargs):
+        self.object_list = self.get_queryset()
         return TemplateLayout.init(self, super().get_context_data(**kwargs))
 
     def get_queryset(self):
@@ -30,6 +32,21 @@ class ListSocialMediaAccount(LoginRequiredMixin, PermissionRequiredMixin, ListVi
         search = self.request.GET.get("search") or None
 
         return self.service.getAll(page, search)
+
+    def get(self, request, *args, **kwargs):
+        print(request.headers.get("x-requested-with"))
+        if request.headers.get("x-requested-with"):
+            data = {}
+            try:
+                data = []
+                for item in self.get_queryset():
+                    data.append(item.toJSON())
+            except Exception as e:
+                data["error"] = str(e)
+            return JsonResponse(data, safe=False)
+
+        context = self.get_context_data(**kwargs)
+        return render(request, self.template_name, context)
 
 
 class CreateSocialMediaAccount(LoginRequiredMixin, CreateView):

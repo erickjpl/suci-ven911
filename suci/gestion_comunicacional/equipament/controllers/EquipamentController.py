@@ -1,8 +1,10 @@
 from typing import Any
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ValidationError
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import (
@@ -13,6 +15,7 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
 )
+from gestion_comunicacional.equipament.forms.EquipamentForm import EquipamentForm
 from gestion_comunicacional.equipament.services.EquipamentService import (
     EquipamentService,
 )
@@ -53,15 +56,33 @@ class ListEquipament(LoginRequiredMixin, ListView):
 
 
 class CreateEquipament(LoginRequiredMixin, CreateView):
-    template_name = "gc/equipament.html"
+    template_name = "gc/equipament/create.html"
+    form_class = EquipamentForm
+    success_url = reverse_lazy("gc:eq:listing-equipament")
 
     def __init__(self):
         self.service = EquipamentService()
 
-    def post(self, request):
-        entity = self.service.creator(request.POST)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Registro de equipos para el departamento"
+        context["tag"] = "Asignar"
 
-        return render(request, self.template_name, {"entity": entity})
+        return TemplateLayout.init(self, context)
+
+    def post(self, request, *arg, **kwargs):
+        try:
+            self.service.creator(request)
+            return HttpResponseRedirect(self.success_url)
+        except ValidationError as e:
+            print("HOLA")
+            print(e)
+
+        self.object = None
+        context = self.get_context_data(**kwargs)
+        # context["form"] = e
+
+        return render(request, self.template_name, context)
 
 
 class ReadEquipament(LoginRequiredMixin, DetailView):

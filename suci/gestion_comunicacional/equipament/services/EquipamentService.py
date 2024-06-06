@@ -1,4 +1,6 @@
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
+from gestion_comunicacional.equipament.forms.EquipamentForm import EquipamentForm
 from gestion_comunicacional.equipament.repositories.EquipamentRepository import (
     EquipamentRepository,
 )
@@ -20,8 +22,17 @@ class EquipamentService:
         # return PaginatorUtil.paginate(paginator, page)
         return entities
 
-    def creator(self, post):
-        return self.repository.createWithForm(post)
+    def creator(self, request):
+        data = request.POST.copy()
+        data["created_by"] = request.user
+        data["updated_by"] = request.user
+
+        form = EquipamentForm(data)
+
+        if form.is_valid():
+            return self.repository.create(data)
+
+        raise ValidationError(form)
 
     def reader(self, id):
         return self.repository.getById(id)

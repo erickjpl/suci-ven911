@@ -11,10 +11,14 @@
 <span class="">Equipos</span>
 {% endblock %}
 
+{% block btnAdd %}
+<a href="{% url 'gc:eq:create-equipament' %}" class="btn btn-outline-primary">
+  <span class="tf-icons bx bx-plus me-1"></span>Registrar Equipo
+</a>
+{% endblock %}
+
 {% block content %}
 <div class="card">
-  <h5 class="card-header">Table Basic</h5>
-
   <div class="card-body">
     <div class="table-responsive text-nowrap">
       <table id="gc-sm-listing-account" class="table table-striped"">

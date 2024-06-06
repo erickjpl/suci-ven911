@@ -32,14 +32,14 @@ urlpatterns = [
         name="gc-reader-social-media-account",
     ),
     path(
-        "account/actualizar/<int:pk>",
+        "account/<int:pk>/actualizar",
         UpdateSocialMediaAccount.as_view(),
-        name="gc-updater-social-media-account",
+        name="updater-account",
     ),
     path(
-        "account/eliminar/<int:pk>",
+        "account/<int:pk>/eliminar",
         DeleteSocialMediaAccount.as_view(),
-        name="gc-destroyer-social-media-account",
+        name="destroyer-account",
     ),
 ]
 

@@ -18,7 +18,6 @@ class EquipamentForm(ModelForm):
             "status",
         )
         exclude = [
-            "id",
             "created_at",
             "created_by",
             "updated_at",
@@ -27,9 +26,14 @@ class EquipamentForm(ModelForm):
             "delete_by",
         ]
         widgets = {
-            "denunciante": TextInput(
+            "name": TextInput(
                 attrs={
-                    "placeholder": "Ejem. George Harris",
+                    "placeholder": "Ingrese el equipo (Marca, Modelo)",
+                }
+            ),
+            "description": TextInput(
+                attrs={
+                    "placeholder": "Ingrese la descripcion",
                 }
             ),
         }

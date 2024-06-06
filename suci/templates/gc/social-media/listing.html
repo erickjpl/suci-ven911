@@ -1,0 +1,72 @@
+{% extends layout_path %}
+
+{% load static %}
+
+{% block title %}Redes Sociales{% endblock %}
+
+{% block breadcrumbs %}
+<span class="text-muted fw-light">
+  <a href="{% url 'gc:info' %}" class="text-muted fw-light">Gestión Comunicacional</a> /
+</span>
+<span class="">Redes Sociales</span>
+{% endblock %}
+
+{% block btnAdd %}
+<a href="{% url 'gc:eq:create-equipament' %}" class="btn btn-outline-primary">
+  <span class="tf-icons bx bx-plus me-1"></span>Registrar una cuenta
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive text-nowrap">
+      <table id="data-table" class="table table-striped"">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Red Social</th>
+            <th>Usuario</th>
+            <th>Segidores</th>
+            <th>Responsable</th>
+            <th>Publicaciones</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block vendor_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/data-tables/css/dataTables.bootstrap5.css' %}">
+{% endblock %}
+
+{% block vendor_js %}
+<script src="{% static 'vendor/libs/data-tables/js/dataTables.js' %}"></script>
+<script src="{% static 'vendor/libs/data-tables/js/dataTables.bootstrap5.js' %}"></script>
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/data-table.js' %}"></script>
+<script>
+$(document).ready(function () {
+  const url = "{% url 'gc:sm:listing-account' %}"
+  const updateUrl = "{% url 'gc:sm:updater-account' 0 %}"
+  const deleteUrl = "{% url 'gc:sm:destroyer-account' 0 %}"
+  const columns =[
+      { "data": "id" },
+      { "data": "platform" },
+      { "data": "username" },
+      { "data": "followers" },
+      { "data": "responsible" },
+      { "data": "publications" },
+      { "data": "created_by" },
+      { "data": "updated_by" },
+    ]
+  setTBody({url, columns, updateUrl, deleteUrl});
+});
+</script>
+{% endblock %}

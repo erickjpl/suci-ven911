@@ -13,17 +13,14 @@ class EquipamentRepository:
         return EquipamentEntity.objects.get(id=id)
 
     def create(self, data):
+        data = {k: v for k, v in data.items() if k != "csrfmiddlewaretoken"}
+
         entity = EquipamentEntity(**data)
         entity.save()
         return entity
 
-    def createWithForm(self, data):
-        createForm = EquipamentForm(data)
-
-        if createForm.is_valid():
-            return createForm.save()
-
-        return createForm
+    def createWithForm(self, createForm):
+        return createForm.save()
 
     def update(self, id, data):
         entity = self.getById(id)
