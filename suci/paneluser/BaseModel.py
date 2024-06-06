@@ -3,18 +3,26 @@ from django.db import models
 
 
 class BaseModel(models.Model):
-    user_created = models.ForeignKey(
+    created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="%(class)s_created",
     )
-    datetime_created = models.DateTimeField(auto_now_add=True)
-    user_updated = models.ForeignKey(
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="%(class)s_updated",
     )
-    datetime_updated = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    delete_by = models.ForeignKey(
+        null=True,
+        blank=True,
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="%(class)s_delete",
+    )
+    delete_at = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     class Meta:
         abstract = True
