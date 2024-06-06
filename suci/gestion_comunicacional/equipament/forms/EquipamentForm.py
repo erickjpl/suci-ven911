@@ -1,9 +1,4 @@
-from typing import Any, Mapping
-
-from django.core.files.base import File
-from django.db.models.base import Model
 from django.forms import ModelForm, TextInput
-from django.forms.utils import ErrorList
 from gestion_comunicacional.equipament.entities.EquipamentEntity import EquipamentEntity
 
 
@@ -28,6 +23,8 @@ class EquipamentForm(ModelForm):
             "created_by",
             "updated_at",
             "updated_by",
+            "delete_at",
+            "delete_by",
         ]
         widgets = {
             "denunciante": TextInput(

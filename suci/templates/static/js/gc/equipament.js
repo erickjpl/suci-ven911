@@ -15,8 +15,8 @@ const listingAccount = (url) => {
       { "data": "name" },
       { "data": "description" },
       { "data": "status" },
-      { "data": "user_created" },
-      { "data": "user_updated" },
+      { "data": "created_by" },
+      { "data": "updated_by" },
     ],
     columnDefs: [
       {
@@ -31,7 +31,7 @@ const listingAccount = (url) => {
       },
     ],
     initComplete: function (settings, json) {
-      // console.info('Datos cargados.', { settings, json })
+      console.info('Datos cargados.', { settings, json })
     },
     language: language
   });

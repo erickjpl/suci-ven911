@@ -15,10 +15,10 @@ class EquipamentService:
         else:
             entities = self.repository.getAllFilter(search)
 
-        entities = self.repository.getAll()
-        paginator = Paginator(entities, 15)
+        # paginator = Paginator(entities, 15)
 
-        return PaginatorUtil.paginate(paginator, page)
+        # return PaginatorUtil.paginate(paginator, page)
+        return entities
 
     def creator(self, post):
         return self.repository.createWithForm(post)

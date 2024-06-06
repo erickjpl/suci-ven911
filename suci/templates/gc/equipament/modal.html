@@ -40,12 +40,12 @@
               <button
                 type="button"
                 id="changeScreen"
-                class="btn-primary"
+                class="btn-close change-screen"
                 aria-label="Change Screen"
-              >Maximixar</button>
+              ></button>
               <button
                 type="button"
-                class="btn-close"
+                class="btn-close btns-modal"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
@@ -97,24 +97,37 @@
 </div>
 {% endblock %}
 
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock %}
+
 {% block page_js %}
 <script>
-// Obtener el modal y los botones
-const modal = document.getElementById('suciModal');
-const changeScreen = document.getElementById('changeScreen');
+const modal = document.getElementById('suciModal').firstElementChild;
+const btnChangeScreen = document.getElementById('changeScreen');
 
-// Inicializar el modal
-modal.addEventListener('shown.bs.modal', function () {
-    // Comprobar si el modal está en modo pantalla completa
-    if (modal.classList.contains('modal-fullscreen')) {
-        // Cambiar a modo predeterminado
-        modal.classList.remove('modal-fullscreen');
-        changeScreen.textContent = 'Minimizar';
-    } else {
-        // Cambiar a modo pantalla completa
-        modal.classList.add('modal-fullscreen');
-        changeScreen.textContent = 'Maximixar';
-    }
+btnChangeScreen.addEventListener("click", () => {
+  if (modal.classList.contains('modal-fullscreen')) {
+    minimize (modal);
+  } else {
+    maximize (modal);
+  }
 });
+
+function minimize (modal) {
+  modal.classList.remove('modal-fullscreen');
+  modal.classList.add('modal-dialog-centered');
+  btnChangeScreen.classList.add('maximize');
+  btnChangeScreen.classList.remove('minimize');
+}
+
+function maximize (modal) {
+  modal.classList.add('modal-fullscreen');
+  modal.classList.remove('modal-dialog-centered');
+  btnChangeScreen.classList.remove('maximize');
+  btnChangeScreen.classList.add('minimize');
+}
+
+minimize (modal);
 </script>
 {% endblock %}
