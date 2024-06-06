@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import model_to_dict
 from paneluser.BaseModel import BaseModel
 
 
@@ -17,6 +18,9 @@ class EquipamentEntity(BaseModel):
 
     def __str__(self):
         return self.name
+
+    def toJSON(self):
+        return model_to_dict(self)
 
     class Meta:
         db_table = "gc_equipaments"

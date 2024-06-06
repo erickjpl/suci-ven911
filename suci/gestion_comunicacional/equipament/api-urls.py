@@ -5,6 +5,7 @@ from django.urls import path
 from .controllers.EquipamentController import (
     CreateEquipament,
     DeleteEquipament,
+    EquipamentView,
     ListEquipament,
     ReadEquipament,
     UpdateEquipament,
@@ -18,16 +19,23 @@ from .controllers.EquipamentLoanController import (
 )
 
 urlpatterns = [
+    # BEGING Equipament
     path(
         "",
         ListEquipament.as_view(),
         name="listing-equipament",
     ),
     path(
-        "<str:accion>",
+        "<str:filter>",
         ListEquipament.as_view(),
         name="filter-equipament",
     ),
+    path(
+        "actualizar/<int:pk>",
+        EquipamentView.as_view(template_name="gc/equipament/listing-equipaments.html"),
+        name="updater-equipament",
+    ),
+    # END Equipament
     path(
         "crear",
         CreateEquipament.as_view(),
@@ -37,11 +45,6 @@ urlpatterns = [
         "detalle/<int:pk>",
         ReadEquipament.as_view(),
         name="reader-equipament",
-    ),
-    path(
-        "actualizar/<int:pk>",
-        UpdateEquipament.as_view(),
-        name="updater-equipament",
     ),
     path(
         "eliminar/<int:pk>",

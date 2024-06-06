@@ -11,7 +11,7 @@ urlpatterns = [
         "social-activity/",
         include(("gestion_comunicacional.social_activity.urls", "sa")),
     ),
-    path("equipament/", include(("gestion_comunicacional.equipament.urls", "eq"))),
+    path("equipament/", include(("gestion_comunicacional.equipament.web-urls", "eq"))),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

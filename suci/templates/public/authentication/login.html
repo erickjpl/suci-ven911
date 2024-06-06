@@ -1,7 +1,6 @@
 {% extends layout_path %}
 
 {% load static %}
-{% load i18n %}
 
 {% block title %}Inicar Sesion{% endblock %}
 
@@ -71,7 +70,10 @@
               </div>
             </div>
             <div class="mb-3">
-              <button class="btn btn-primary d-grid w-100" type="submit">Iniciar sesión</button>
+              <button class="btn btn-primary d-grid w-100" type="submit">
+                Iniciar sesión
+                <i class="bx log-in"></i>
+              </button>
             </div>
           </form>
 
@@ -88,24 +90,3 @@
   </div>
 </div>
 {% endblock content %}
-
-{% block page_js %}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script src="{% static 'js/notification.js' %}"></script>
-<script>
-  {% if form.errors %}
-      var errors = '';
-      {% for field in form %}
-        {% for error in field.errors %}
-            errors += '{{ error }}\n';
-        {% endfor %}
-      {% endfor %}
-      
-      {% for error in from.non_field_errors %}
-          errors += '{{ error }}\n';
-      {% endfor %}
-
-      {% comment %} notificacionError(errors); {% endcomment %}
-  {% endif %}
-</script>
-{% endblock %}

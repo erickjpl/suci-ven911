@@ -1,17 +1,27 @@
+from typing import Any
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_protect
 from django.views.generic import (
     CreateView,
     DeleteView,
     DetailView,
     ListView,
+    TemplateView,
     UpdateView,
 )
 from gestion_comunicacional.equipament.services.EquipamentService import (
     EquipamentService,
 )
 from templates.sneat import TemplateLayout
+
+
+class EquipamentView(LoginRequiredMixin, TemplateView):
+    def get_context_data(self, **kwargs):
+        return TemplateLayout.init(self, super().get_context_data(**kwargs))
 
 
 class ListEquipament(LoginRequiredMixin, ListView):
@@ -21,14 +31,25 @@ class ListEquipament(LoginRequiredMixin, ListView):
     def __init__(self):
         self.service = EquipamentService()
 
-    def get_context_data(self, **kwargs):
-        return TemplateLayout.init(self, super().get_context_data(**kwargs))
+    @method_decorator(csrf_protect)
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         page = self.request.GET.get("page") or 1
         search = self.request.GET.get("search") or None
 
         return self.service.getAll(page, search)
+
+    def get(self, request, *args, **kwargs):
+        data = {}
+        try:
+            data = []
+            for item in self.get_queryset():
+                data.append(item.toJSON())
+        except Exception as e:
+            data["error"] = str(e)
+        return JsonResponse(data, safe=False)
 
 
 class CreateEquipament(LoginRequiredMixin, CreateView):

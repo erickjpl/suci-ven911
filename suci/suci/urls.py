@@ -38,7 +38,12 @@ urlpatterns = [
     path("biblioteca/", include("biblioteca.urls")),
     path("emergencia/", include("emergencia.urls")),
     path("organizacion/", include("organizacion.urls")),
-    path("gestion-comunicacional/", include(("gestion_comunicacional.urls", "gc"))),
+    path("gestion-comunicacional/", include(("gestion_comunicacional.web-urls", "gc"))),
+    # API's
+    path(
+        "api/gestion-comunicacional/",
+        include(("gestion_comunicacional.api-urls", "api-gc")),
+    ),
 ]
 
 if settings.ENABLE_DEBUG_TOOLBAR:

@@ -50,7 +50,9 @@
   <body>
     <!-- beautify ignore:end -->
 
-    {% block layout %}{% endblock %} {% include "./partials/scripts.html" %}
+    {% block layout %}{% endblock %}
+    
+    {% include "./partials/scripts.html" %}
 
     <!--Vendors Javascript-->
     {% block vendor_js %} {% endblock %}
