@@ -2,14 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from .controllers.EquipamentController import (
-    CreateEquipament,
-    DeleteEquipament,
-    EquipamentView,
-    ListEquipament,
-    ReadEquipament,
-    UpdateEquipament,
-)
+# Equipament Loan
 from .controllers.EquipamentLoanController import (
     CreateEquipamentLoan,
     DeleteEquipamentLoan,
@@ -18,17 +11,19 @@ from .controllers.EquipamentLoanController import (
     UpdateEquipamentLoan,
 )
 
+# Equipament
+from .controllers.equipaments.CreateEquipamentController import CreateEquipament
+from .controllers.equipaments.DeleteEquipamentController import DeleteEquipament
+from .controllers.equipaments.ListEquipamentController import ListEquipament
+from .controllers.equipaments.ReadEquipamentController import ReadEquipament
+from .controllers.equipaments.UpdateEquipamentController import UpdateEquipament
+
 urlpatterns = [
     # BEGING Equipament
     path(
         "",
-        EquipamentView.as_view(template_name="gc/equipament/listing.html"),
+        ListEquipament.as_view(),
         name="listing-equipament",
-    ),
-    path(
-        "filter<str:filter>",
-        EquipamentView.as_view(template_name="gc/equipament/listing.html"),
-        name="filter-equipament",
     ),
     path(
         "crear",
@@ -42,7 +37,7 @@ urlpatterns = [
     ),
     path(
         "<int:pk>/actualizar",
-        EquipamentView.as_view(template_name="gc/equipament/listing.html"),
+        UpdateEquipament.as_view(template_name="gc/equipament/listing.html"),
         name="updater-equipament",
     ),
     path(
@@ -50,7 +45,7 @@ urlpatterns = [
         DeleteEquipament.as_view(),
         name="destroyer-equipament",
     ),
-    # END Equipament
+    # BEGING Equipament Loan
     path(
         "loan",
         ListEquipamentLoan.as_view(),

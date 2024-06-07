@@ -17,6 +17,18 @@ THEME_VARIABLES = {
     "changelog": "https://github.com/erickjpl/suci-ven911/blob/main/CHANGELOG.md",
     "git_repository": "https://github.com/erickjpl/suci-ven911",
     "license_url": "https://github.com/erickjpl/suci-ven911/blob/main/README.md",
+    # Modulo Gestion Comunicacional
+    "gc_module_name": "Gestión Comunicacional",
+    ## Submodulo Redes Sociales
+    "gc_sm_module_name": "Redes Sociales",
+    "gc_sm_account_title_page": "Redes sociales",
+    "gc_sm_account_title_form": "Cuenta para la red social",
+    "gc_sm_account_title_btn_add": "Registrar una cuenta",
+    ## Submodulo Redes Sociales
+    "gc_eq_module_name": "Equipos",
+    "gc_eq_equipament_title_page": "Equipos (GC)",
+    "gc_eq_equipament_title_form": "Equipos para el departamento",
+    "gc_eq_equipament_title_btn_add": "Registrar Equipo",
 }
 
 # ! Don't change THEME_LAYOUT_DIR unless it's required

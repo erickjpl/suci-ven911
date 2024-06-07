@@ -1,4 +1,8 @@
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
+from gestion_comunicacional.social_media.forms.SocialMediaAccountForm import (
+    SocialMediaAccountForm,
+)
 from gestion_comunicacional.social_media.repositories.SocialMediaAccountRepository import (
     SocialMediaAccountRepository,
 )
@@ -20,8 +24,20 @@ class SocialMediaAccountService:
 
         return PaginatorUtil.paginate(paginator, page)
 
-    def creator(self, post):
-        return self.repository.createWithForm(post)
+    def creator(self, request):
+        data = request.POST.copy()
+        data["created_by"] = request.user
+        data["updated_by"] = request.user
+
+        form = SocialMediaAccountForm(data)
+
+        if form.is_valid():
+            return self.repository.create(data)
+
+        for field in form.errors:
+            form[field].field.widget.attrs["class"] += " is-invalid"
+
+        raise ValidationError(form)
 
     def reader(self, id):
         return self.repository.getById(id)

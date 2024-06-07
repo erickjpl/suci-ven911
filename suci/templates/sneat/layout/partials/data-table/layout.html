@@ -2,18 +2,18 @@
 
 {% load static %}
 
-{% block title %}Redes Sociales{% endblock %}
+{% block title %}{% get_theme_variables titlePage %}{% endblock %}
 
 {% block breadcrumbs %}
 <span class="text-muted fw-light">
-  <a href="{% url 'gc:info' %}" class="text-muted fw-light">Gestión Comunicacional</a> /
+  <a href="{{ indexUrl }}" class="text-muted fw-light">{% get_theme_variables module %}</a> /
 </span>
-<span class="">Redes Sociales</span>
+<span class="">{% get_theme_variables submodule %}</span>
 {% endblock %}
 
 {% block btnAdd %}
-<a href="{% url 'gc:eq:create-equipament' %}" class="btn btn-outline-primary">
-  <span class="tf-icons bx bx-plus me-1"></span>Registrar una cuenta
+<a href="{{ createUrl }}" class="btn btn-outline-primary">
+  <span class="tf-icons bx bx-plus me-1"></span>{% get_theme_variables createBtn %}
 </a>
 {% endblock %}
 
@@ -24,13 +24,8 @@
       <table id="data-table" class="table table-striped"">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Red Social</th>
-            <th>Usuario</th>
-            <th>Segidores</th>
-            <th>Responsable</th>
-            <th>Publicaciones</th>
-            <th>Acciones</th>
+            {% block thead %}
+            {% endblock %}
           </tr>
         </thead>
         <tbody class="table-border-bottom-0"></tbody>
@@ -53,19 +48,10 @@
 <script src="{% static 'js/data-table.js' %}"></script>
 <script>
 $(document).ready(function () {
-  const url = "{% url 'gc:sm:listing-account' %}"
-  const updateUrl = "{% url 'gc:sm:updater-account' 0 %}"
-  const deleteUrl = "{% url 'gc:sm:destroyer-account' 0 %}"
-  const columns =[
-      { "data": "id" },
-      { "data": "platform" },
-      { "data": "username" },
-      { "data": "followers" },
-      { "data": "responsible" },
-      { "data": "publications" },
-      { "data": "created_by" },
-      { "data": "updated_by" },
-    ]
+  const url = "{{ listUrl }}"
+  const updateUrl = "{{ updateUrl }}"
+  const deleteUrl = "{{ deleteUrl }}"
+  const columns = "{{ columns }}"
   setTBody({url, columns, updateUrl, deleteUrl});
 });
 </script>

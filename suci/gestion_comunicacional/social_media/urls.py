@@ -2,11 +2,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from .controllers.SocialMediaAccountController import (
+from .controllers.accounts.CreateSocialMediaAccountController import (
     CreateSocialMediaAccount,
-    DeleteSocialMediaAccount,
+)
+from .controllers.accounts.ListSocialMediaAccountController import (
     ListSocialMediaAccount,
+)
+from .controllers.accounts.SocialMediaAccountController import (
+    DeleteSocialMediaAccount,
     ReadSocialMediaAccount,
+)
+from .controllers.accounts.UpdateSocialMediaAccountController import (
     UpdateSocialMediaAccount,
 )
 
@@ -17,17 +23,12 @@ urlpatterns = [
         name="listing-account",
     ),
     path(
-        "account/<str:accion>",
-        ListSocialMediaAccount.as_view(),
-        name="gc-filter-social-media-account",
-    ),
-    path(
         "account/crear",
         CreateSocialMediaAccount.as_view(),
-        name="gc-create-social-media-account",
+        name="create-account",
     ),
     path(
-        "account/detalle/<int:pk>",
+        "account/<int:pk>",
         ReadSocialMediaAccount.as_view(),
         name="gc-reader-social-media-account",
     ),

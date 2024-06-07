@@ -1,5 +1,4 @@
 const setTBody = ({ url, columns, updateUrl, deleteUrl }) => {
-  console.info({ url, columns, updateUrl, deleteUrl })
   $("#data-table").DataTable({
     resposive: true,
     autoWidth: false,
@@ -14,24 +13,32 @@ const setTBody = ({ url, columns, updateUrl, deleteUrl }) => {
       contentType: 'application/json',
       accepts: "application/json; charset=utf-8",
     },
-    columns: columns,
+    columns: getColumns(columns),
     columnDefs: [
       {
         targets: [-1],
         class: 'text-center',
         orderable: false,
         render: function (data, type, row) {
-          let buttons = `<a href="${updateUrl.replace('0', row.id)}/" class="btn btn-warning btn-xs btn-flat"><i class="bx bx-edit-alt"></i></a>`;
-          buttons += `<a href="${deleteUrl.replace('0', row.id)}/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="bx bx-trash"></i></a>`;
+          let buttons = `
+            <a href="${updateUrl.replace('0', row.id)}/" class="btn btn-warning btn-xs btn-flat me-2"><i class="bx bx-edit-alt"></i></a>
+            <a href="${deleteUrl.replace('0', row.id)}/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="bx bx-trash"></i></a>
+          `;
           return buttons;
         }
       },
     ],
     initComplete: function (settings, json) {
-      console.info('Datos cargados.', { settings, json })
+      // console.info('Datos cargados.', { settings, json })
     },
     language: language
   });
+}
+
+function getColumns (stringColumns) {
+  columns = stringColumns.split("|").map(item => ({ data: item }));
+  columns.push({ data: "" });
+  return columns
 }
 
 let language = {

@@ -6,12 +6,12 @@ from .info.InfoController import InfoController
 
 urlpatterns = [
     path("", InfoController.as_view(), name="info"),
+    path("equipament/", include(("gestion_comunicacional.equipament.urls", "eq"))),
     path("social-media/", include(("gestion_comunicacional.social_media.urls", "sm"))),
     path(
         "social-activity/",
         include(("gestion_comunicacional.social_activity.urls", "sa")),
     ),
-    path("equipament/", include(("gestion_comunicacional.equipament.web-urls", "eq"))),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

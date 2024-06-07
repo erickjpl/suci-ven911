@@ -12,9 +12,9 @@
 {% endblock %}
 
 {% block btnAdd %}
-<a href="{% url 'gc:eq:create-equipament' %}" class="btn btn-outline-primary">
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#suciModal">
   <span class="tf-icons bx bx-plus me-1"></span>Registrar Equipo
-</a>
+</button>
 {% endblock %}
 
 {% block content %}
@@ -36,10 +36,16 @@
     </div>
   </div>
 </div>
+
+{% include "./create-modal.html" %}
 {% endblock %}
 
 {% block vendor_css %}
 <link rel="stylesheet" href="{% static 'vendor/libs/data-tables/css/dataTables.bootstrap5.css' %}">
+{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
 {% endblock %}
 
 {% block vendor_js %}
@@ -49,9 +55,10 @@
 
 {% block page_js %}
 <script src="{% static 'js/gc/equipament.js' %}"></script>
+<script src="{% static 'js/modal.js' %}"></script>
 <script>
 $(document).ready(function () {
-  let url = "{% url 'api-gc:eq:listing-equipament' %}"
+  let url = "{% url 'gc:eq:listing-equipament' %}"
   listingAccount(url);
 });
 </script>

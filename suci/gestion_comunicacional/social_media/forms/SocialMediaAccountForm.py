@@ -5,11 +5,13 @@ from gestion_comunicacional.social_media.entities.SocialMediaAccountEntity impor
 
 
 class SocialMediaAccountForm(ModelForm):
+    error_css_class = "is-invalid"
+
     def __init__(self, *arg, **kwarg) -> None:
         super().__init__(*arg, **kwarg)
         for form in self.visible_fields():
             form.field.widget.attrs.update(
-                {"class": "form-control mb-3", "autocomplete": "off"}
+                {"class": "form-control", "autocomplete": "off"}
             )
 
     class Meta:
