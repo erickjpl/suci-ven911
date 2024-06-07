@@ -36,14 +36,21 @@
     </li>
 
     <li class="menu-header small text-uppercase">
-      <span class="menu-header-text">Gestión Comunicacional</span>
+      <span class="menu-header-text">{% get_theme_variables 'gc_module_name' %}</span>
     </li>
 
-    <!-- Layouts -->
-    <li class="menu-item {% if '/gestion-comunicacional/' in request.path  %}active open{% endif %}">
+    {% comment %} <li class="menu-item {% if 'gc' in request.resolver_match.namespaces and 'info' == request.resolver_match.url_name %}active{% endif %}">
+      <a href="{% url 'gc:info' %}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-envelope"></i>
+        <div class="text-truncate" data-i18n="Email">Inicio</div>
+      </a>
+    </li> {% endcomment %}
+
+    <!-- Gestion Comunicacional -->
+    <li class="menu-item {% if 'gc' in request.resolver_match.namespaces %}active open{% endif %}">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-layout"></i>
-        <div class="text-truncate" data-i18n="Layouts">Layouts</div>
+        <div class="text-truncate" data-i18n="Layouts">{% get_theme_variables 'gc_module_name' %}</div>
       </a>
       <ul class="menu-sub">
         <li class="menu-item {% if 'gc' in request.resolver_match.namespaces and 'info' == request.resolver_match.url_name %}active{% endif %}">
