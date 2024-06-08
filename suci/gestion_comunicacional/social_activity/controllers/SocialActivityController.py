@@ -1,16 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-)
-from gestion_comunicacional.social_activity.services.SocialActivityService import (
-    SocialActivityService,
-)
+from django.views.generic import DeleteView
+from django.views.generic import DetailView
+from django.views.generic import ListView
+from django.views.generic import UpdateView
+
+from gestion_comunicacional.social_activity.services.SocialActivityService import SocialActivityService
 from templates.sneat import TemplateLayout
 
 
@@ -29,18 +25,6 @@ class ListSocialActivity(LoginRequiredMixin, ListView):
         search = self.request.GET.get("search") or None
 
         return self.service.getAll(page, search)
-
-
-class CreateSocialActivity(LoginRequiredMixin, CreateView):
-    template_name = "gc/social-activity.html"
-
-    def __init__(self):
-        self.service = SocialActivityService()
-
-    def post(self, request):
-        entity = self.service.creator(request.POST)
-
-        return render(request, self.template_name, {"entity": entity})
 
 
 class ReadSocialActivity(LoginRequiredMixin, DetailView):

@@ -2,17 +2,14 @@ import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView
-from gestion_comunicacional.social_media.forms.SocialMediaAccountForm import (
-    SocialMediaAccountForm,
-)
-from gestion_comunicacional.social_media.services.SocialMediaAccountService import (
-    SocialMediaAccountService,
-)
+
+from gestion_comunicacional.social_media.forms.SocialMediaAccountForm import SocialMediaAccountForm
+from gestion_comunicacional.social_media.services.SocialMediaAccountService import SocialMediaAccountService
 from templates.sneat import TemplateLayout
 
 

@@ -1,16 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-)
-from gestion_comunicacional.equipament.services.EquipamentLoanService import (
-    EquipamentLoanService,
-)
+from django.views.generic import CreateView
+from django.views.generic import DeleteView
+from django.views.generic import DetailView
+from django.views.generic import ListView
+from django.views.generic import UpdateView
+
+from gestion_comunicacional.equipament.services.EquipamentLoanService import EquipamentLoanService
 
 
 class ListEquipamentLoan(LoginRequiredMixin, ListView):

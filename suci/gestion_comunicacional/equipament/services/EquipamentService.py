@@ -1,10 +1,6 @@
 from django.core.exceptions import ValidationError
-from django.core.paginator import Paginator
-from gestion_comunicacional.equipament.forms.EquipamentForm import EquipamentForm
-from gestion_comunicacional.equipament.repositories.EquipamentRepository import (
-    EquipamentRepository,
-)
-from gestion_comunicacional.utils.PaginatorUtil import PaginatorUtil
+
+from gestion_comunicacional.equipament.repositories.EquipamentRepository import EquipamentRepository
 from index.mixins.RequestDataMixin import RequestDataMixin
 
 

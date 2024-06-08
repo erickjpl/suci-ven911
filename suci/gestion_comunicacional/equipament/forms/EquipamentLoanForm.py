@@ -1,7 +1,6 @@
 from django.forms import ModelForm
-from gestion_comunicacional.equipament.entities.EquipamentLoanEntity import (
-    EquipamentLoanEntity,
-)
+
+from gestion_comunicacional.equipament.entities.EquipamentLoanEntity import EquipamentLoanEntity
 
 
 class EquipamentLoanForm(ModelForm):

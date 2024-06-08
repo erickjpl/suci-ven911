@@ -1,6 +1,4 @@
-from gestion_comunicacional.equipament.repositories.EquipamentLoanRepository import (
-    EquipamentLoanRepository,
-)
+from gestion_comunicacional.equipament.repositories.EquipamentLoanRepository import EquipamentLoanRepository
 
 
 class EquipamentLoanService:

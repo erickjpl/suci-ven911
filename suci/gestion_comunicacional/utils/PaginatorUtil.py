@@ -1,4 +1,5 @@
-from django.core.paginator import EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
 
 
 class PaginatorUtil:

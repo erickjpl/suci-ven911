@@ -3,9 +3,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView
-from gestion_comunicacional.equipament.services.EquipamentService import (
-    EquipamentService,
-)
+
+from gestion_comunicacional.equipament.services.EquipamentService import EquipamentService
 from templates.sneat import TemplateLayout
 
 

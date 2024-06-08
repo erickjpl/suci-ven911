@@ -3,12 +3,9 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import UpdateView
-from gestion_comunicacional.social_media.forms.SocialMediaAccountForm import (
-    SocialMediaAccountForm,
-)
-from gestion_comunicacional.social_media.services.SocialMediaAccountService import (
-    SocialMediaAccountService,
-)
+
+from gestion_comunicacional.social_media.forms.SocialMediaAccountForm import SocialMediaAccountForm
+from gestion_comunicacional.social_media.services.SocialMediaAccountService import SocialMediaAccountService
 from templates.sneat import TemplateLayout
 
 

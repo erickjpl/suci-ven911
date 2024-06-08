@@ -1,4 +1,5 @@
-from django.forms import ModelForm, TextInput
+from django.forms import ModelForm
+
 from gestion_comunicacional.equipament.entities.EquipamentEntity import EquipamentEntity
 
 

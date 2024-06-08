@@ -2,13 +2,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from .controllers.SocialActivityController import (
-    CreateSocialActivity,
-    DeleteSocialActivity,
-    ListSocialActivity,
-    ReadSocialActivity,
-    UpdateSocialActivity,
-)
+from .controllers.SocialActivityController import CreateSocialActivity
+from .controllers.SocialActivityController import DeleteSocialActivity
+from .controllers.SocialActivityController import ListSocialActivity
+from .controllers.SocialActivityController import ReadSocialActivity
+from .controllers.SocialActivityController import UpdateSocialActivity
+
 
 urlpatterns = [
     path(

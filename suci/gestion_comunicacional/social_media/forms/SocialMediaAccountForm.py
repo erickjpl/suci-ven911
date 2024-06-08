@@ -1,7 +1,6 @@
-from django.forms import ModelForm, Select, TextInput
-from gestion_comunicacional.social_media.entities.SocialMediaAccountEntity import (
-    SocialMediaAccountEntity,
-)
+from django.forms import ModelForm
+
+from gestion_comunicacional.social_media.entities.SocialMediaAccountEntity import SocialMediaAccountEntity
 
 
 class SocialMediaAccountForm(ModelForm):

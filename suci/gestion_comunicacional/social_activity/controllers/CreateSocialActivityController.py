@@ -1,7 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
 from django.views.generic import CreateView
-from gestion_comunicacional.social_activity.services.SocialActivityService import SocialActivityService
 
 
 class CreateSocialActivity(LoginRequiredMixin, CreateView):

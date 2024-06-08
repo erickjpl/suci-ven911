@@ -3,13 +3,11 @@ from django.conf.urls.static import static
 from django.urls import path
 
 # Equipament Loan
-from .controllers.EquipamentLoanController import (
-    CreateEquipamentLoan,
-    DeleteEquipamentLoan,
-    ListEquipamentLoan,
-    ReadEquipamentLoan,
-    UpdateEquipamentLoan,
-)
+from .controllers.EquipamentLoanController import CreateEquipamentLoan
+from .controllers.EquipamentLoanController import DeleteEquipamentLoan
+from .controllers.EquipamentLoanController import ListEquipamentLoan
+from .controllers.EquipamentLoanController import ReadEquipamentLoan
+from .controllers.EquipamentLoanController import UpdateEquipamentLoan
 
 # Equipament
 from .controllers.equipaments.CreateEquipamentController import CreateEquipament
@@ -17,6 +15,7 @@ from .controllers.equipaments.DeleteEquipamentController import DeleteEquipament
 from .controllers.equipaments.ListEquipamentController import ListEquipament
 from .controllers.equipaments.ReadEquipamentController import ReadEquipament
 from .controllers.equipaments.UpdateEquipamentController import UpdateEquipament
+
 
 urlpatterns = [
     # BEGING Equipament

@@ -1,7 +1,6 @@
 from django.core.paginator import Paginator
-from gestion_comunicacional.social_activity.repositories.SocialActivityRepository import (
-    SocialActivityRepository,
-)
+
+from gestion_comunicacional.social_activity.repositories.SocialActivityRepository import SocialActivityRepository
 from gestion_comunicacional.utils.PaginatorUtil import PaginatorUtil
 
 

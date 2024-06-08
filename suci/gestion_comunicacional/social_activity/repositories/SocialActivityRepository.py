@@ -1,9 +1,5 @@
-from gestion_comunicacional.social_activity.entities.SocialActivityEntity import (
-    SocialActivityEntity,
-)
-from gestion_comunicacional.social_activity.forms.SocialActivityForm import (
-    SocialActivityForm,
-)
+from gestion_comunicacional.social_activity.entities.SocialActivityEntity import SocialActivityEntity
+from gestion_comunicacional.social_activity.forms.SocialActivityForm import SocialActivityForm
 
 
 class SocialActivityRepository:

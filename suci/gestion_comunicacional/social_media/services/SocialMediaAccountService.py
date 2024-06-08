@@ -1,8 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
-from gestion_comunicacional.social_media.repositories.SocialMediaAccountRepository import (
-    SocialMediaAccountRepository,
-)
+
+from gestion_comunicacional.social_media.repositories.SocialMediaAccountRepository import SocialMediaAccountRepository
 from gestion_comunicacional.utils.PaginatorUtil import PaginatorUtil
 from index.mixins.RequestDataMixin import RequestDataMixin
 

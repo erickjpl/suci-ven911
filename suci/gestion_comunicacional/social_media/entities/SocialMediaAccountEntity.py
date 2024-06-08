@@ -1,5 +1,8 @@
-from django.db.models import CharField, PositiveSmallIntegerField, URLField
+from django.db.models import CharField
+from django.db.models import PositiveSmallIntegerField
+from django.db.models import URLField
 from django.forms import model_to_dict
+
 from index.mixins.BaseModel import BaseModel
 
 

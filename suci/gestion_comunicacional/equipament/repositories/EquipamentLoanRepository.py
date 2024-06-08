@@ -1,6 +1,4 @@
-from gestion_comunicacional.equipament.entities.EquipamentLoanEntity import (
-    EquipamentLoanEntity,
-)
+from gestion_comunicacional.equipament.entities.EquipamentLoanEntity import EquipamentLoanEntity
 
 
 class EquipamentLoanRepository:

@@ -7,10 +7,9 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView
+
 from gestion_comunicacional.equipament.forms.EquipamentForm import EquipamentForm
-from gestion_comunicacional.equipament.services.EquipamentService import (
-    EquipamentService,
-)
+from gestion_comunicacional.equipament.services.EquipamentService import EquipamentService
 from templates.sneat import TemplateLayout
 
 
