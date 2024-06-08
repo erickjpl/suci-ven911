@@ -1,12 +1,10 @@
-from django.forms import ModelForm, TextInput
+from django.forms import ModelForm, Select, TextInput
 from gestion_comunicacional.social_media.entities.SocialMediaAccountEntity import (
     SocialMediaAccountEntity,
 )
 
 
 class SocialMediaAccountForm(ModelForm):
-    error_css_class = "is-invalid"
-
     def __init__(self, *arg, **kwarg) -> None:
         super().__init__(*arg, **kwarg)
         for form in self.visible_fields():
@@ -33,11 +31,7 @@ class SocialMediaAccountForm(ModelForm):
             "delete_by",
         ]
         widgets = {
-            "platform": TextInput(
-                attrs={
-                    "placeholder": "Ingrese el nombre de la red social",
-                }
-            ),
+            "platform": Select(choices=SocialMediaAccountEntity.PLATFORM_CHOICES),
             "username": TextInput(
                 attrs={
                     "placeholder": "Ingrese el usuario de la red social",

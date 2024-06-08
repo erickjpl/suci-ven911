@@ -5,9 +5,10 @@ from gestion_comunicacional.equipament.repositories.EquipamentRepository import 
     EquipamentRepository,
 )
 from gestion_comunicacional.utils.PaginatorUtil import PaginatorUtil
+from index.mixins.RequestDataMixin import RequestDataMixin
 
 
-class EquipamentService:
+class EquipamentService(RequestDataMixin):
     def __init__(self):
         self.repository = EquipamentRepository()
 
@@ -22,17 +23,12 @@ class EquipamentService:
         # return PaginatorUtil.paginate(paginator, page)
         return entities
 
-    def creator(self, request):
-        data = request.POST.copy()
-        data["created_by"] = request.user
-        data["updated_by"] = request.user
-
-        form = EquipamentForm(data)
-
+    def creator(self, form, request):
+        data = self.prepare_data(request)
         if form.is_valid():
+            form.clean()
             return self.repository.create(data)
-
-        raise ValidationError(form)
+        raise ValidationError(form.errors.as_json())
 
     def reader(self, id):
         return self.repository.getById(id)

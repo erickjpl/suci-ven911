@@ -1,6 +1,6 @@
 from django.db import models
 from django.forms import model_to_dict
-from paneluser.BaseModel import BaseModel
+from index.mixins.BaseModel import BaseModel
 
 
 class EquipamentEntity(BaseModel):

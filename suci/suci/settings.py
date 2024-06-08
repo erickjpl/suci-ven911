@@ -36,7 +36,7 @@ AUTH_USER_MODEL = "paneluser.UserEntity"
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Default URL on which Django application runs for specific environment
-BASE_URL = os.environ.get("BASE_URL", default="http://127.0.0.1:8000")
+BASE_URL = os.environ.get("BASE_URL", default="http://127.0.0.1")
 
 
 # Quick-start development settings - unsuitable for production
@@ -53,7 +53,17 @@ if not SECRET_KEY:
 DEBUG = os.environ.get("DEBUG", "True").lower() in ["true", "yes", "1"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+]
+
+CSRF_ALLOWED_ORIGINS = [os.environ.get("BASE_URL", default="http://127.0.0.1")]
+CSRF_TRUSTED_ORIGINS = [os.environ.get("BASE_URL", default="http://127.0.0.1")]
+CSRF_COOKIE_SECURE = True
+
+CORS_ORIGINS_WHITELIST = [os.environ.get("BASE_URL", default="http://127.0.0.1")]
+CORS_ALLOWED_ORIGINS = [os.environ.get("BASE_URL", default="http://127.0.0.1")]
 
 # Current DJANGO_ENVIRONMENT
 ENVIRONMENT = os.environ.get("DJANGO_ENVIRONMENT", default="local")
@@ -198,14 +208,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "templates", "static")]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # MEDIA_ROOT = BASE_DIR / 'media'
-
-
 MEDIA_ROOT = os.path.join(BASE_DIR, "media").replace("\\", "/")
 MEDIA_URL = "/media/"
-
-# CSRF_TRUSTED_ORIGINS = ["https://19d7-150-188-246-2.ngrok-free.app/"]
-
-CSRF_COOKIE_SECURE = True
 
 # Only enable the toolbar when we're in debug mode and we're
 # not running tests. Django will change DEBUG to be False for

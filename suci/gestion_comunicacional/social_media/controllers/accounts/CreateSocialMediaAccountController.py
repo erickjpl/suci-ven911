@@ -1,8 +1,11 @@
+import json
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView
 from gestion_comunicacional.social_media.forms.SocialMediaAccountForm import (
     SocialMediaAccountForm,
@@ -16,6 +19,7 @@ from templates.sneat import TemplateLayout
 class CreateSocialMediaAccount(LoginRequiredMixin, CreateView):
     form_class = SocialMediaAccountForm
     template_name = "gc/social-media/accounts/create.html"
+    success_url = reverse_lazy("gc:sm:listing-account")
 
     def __init__(self):
         self.service = SocialMediaAccountService()
@@ -29,14 +33,18 @@ class CreateSocialMediaAccount(LoginRequiredMixin, CreateView):
         context["titleForm"] = "gc_sm_account_title_form"
         context["tag"] = "Registrar"
         context["listUrl"] = reverse_lazy("gc:sm:listing-account")
+        context["urlForm"] = reverse_lazy("gc:sm:create-account")
+        context["methodForm"] = "POST"
         return TemplateLayout.init(self, context)
 
+    @method_decorator(csrf_protect)
     def post(self, request, *arg, **kwargs):
-        try:
-            self.service.creator(request)
-            return HttpResponseRedirect(self.success_url)
-        except ValidationError as e:
-            self.object = None
-            context = self.get_context_data(**kwargs)
-            context["form"] = e.message
-            return render(request, self.template_name, context)
+        if (
+            request.method == "POST"
+            and request.headers.get("x-requested-with") == "XMLHttpRequest"
+        ):
+            try:
+                self.service.creator(self.get_form(), request)
+                return HttpResponseRedirect(self.success_url)
+            except ValidationError as e:
+                return JsonResponse({"errors": json.loads(e.message.replace("'", '"'))})

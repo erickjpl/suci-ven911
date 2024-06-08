@@ -1,8 +1,11 @@
+import json
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView
 from gestion_comunicacional.equipament.forms.EquipamentForm import EquipamentForm
 from gestion_comunicacional.equipament.services.EquipamentService import (
@@ -28,18 +31,20 @@ class CreateEquipament(LoginRequiredMixin, CreateView):
         context["titleForm"] = "gc_eq_equipament_title_form"
         context["tag"] = "Registrar"
         context["listUrl"] = reverse_lazy("gc:eq:listing-equipament")
+        context["urlForm"] = reverse_lazy("gc:eq:create-equipament")
+        context["methodForm"] = "POST"
         return TemplateLayout.init(self, context)
 
+    @method_decorator(csrf_protect)
     def post(self, request, *arg, **kwargs):
-        try:
-            self.service.creator(request)
-            return HttpResponseRedirect(self.success_url)
-        except ValidationError as e:
-            print("HOLA")
-            print(e)
-
-        self.object = None
-        context = self.get_context_data(**kwargs)
-        context["form"] = e
-
-        return render(request, self.template_name, context)
+        if (
+            request.method == "POST"
+            and request.headers.get("x-requested-with") == "XMLHttpRequest"
+        ):
+            try:
+                self.service.creator(self.get_form(), request)
+                return JsonResponse(
+                    {"message": f"Se ha registro {request.POST['name']} con éxito."}
+                )
+            except ValidationError as e:
+                return JsonResponse({"errors": json.loads(e.message.replace("'", '"'))})

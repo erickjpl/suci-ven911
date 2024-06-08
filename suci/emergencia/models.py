@@ -1,5 +1,5 @@
 from django.db import models
-from paneluser.BaseModel import BaseModel
+from index.mixins.BaseModel import BaseModel
 
 
 # Create your models here.
