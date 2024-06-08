@@ -1,5 +1,9 @@
 import json
 
+from gestion_comunicacional.social_media.forms.SocialMediaAccountForm import SocialMediaAccountForm
+from gestion_comunicacional.social_media.services.SocialMediaAccountService import SocialMediaAccountService
+from templates.sneat import TemplateLayout
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
@@ -7,10 +11,6 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView
-
-from gestion_comunicacional.social_media.forms.SocialMediaAccountForm import SocialMediaAccountForm
-from gestion_comunicacional.social_media.services.SocialMediaAccountService import SocialMediaAccountService
-from templates.sneat import TemplateLayout
 
 
 class CreateSocialMediaAccount(LoginRequiredMixin, CreateView):
@@ -35,14 +35,9 @@ class CreateSocialMediaAccount(LoginRequiredMixin, CreateView):
 
     @method_decorator(csrf_protect)
     def post(self, request, *arg, **kwargs):
-        if (
-            request.method == "POST"
-            and request.headers.get("x-requested-with") == "XMLHttpRequest"
-        ):
+        if request.method == "POST" and request.headers.get("x-requested-with") == "XMLHttpRequest":
             try:
                 self.service.creator(self.get_form(), request)
-                return JsonResponse(
-                    {"message": f"Se ha registro {request.POST['nickname']} con éxito."}
-                )
+                return JsonResponse({"message": f"Se ha registro {request.POST['username_sm']} con éxito."})
             except ValidationError as e:
                 return JsonResponse({"errors": json.loads(e.message.replace("'", '"'))})

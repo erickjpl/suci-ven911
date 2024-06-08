@@ -1,12 +1,12 @@
 from gestion_comunicacional.social_activity.entities.SocialActivityEntity import SocialActivityEntity
 
 from django.forms import ModelForm
+from django.forms.fields import DateTimeInput
 
 
 class SocialActivityForm(ModelForm):
     def __init__(self, *arg, **kwarg):
         super().__init__(*arg, **kwarg)
-        self.fields["date"].widget.attrs.update({"placeholder": "Ingrese la fecha de la actividad"})
         self.fields["location"].widget.attrs.update({"placeholder": "Ingrese la direccion de la actividad"})
         self.fields["reason"].widget.attrs.update({"placeholder": "Ingrese el motivio de la actividad"})
         self.fields["description"].widget.attrs.update({"placeholder": "Ingrese la descripcion"})
@@ -32,3 +32,11 @@ class SocialActivityForm(ModelForm):
             "delete_at",
             "delete_by",
         ]
+        widgets = {
+            "date": DateTimeInput(
+                attrs={
+                    "type": "date",
+                    "placeholder": "Ingrese la fecha de la actividad",
+                }
+            ),
+        }

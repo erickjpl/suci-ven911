@@ -1,12 +1,7 @@
-from repositories.SocialMediaPostRepository import SocialMediaPostRepository
+from gestion_comunicacional.social_media.repositories.SocialMediaPostRepository import SocialMediaPostRepository
+from index.mixins.CrudMixin import CrudService
 
 
-class SocialMediaPostService:
+class SocialMediaPostService(CrudService):
     def __init__(self):
         self.repository = SocialMediaPostRepository()
-
-    def getAll(self):
-        return self.repository.getAll()
-
-    def getById(self, id):
-        return self.repository.getById(id)

@@ -1,11 +1,11 @@
+from gestion_comunicacional.social_media.services.SocialMediaAccountService import SocialMediaAccountService
+from templates.sneat import TemplateLayout
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView
-
-from gestion_comunicacional.social_media.services.SocialMediaAccountService import SocialMediaAccountService
-from templates.sneat import TemplateLayout
 
 
 class ListSocialMediaAccount(LoginRequiredMixin, ListView):
@@ -28,7 +28,7 @@ class ListSocialMediaAccount(LoginRequiredMixin, ListView):
         context["listUrl"] = reverse_lazy("gc:sm:listing-account")
         context["updateUrl"] = reverse_lazy("gc:sm:updater-account", args=[0])
         context["deleteUrl"] = reverse_lazy("gc:sm:destroyer-account", args=[0])
-        context["columns"] = "id|platform|username|followers|responsible|publications"
+        context["columns"] = "id|platform|username_sm|followers|responsible|publications"
         return TemplateLayout.init(self, context)
 
     def get_queryset(self):

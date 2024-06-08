@@ -17,17 +17,11 @@ class SocialMediaPostEntity(models.Model):
         ("draft", "Draft"),  # Borrador
     ]
 
-    account = models.ForeignKey(
-        SocialMediaAccountEntity, verbose_name="Cuenta", on_delete=models.CASCADE
-    )
-    post_type = models.CharField(
-        max_length=50, verbose_name="Tipo de publicacion", choices=POST_TYPE_CHOICES
-    )
+    account = models.ForeignKey(SocialMediaAccountEntity, verbose_name="Cuenta", on_delete=models.CASCADE)
+    post_type = models.CharField(max_length=50, verbose_name="Tipo de publicacion", choices=POST_TYPE_CHOICES)
     content = models.TextField(verbose_name="Contenido")
     publish_date = models.DateField(verbose_name="Fecha de publicacion")
-    status = models.CharField(
-        max_length=50, verbose_name="Estatus", choices=STATUS_CHOICES
-    )
+    status = models.CharField(max_length=50, verbose_name="Estatus", choices=STATUS_CHOICES)
     reach = models.IntegerField(verbose_name="Alcance de la publicación")
 
     def __str__(self):

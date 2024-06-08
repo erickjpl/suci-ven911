@@ -1,9 +1,7 @@
 from entities.SocialMediaPostEntity import SocialMediaPostEntity
+from index.mixins.RepositoryMixin import Repository
 
 
-class SocialMediaPostRepository:
-    def getAll(self):
-        return SocialMediaPostEntity.objects.all()
-
-    def getById(self, id):
-        return SocialMediaPostEntity.objects.get(id=id)
+class SocialMediaPostRepository(Repository):
+    def __init__(self):
+        self.entity = SocialMediaPostEntity
