@@ -1,9 +1,7 @@
-from django.db.models import CharField
-from django.db.models import PositiveSmallIntegerField
-from django.db.models import URLField
-from django.forms import model_to_dict
+from index.mixins.BaseModelMixin import BaseModel
 
-from index.mixins.BaseModel import BaseModel
+from django.db.models import CharField, PositiveSmallIntegerField, URLField
+from django.forms import model_to_dict
 
 
 class SocialMediaAccountEntity(BaseModel):
@@ -13,12 +11,8 @@ class SocialMediaAccountEntity(BaseModel):
         ("Twitter", "Twitter"),
     ]
 
-    platform = CharField(
-        max_length=50, verbose_name="Red social", choices=PLATFORM_CHOICES
-    )
-    username_sm = CharField(
-        max_length=60, verbose_name="Nombre de usuario de la red social", unique=True
-    )
+    platform = CharField(max_length=50, verbose_name="Red social", choices=PLATFORM_CHOICES)
+    username_sm = CharField(max_length=60, verbose_name="Nombre de usuario de la red social", unique=True)
     url = URLField(verbose_name="Direccion web", unique=True)
     followers = PositiveSmallIntegerField("Seguidores")
     responsible = CharField(max_length=100, verbose_name="Responsable de la red social")

@@ -13,17 +13,10 @@ class SocialActivityRepository:
         return SocialActivityEntity.objects.get(id=id)
 
     def create(self, data):
+        data = {k: v for k, v in data.items() if k != "csrfmiddlewaretoken"}
         entity = SocialActivityEntity(**data)
         entity.save()
         return entity
-
-    def createWithForm(self, data):
-        createForm = SocialActivityForm(data)
-
-        if createForm.is_valid():
-            return createForm.save()
-
-        return createForm
 
     def update(self, id, data):
         entity = self.getById(id)

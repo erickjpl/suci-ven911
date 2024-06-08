@@ -1,4 +1,4 @@
-from gestion_comunicacional.equipament.services.EquipamentService import EquipamentService
+from gestion_comunicacional.social_activity.services.SocialActivityService import SocialActivityService
 from templates.sneat import TemplateLayout
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,25 +8,25 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView
 
 
-class ListEquipament(LoginRequiredMixin, ListView):
-    template_name = "gc/equipaments/equipaments/listing.html"
+class ListSocialActivity(LoginRequiredMixin, ListView):
+    template_name = "gc/social-activity/listing.html"
 
     def __init__(self):
-        self.service = EquipamentService()
+        self.service = SocialActivityService()
 
     def get_context_data(self, **kwargs):
         self.object_list = self.get_queryset()
         context = super().get_context_data(**kwargs)
-        context["titlePage"] = "gc_eq_equipament_title_page"
+        context["titlePage"] = "gc_sa_title_page"
         context["indexUrl"] = reverse_lazy("gc:info")
         context["module"] = "gc_module_name"
-        context["submodule"] = "gc_eq_module_name"
-        context["createBtn"] = "gc_eq_equipament_title_btn_add"
-        context["createUrl"] = reverse_lazy("gc:eq:create-equipament")
-        context["listUrl"] = reverse_lazy("gc:eq:listing-equipament")
-        context["updateUrl"] = reverse_lazy("gc:eq:updater-equipament", args=[0])
-        context["deleteUrl"] = reverse_lazy("gc:eq:destroyer-equipament", args=[0])
-        context["columns"] = "id|name|description|status"
+        context["submodule"] = "gc_sa_module_name"
+        context["createBtn"] = "gc_sa_title_btn_add"
+        context["createUrl"] = reverse_lazy("gc:sa:create-activity")
+        context["listUrl"] = reverse_lazy("gc:sa:listing-activity")
+        context["updateUrl"] = reverse_lazy("gc:sa:updater-activity", args=[0])
+        context["deleteUrl"] = reverse_lazy("gc:sa:destroyer-activity", args=[0])
+        context["columns"] = "id|date|activity_type|location|reason|description|beneficiaries"
         return TemplateLayout.init(self, context)
 
     def get_queryset(self):

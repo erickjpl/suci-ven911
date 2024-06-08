@@ -1,7 +1,7 @@
-from django.db import models
-from django.forms import model_to_dict
+from index.mixins.BaseModelMixin import BaseModel
 
-from index.mixins.BaseModel import BaseModel
+from django.db.models import CharField, TextField
+from django.forms import model_to_dict
 
 
 class EquipamentEntity(BaseModel):
@@ -11,11 +11,9 @@ class EquipamentEntity(BaseModel):
         ("maintenance", "Mantenimiento"),
     ]
 
-    name = models.CharField(max_length=100, verbose_name="Equipo")
-    description = models.TextField(verbose_name="Descripción del equipo")
-    status = models.CharField(
-        max_length=50, verbose_name="Estatus del equipo", choices=STATUS_CHOICES
-    )
+    name = CharField(max_length=100, verbose_name="Equipo")
+    description = TextField(verbose_name="Descripción del equipo")
+    status = CharField(max_length=50, verbose_name="Estatus del equipo", choices=STATUS_CHOICES)
 
     def __str__(self):
         return self.name

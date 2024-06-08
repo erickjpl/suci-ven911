@@ -1,5 +1,9 @@
 import json
 
+from gestion_comunicacional.equipament.forms.EquipamentForm import EquipamentForm
+from gestion_comunicacional.equipament.services.EquipamentService import EquipamentService
+from templates.sneat import TemplateLayout
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
@@ -7,10 +11,6 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView
-
-from gestion_comunicacional.equipament.forms.EquipamentForm import EquipamentForm
-from gestion_comunicacional.equipament.services.EquipamentService import EquipamentService
-from templates.sneat import TemplateLayout
 
 
 class CreateEquipament(LoginRequiredMixin, CreateView):
@@ -35,8 +35,6 @@ class CreateEquipament(LoginRequiredMixin, CreateView):
 
     @method_decorator(csrf_protect)
     def post(self, request, *arg, **kwargs):
-        print(request.headers.get("x-requested-with"))
-        print(request.headers.get("X-Requested-With"))
         if request.method == "POST" and request.headers.get("X-Requested-With") == "XMLHttpRequest":
             try:
                 self.service.creator(self.get_form(), request)

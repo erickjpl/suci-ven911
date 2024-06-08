@@ -1,5 +1,6 @@
+from index.mixins.BaseModelMixin import BaseModel
+
 from django.db import models
-from index.mixins.BaseModel import BaseModel
 
 # Create your models here.
 

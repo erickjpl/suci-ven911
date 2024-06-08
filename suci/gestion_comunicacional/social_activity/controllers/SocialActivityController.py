@@ -1,30 +1,10 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
-from django.shortcuts import render
-from django.views.generic import DeleteView
-from django.views.generic import DetailView
-from django.views.generic import ListView
-from django.views.generic import UpdateView
-
 from gestion_comunicacional.social_activity.services.SocialActivityService import SocialActivityService
 from templates.sneat import TemplateLayout
 
-
-class ListSocialActivity(LoginRequiredMixin, ListView):
-    template_name = "gc/social-activity/listing-activities.html"
-    context_object_name = "socialActivities"
-
-    def __init__(self):
-        self.service = SocialActivityService()
-
-    def get_context_data(self, **kwargs):
-        return TemplateLayout.init(self, super().get_context_data(**kwargs))
-
-    def get_queryset(self):
-        page = self.request.GET.get("page") or 1
-        search = self.request.GET.get("search") or None
-
-        return self.service.getAll(page, search)
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.generic import DeleteView, DetailView, ListView, UpdateView
 
 
 class ReadSocialActivity(LoginRequiredMixin, DetailView):

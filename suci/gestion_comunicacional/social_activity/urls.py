@@ -1,13 +1,14 @@
+from gestion_comunicacional.social_activity.controllers.CreateSocialActivityController import CreateSocialActivity
+from gestion_comunicacional.social_activity.controllers.ListSocialActivityController import ListSocialActivity
+from gestion_comunicacional.social_activity.controllers.SocialActivityController import (
+    DeleteSocialActivity,
+    ReadSocialActivity,
+    UpdateSocialActivity,
+)
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-
-from .controllers.SocialActivityController import CreateSocialActivity
-from .controllers.SocialActivityController import DeleteSocialActivity
-from .controllers.SocialActivityController import ListSocialActivity
-from .controllers.SocialActivityController import ReadSocialActivity
-from .controllers.SocialActivityController import UpdateSocialActivity
-
 
 urlpatterns = [
     path(
@@ -16,27 +17,22 @@ urlpatterns = [
         name="listing-activity",
     ),
     path(
-        "<str:accion>",
-        ListSocialActivity.as_view(),
-        name="filter-activity",
-    ),
-    path(
         "crear",
         CreateSocialActivity.as_view(),
         name="create-activity",
     ),
     path(
-        "detalle/<int:pk>",
+        "<int:pk>",
         ReadSocialActivity.as_view(),
         name="reader-activity",
     ),
     path(
-        "actualizar/<int:pk>",
+        "<int:pk>/actualizar",
         UpdateSocialActivity.as_view(),
         name="updater-activity",
     ),
     path(
-        "eliminar/<int:pk>",
+        "<int:pk>/eliminar",
         DeleteSocialActivity.as_view(),
         name="destroyer-activity",
     ),

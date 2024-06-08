@@ -19,9 +19,6 @@ class EquipamentRepository:
         entity.save()
         return entity
 
-    def createWithForm(self, createForm):
-        return createForm.save()
-
     def update(self, id, data):
         entity = self.getById(id)
         for field, value in data.items():

@@ -1,21 +1,15 @@
-from django.forms import ModelForm
-
 from gestion_comunicacional.equipament.entities.EquipamentEntity import EquipamentEntity
+
+from django.forms import ModelForm
 
 
 class EquipamentForm(ModelForm):
-    def __init__(self, *arg, **kwarg) -> None:
+    def __init__(self, *arg, **kwarg):
         super().__init__(*arg, **kwarg)
-        self.fields["name"].widget.attrs.update(
-            {"placeholder": "Ingrese el equipo (Marca, Modelo)"}
-        )
-        self.fields["description"].widget.attrs.update(
-            {"placeholder": "Ingrese la descripcion"}
-        )
+        self.fields["name"].widget.attrs.update({"placeholder": "Ingrese el equipo (Marca, Modelo)"})
+        self.fields["description"].widget.attrs.update({"placeholder": "Ingrese la descripcion"})
         for form in self.visible_fields():
-            form.field.widget.attrs.update(
-                {"class": "form-control", "autocomplete": "off"}
-            )
+            form.field.widget.attrs.update({"class": "form-control", "autocomplete": "off"})
 
     class Meta:
         model = EquipamentEntity

@@ -1,9 +1,19 @@
-from django.forms import ModelForm
-
 from gestion_comunicacional.social_activity.entities.SocialActivityEntity import SocialActivityEntity
+
+from django.forms import ModelForm
 
 
 class SocialActivityForm(ModelForm):
+    def __init__(self, *arg, **kwarg):
+        super().__init__(*arg, **kwarg)
+        self.fields["date"].widget.attrs.update({"placeholder": "Ingrese la fecha de la actividad"})
+        self.fields["location"].widget.attrs.update({"placeholder": "Ingrese la direccion de la actividad"})
+        self.fields["reason"].widget.attrs.update({"placeholder": "Ingrese el motivio de la actividad"})
+        self.fields["description"].widget.attrs.update({"placeholder": "Ingrese la descripcion"})
+        self.fields["beneficiaries"].widget.attrs.update({"placeholder": "Ingrese la cantidad de beneficiarios"})
+        for form in self.visible_fields():
+            form.field.widget.attrs.update({"class": "form-control", "autocomplete": "off"})
+
     class Meta:
         model = SocialActivityEntity
         fields = (
@@ -14,3 +24,11 @@ class SocialActivityForm(ModelForm):
             "description",
             "beneficiaries",
         )
+        exclude = [
+            "created_at",
+            "created_by",
+            "updated_at",
+            "updated_by",
+            "delete_at",
+            "delete_by",
+        ]

@@ -24,11 +24,21 @@ THEME_VARIABLES = {
     "gc_sm_account_title_page": "Redes sociales",
     "gc_sm_account_title_form": "Cuenta para la red social",
     "gc_sm_account_title_btn_add": "Registrar una cuenta",
-    ## Submodulo Redes Sociales
+    ## Submodulo Equipos de Gestión
     "gc_eq_module_name": "Equipos",
     "gc_eq_equipament_title_page": "Equipos (GC)",
     "gc_eq_equipament_title_form": "Equipos para el departamento",
     "gc_eq_equipament_title_btn_add": "Registrar Equipo",
+    ## Submodulo Equipos Prestados de Gestión
+    "gc_eq_module_name": "Equipos Asignados",
+    "gc_eq_loan_title_page": "Equipos (Asignados)",
+    "gc_eq_loan_title_form": "Equipos asignados al departamento",
+    "gc_eq_loan_title_btn_add": "Registrar Prestamo",
+    ## Submodulo Actividades Sociales
+    "gc_sa_module_name": "Actividades Sociales",
+    "gc_sa_title_page": "Actividades",
+    "gc_sa_title_form": "Actividad Social",
+    "gc_sa_title_btn_add": "Registrar Actividad Social",
 }
 
 # ! Don't change THEME_LAYOUT_DIR unless it's required
