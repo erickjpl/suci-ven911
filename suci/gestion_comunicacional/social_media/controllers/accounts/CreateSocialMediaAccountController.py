@@ -19,7 +19,6 @@ from templates.sneat import TemplateLayout
 class CreateSocialMediaAccount(LoginRequiredMixin, CreateView):
     form_class = SocialMediaAccountForm
     template_name = "gc/social-media/accounts/create.html"
-    success_url = reverse_lazy("gc:sm:listing-account")
 
     def __init__(self):
         self.service = SocialMediaAccountService()
@@ -45,6 +44,8 @@ class CreateSocialMediaAccount(LoginRequiredMixin, CreateView):
         ):
             try:
                 self.service.creator(self.get_form(), request)
-                return HttpResponseRedirect(self.success_url)
+                return JsonResponse(
+                    {"message": f"Se ha registro {request.POST['nickname']} con éxito."}
+                )
             except ValidationError as e:
                 return JsonResponse({"errors": json.loads(e.message.replace("'", '"'))})

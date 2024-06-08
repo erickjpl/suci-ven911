@@ -5,9 +5,15 @@ from gestion_comunicacional.equipament.entities.EquipamentEntity import Equipame
 class EquipamentForm(ModelForm):
     def __init__(self, *arg, **kwarg) -> None:
         super().__init__(*arg, **kwarg)
+        self.fields["name"].widget.attrs.update(
+            {"placeholder": "Ingrese el equipo (Marca, Modelo)"}
+        )
+        self.fields["description"].widget.attrs.update(
+            {"placeholder": "Ingrese la descripcion"}
+        )
         for form in self.visible_fields():
             form.field.widget.attrs.update(
-                {"class": "form-control mb-3", "autocomplete": "off"}
+                {"class": "form-control", "autocomplete": "off"}
             )
 
     class Meta:
@@ -25,15 +31,4 @@ class EquipamentForm(ModelForm):
             "delete_at",
             "delete_by",
         ]
-        widgets = {
-            "name": TextInput(
-                attrs={
-                    "placeholder": "Ingrese el equipo (Marca, Modelo)",
-                }
-            ),
-            "description": TextInput(
-                attrs={
-                    "placeholder": "Ingrese la descripcion",
-                }
-            ),
-        }
+        widgets = {}

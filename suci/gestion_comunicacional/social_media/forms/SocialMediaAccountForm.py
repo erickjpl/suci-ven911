@@ -7,6 +7,21 @@ from gestion_comunicacional.social_media.entities.SocialMediaAccountEntity impor
 class SocialMediaAccountForm(ModelForm):
     def __init__(self, *arg, **kwarg) -> None:
         super().__init__(*arg, **kwarg)
+        self.fields["username_sm"].widget.attrs.update(
+            {"placeholder": "Ingrese el usuario de la red social"}
+        )
+        self.fields["url"].widget.attrs.update(
+            {"placeholder": "Ingrese la url de la red social"}
+        )
+        self.fields["followers"].widget.attrs.update(
+            {"placeholder": "Ingrese la cantidad de seguidores de la red social"}
+        )
+        self.fields["responsible"].widget.attrs.update(
+            {"placeholder": "Ingrese el usuario responsable de la red social"}
+        )
+        self.fields["publications"].widget.attrs.update(
+            {"placeholder": "Ingrese la cantidad de publicaciones de la red social"}
+        )
         for form in self.visible_fields():
             form.field.widget.attrs.update(
                 {"class": "form-control", "autocomplete": "off"}
@@ -16,7 +31,7 @@ class SocialMediaAccountForm(ModelForm):
         model = SocialMediaAccountEntity
         fields = (
             "platform",
-            "username",
+            "username_sm",
             "url",
             "followers",
             "responsible",
@@ -30,31 +45,4 @@ class SocialMediaAccountForm(ModelForm):
             "delete_at",
             "delete_by",
         ]
-        widgets = {
-            "platform": Select(choices=SocialMediaAccountEntity.PLATFORM_CHOICES),
-            "username": TextInput(
-                attrs={
-                    "placeholder": "Ingrese el usuario de la red social",
-                }
-            ),
-            "url": TextInput(
-                attrs={
-                    "placeholder": "Ingrese la url de la red social",
-                }
-            ),
-            "followers": TextInput(
-                attrs={
-                    "placeholder": "Ingrese la cantidad de seguidores de la red social",
-                }
-            ),
-            "responsible": TextInput(
-                attrs={
-                    "placeholder": "Ingrese el usuario responsable de la red social",
-                }
-            ),
-            "publications": TextInput(
-                attrs={
-                    "placeholder": "Ingrese la cantidad de publicaciones de la red social",
-                }
-            ),
-        }
+        widgets = {}

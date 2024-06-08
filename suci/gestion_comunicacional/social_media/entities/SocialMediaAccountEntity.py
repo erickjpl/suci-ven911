@@ -13,14 +13,16 @@ class SocialMediaAccountEntity(BaseModel):
     platform = CharField(
         max_length=50, verbose_name="Red social", choices=PLATFORM_CHOICES
     )
-    username = CharField(max_length=60, verbose_name="Nombre de usuario", unique=True)
+    username_sm = CharField(
+        max_length=60, verbose_name="Nombre de usuario de la red social", unique=True
+    )
     url = URLField(verbose_name="Direccion web", unique=True)
     followers = PositiveSmallIntegerField("Seguidores")
     responsible = CharField(max_length=100, verbose_name="Responsable de la red social")
     publications = PositiveSmallIntegerField("Publicaciones")
 
     def __str__(self):
-        return f"{self.platform} - {self.username}"
+        return f"{self.platform} - {self.username_sm}"
 
     def toJSON(self):
         return model_to_dict(self)

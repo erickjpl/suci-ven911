@@ -5,9 +5,9 @@ from index.mixins.BaseModel import BaseModel
 
 class EquipamentEntity(BaseModel):
     STATUS_CHOICES = [
-        ("available", "Available"),  # Disponible
-        ("loaned", "Loaned"),  # Prestado
-        ("maintenance", "Maintenance"),  # Mantenimiento
+        ("available", "Disponible"),
+        ("loaned", "Prestado"),
+        ("maintenance", "Mantenimiento"),
     ]
 
     name = models.CharField(max_length=100, verbose_name="Equipo")
@@ -26,4 +26,4 @@ class EquipamentEntity(BaseModel):
         db_table = "gc_equipaments"
         verbose_name = "Equipo"
         verbose_name_plural = "Equipos"
-        ordering = ["name"]
+        ordering = ["status"]

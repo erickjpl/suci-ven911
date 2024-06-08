@@ -25,6 +25,7 @@ class SocialMediaAccountService(RequestDataMixin):
     def creator(self, form, request):
         data = self.prepare_data(request)
         if form.is_valid():
+            form.clean()
             return self.repository.create(data)
         raise ValidationError(form.errors.as_json())
 

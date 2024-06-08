@@ -21,19 +21,19 @@
       <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0">{% get_theme_variables titleForm %}</h5> <small class="text-muted float-end">{{ tag }}</small>
       </div>
-      
+
       <div class="card-body">
-        <form id="form" method="POST">
+        <form id="form" method="POST" novalidate>
           {% csrf_token %}
 
           {% for field in form.visible_fields %}
-            <div class="row mb-3">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">{{ field.label }}</label>
-              <div class="col-sm-10">
-                {{ field }}
-                <div class="invalid-feedback"></div>
-              </div>
+          <div class="row mb-3">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">{{ field.label }}</label>
+            <div class="col-sm-10">
+              {{ field }}
+              <div class="invalid-feedback"></div>
             </div>
+          </div>
           {% endfor %}
 
           <div class="d-flex gap-2 justify-content-end">
@@ -58,42 +58,63 @@
 {{ block.super }}
 <script src="{% static 'js/form.js' %}"></script>
 <script>
-const url = "{{ urlForm }}";
-const method = "{{ methodForm }}";
-const csrftoken = getCookie('csrftoken');
+  const url = "{{ urlForm }}";
+  const method = "{{ methodForm }}";
 
-$("form").on("submit", function( event ) {
-  event.preventDefault();
+  (function () {
+    'use strict'
+    const form = document.getElementById('form')
 
-  const data = $(this).serializeArray() 
-  $.ajax({
+    form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })()
+
+  $("form").on("submit", function (event) {
+    event.preventDefault();
+
+    const data = $(this).serializeArray()
+    $.ajax({
       url: url,
       type: method,
       data: data,
       dataType: 'json',
-  }).done(function (data) {
-    if (data.hasOwnProperty('errors')) {
-      toast("Ha ocurrido un error..!", "danger");
-      form_errors(data.errors);
-      return false;
-    }
+    })
+      .done(function (data) {
+        if (data.hasOwnProperty('errors')) {
+          toast("Ha ocurrido un error..!", "danger");
+          form_errors(data.errors);
+          return false;
+        }
 
-    $("form").trigger("reset");
-    toast(data.message, "success");
-    setTimeout(() => (location.href = '{{ listUrl }}'), 2000);
-  })
-  .fail((jqXHR, textStatus, errorThrown) => console.error)
-});
+        $("form").trigger("reset");
+        toast(data.message, "success");
+        setTimeout(() => (location.href = '{{ listUrl }}'), 2100);
+      })
+      .fail((jqXHR, textStatus, errorThrown) => console.error)
+      .always(() => {
+        Array.from(document.querySelectorAll('.form-control.is-invalid')).forEach(
+          (el) => el.classList.remove('is-invalid')
+        );
+      })
+  });
 
-function toast (message, bg)  {
-  const submodule = "{% get_theme_variables submodule %}";
-  const toastHtml = document.getElementById('toast');
-  document.getElementById('toast-title').textContent = submodule;
-  document.getElementById('toast-date').textContent = 'Hace un momento';
-  document.getElementById('toast-message').textContent = message;  
-  $("#toast").removeClass("bg-primary").addClass(`bg-${bg}`);
-  const toast = new bootstrap.Toast(toastHtml)
-  toast.show();
-}
+  function test () { alert("KAS") }
+  function toast (message, bg) {
+    const submodule = "{% get_theme_variables submodule %}";
+    const toastHtml = document.getElementById('toast');
+    document.getElementById('toast-title').textContent = submodule;
+    document.getElementById('toast-date').textContent = 'Hace un momento';
+    document.getElementById('toast-message').textContent = message;
+    document.getElementById('form').classList.remove('was-validated')
+    $("#toast").removeClass("bg-primary").addClass(`bg-${bg}`);
+    const toast = new bootstrap.Toast(toastHtml)
+    toast.show();
+  }
 </script>
 {% endblock %}
