@@ -21,7 +21,7 @@ class BaseModel(models.Model):
         auto_now=True,
         verbose_name="Actualizado el",
     )
-    delete_by = models.ForeignKey(
+    deleted_by = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
         verbose_name="Eliminado por",
         on_delete=models.CASCADE,
@@ -29,8 +29,7 @@ class BaseModel(models.Model):
         null=True,
         blank=True,
     )
-    delete_at = models.DateTimeField(
-        auto_now=True,
+    deleted_at = models.DateTimeField(
         verbose_name="Eliminado el",
         null=True,
         blank=True,

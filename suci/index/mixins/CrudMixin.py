@@ -35,5 +35,5 @@ class CrudService(ServiceUtilMixin):
             return self.repository.update(entity, payload)
         raise ValidationError(payload.errors.as_json())
 
-    def destroyer(self, id):
-        return self.repository.delete(id)
+    def destroyer(self, payload):
+        return self.repository.delete(payload)

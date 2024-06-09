@@ -8,8 +8,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView
 
 
@@ -33,11 +31,10 @@ class CreateEquipament(LoginRequiredMixin, CreateView):
         context["methodForm"] = "POST"
         return TemplateLayout.init(self, context)
 
-    @method_decorator(csrf_protect)
     def post(self, request, *arg, **kwargs):
         if request.method == "POST" and request.headers.get("X-Requested-With") == "XMLHttpRequest":
             try:
                 self.service.creator(self.get_form(), request)
-                return JsonResponse({"message": f"Se ha registro {request.POST['name']} con éxito."})
+                return JsonResponse({"message": "Se ha registro con éxito."})
             except ValidationError as e:
                 return JsonResponse({"errors": json.loads(e.message.replace("'", '"'))})

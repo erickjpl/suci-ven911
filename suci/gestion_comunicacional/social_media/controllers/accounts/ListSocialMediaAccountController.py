@@ -32,6 +32,7 @@ class ListSocialMediaAccount(LoginRequiredMixin, ListView):
         return TemplateLayout.init(self, context)
 
     def get_queryset(self):
+        # self.kwargs['page']
         page = self.request.GET.get("page") or 1
         search = self.request.GET.get("search") or None
 

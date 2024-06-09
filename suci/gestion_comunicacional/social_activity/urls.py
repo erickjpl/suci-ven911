@@ -1,10 +1,7 @@
 from gestion_comunicacional.social_activity.controllers.CreateSocialActivityController import CreateSocialActivity
+from gestion_comunicacional.social_activity.controllers.DeleteSocialActivityController import DeleteSocialActivity
 from gestion_comunicacional.social_activity.controllers.ListSocialActivityController import ListSocialActivity
-from gestion_comunicacional.social_activity.controllers.SocialActivityController import (
-    DeleteSocialActivity,
-    ReadSocialActivity,
-    UpdateSocialActivity,
-)
+from gestion_comunicacional.social_activity.controllers.UpdateSocialActivityController import UpdateSocialActivity
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -21,11 +18,11 @@ urlpatterns = [
         CreateSocialActivity.as_view(),
         name="create-activity",
     ),
-    path(
-        "<int:pk>",
-        ReadSocialActivity.as_view(),
-        name="reader-activity",
-    ),
+    # path(
+    #     "<int:pk>",
+    #     ReadSocialActivity.as_view(),
+    #     name="reader-activity",
+    # ),
     path(
         "<int:pk>/actualizar",
         UpdateSocialActivity.as_view(),

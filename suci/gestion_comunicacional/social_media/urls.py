@@ -1,11 +1,19 @@
+from gestion_comunicacional.social_media.controllers.accounts.CreateSocialMediaAccountController import (
+    CreateSocialMediaAccount,
+)
+from gestion_comunicacional.social_media.controllers.accounts.DeleteSocialMediaAccountController import (
+    DeleteSocialMediaAccount,
+)
+from gestion_comunicacional.social_media.controllers.accounts.ListSocialMediaAccountController import (
+    ListSocialMediaAccount,
+)
+from gestion_comunicacional.social_media.controllers.accounts.UpdateSocialMediaAccountController import (
+    UpdateSocialMediaAccount,
+)
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-
-from .controllers.accounts.CreateSocialMediaAccountController import CreateSocialMediaAccount
-from .controllers.accounts.ListSocialMediaAccountController import ListSocialMediaAccount
-from .controllers.accounts.SocialMediaAccountController import DeleteSocialMediaAccount, ReadSocialMediaAccount
-from .controllers.accounts.UpdateSocialMediaAccountController import UpdateSocialMediaAccount
 
 urlpatterns = [
     path(
@@ -18,11 +26,11 @@ urlpatterns = [
         CreateSocialMediaAccount.as_view(),
         name="create-account",
     ),
-    path(
-        "account/<int:pk>",
-        ReadSocialMediaAccount.as_view(),
-        name="gc-reader-social-media-account",
-    ),
+    # path(
+    #     "account/<int:pk>",
+    #     ReadSocialMediaAccount.as_view(),
+    #     name="gc-reader-social-media-account",
+    # ),
     path(
         "account/<int:pk>/actualizar",
         UpdateSocialMediaAccount.as_view(),

@@ -19,7 +19,7 @@ class SocialMediaAccountEntity(BaseModel):
     publications = PositiveSmallIntegerField("Publicaciones")
 
     def __str__(self):
-        return f"{self.platform} - {self.username_sm}"
+        return f"red social: {self.platform}@{self.username_sm}"
 
     def toJSON(self):
         return model_to_dict(self)

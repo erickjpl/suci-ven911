@@ -1,7 +1,7 @@
 import json
 
-from gestion_comunicacional.social_media.forms.SocialMediaAccountForm import SocialMediaAccountForm
-from gestion_comunicacional.social_media.services.SocialMediaAccountService import SocialMediaAccountService
+from gestion_comunicacional.social_activity.forms.SocialActivityForm import SocialActivityForm
+from gestion_comunicacional.social_activity.services.SocialActivityService import SocialActivityService
 from templates.sneat import TemplateLayout
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,12 +11,12 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 
 
-class UpdateSocialMediaAccount(LoginRequiredMixin, UpdateView):
-    form_class = SocialMediaAccountForm
-    template_name = "gc/social-media/accounts/update.html"
+class UpdateSocialActivity(LoginRequiredMixin, UpdateView):
+    template_name = "gc/social-activity/update.html"
+    form_class = SocialActivityForm
 
     def __init__(self):
-        self.service = SocialMediaAccountService()
+        self.service = SocialActivityService()
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -31,20 +31,20 @@ class UpdateSocialMediaAccount(LoginRequiredMixin, UpdateView):
                 data.updated_by = self.request.user
                 return data
             except Http404:
-                raise Http404("La cuenta de la red social no se ha encontrada")
+                raise Http404("El recurso no se ha encontrada")
         else:
             raise Http404("No se proporcionó ningún recurso válido")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["titlePage"] = "gc_sm_account_title_page"
+        context["titlePage"] = "gc_sa_title_page"
         context["indexUrl"] = reverse_lazy("gc:info")
         context["module"] = "gc_module_name"
-        context["submodule"] = "gc_sm_module_name"
-        context["titleForm"] = "gc_sm_account_title_form"
+        context["submodule"] = "gc_sa_module_name"
+        context["titleForm"] = "gc_sa_title_form"
         context["tag"] = "Editar"
-        context["listUrl"] = reverse_lazy("gc:sm:listing-account")
-        context["urlForm"] = reverse_lazy("gc:sm:updater-account", args=[self.kwargs.get("pk")])
+        context["listUrl"] = reverse_lazy("gc:sa:listing-activity")
+        context["urlForm"] = reverse_lazy("gc:sa:updater-activity", args=[self.kwargs.get("pk")])
         context["methodForm"] = "POST"
         return TemplateLayout.init(self, context)
 

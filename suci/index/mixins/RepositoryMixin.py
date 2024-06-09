@@ -6,10 +6,10 @@ from django.http import Http404
 
 class Repository:
     def getAll(self):
-        return self.entity.objects.all()
+        return self.entity.objects.all().exclude(deleted_at__isnull=False)
 
     def getFilter(self, search):
-        return self.entity.objects.filter(username=search)
+        return self.entity.objects.all().exclude(deleted_at__isnull=False)
 
     def getById(self, id):
         try:
@@ -30,5 +30,8 @@ class Repository:
         entity.save()
         return entity
 
-    def delete(self, id):
-        return self.getById(id).delete()
+    def delete(self, payload):
+        return payload.save()
+
+    def destroy(self, payload):
+        return payload.delete()
