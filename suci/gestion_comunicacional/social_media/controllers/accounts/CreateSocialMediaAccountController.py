@@ -40,4 +40,4 @@ class CreateSocialMediaAccount(LoginRequiredMixin, CreateView):
                 self.service.creator(self.get_form(), request)
                 return JsonResponse({"message": f"Se ha registro {request.POST['username_sm']} con éxito."})
             except ValidationError as e:
-                return JsonResponse({"errors": json.loads(e.message.replace("'", '"'))})
+                return JsonResponse({"errors": json.loads(e.message)})

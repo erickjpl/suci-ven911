@@ -23,10 +23,10 @@ class Repository:
         entity.save()
         return entity
 
-    def update(self, id, data):
-        entity = self.getById(id)
-        for field, value in data.items():
-            setattr(entity, field, value)
+    def update(self, entity, payload):
+        for field in payload.fields:
+            if hasattr(entity, field):
+                setattr(entity, field, payload.cleaned_data[field])
         entity.save()
         return entity
 

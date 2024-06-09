@@ -29,8 +29,11 @@ class CrudService(ServiceUtilMixin):
         except Usuario.DoesNotExist:
             raise Http404("La cuenta de la red social no se ha encontrada")
 
-    def updater(self, form, id, request):
-        return self.repository.updateWithForm(id, put)
+    def updater(self, entity, payload):
+        if payload.is_valid():
+            payload.clean()
+            return self.repository.update(entity, payload)
+        raise ValidationError(payload.errors.as_json())
 
     def destroyer(self, id):
         return self.repository.delete(id)

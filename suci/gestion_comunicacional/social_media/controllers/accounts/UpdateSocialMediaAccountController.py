@@ -27,20 +27,20 @@ class UpdateSocialMediaAccount(LoginRequiredMixin, UpdateView):
 
     def get_object(self, **kwargs):
         pk = self.kwargs.get("pk")
-        abc = self.service.reader(pk)
-        print("=== +++ ===")
-        print(abc.isNew())
-        print("=== +++ ===")
-        print(abc)
-        print("=== +++ ===")
 
         if pk:
             try:
-                return self.service.reader(pk)
+                data = self.service.reader(pk)
+                data.updated_by = self.request.user
+                return data
             except Http404:
                 raise Http404("La cuenta de la red social no se ha encontrada")
         else:
             raise Http404("No se proporcionó ningún recurso válido")
+
+    # def get_form(self):
+    #     self.form_class(self.object, self.request.POST)
+    #     return super().get_form()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -51,7 +51,7 @@ class UpdateSocialMediaAccount(LoginRequiredMixin, UpdateView):
         context["titleForm"] = "gc_sm_account_title_form"
         context["tag"] = "Editar"
         context["listUrl"] = reverse_lazy("gc:sm:listing-account")
-        context["urlForm"] = reverse_lazy("gc:sm:create-account")
+        context["urlForm"] = reverse_lazy("gc:sm:updater-account", args=[self.kwargs.get("pk")])
         context["methodForm"] = "POST"
         return TemplateLayout.init(self, context)
 
@@ -59,7 +59,7 @@ class UpdateSocialMediaAccount(LoginRequiredMixin, UpdateView):
     def post(self, request, pk, *arg, **kwargs):
         if request.method == "POST" and request.headers.get("x-requested-with") == "XMLHttpRequest":
             try:
-                self.service.updater(self.get_form(), pk, request)
+                self.service.updater(self.get_object(), self.get_form())
                 return JsonResponse({"message": f"Se ha acrualizado {request.POST['username_sm']} con éxito."})
             except ValidationError as e:
-                return JsonResponse({"errors": json.loads(e.message.replace("'", '"'))})
+                return JsonResponse({"errors": json.loads(e.message)})
