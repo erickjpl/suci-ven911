@@ -1,6 +1,7 @@
 from index.mixins.ServiceUtilMixin import ServiceUtilMixin
 
 from django.core.exceptions import ValidationError
+from django.http import Http404
 
 
 class Repository:
@@ -11,11 +12,13 @@ class Repository:
         return self.entity.objects.filter(username=search)
 
     def getById(self, id):
-        return self.entity.objects.get(id=id)
+        try:
+            return self.entity.objects.get(pk=id)
+        except self.entity.DoesNotExist:
+            raise Http404
 
     def create(self, data):
         data = {k: v for k, v in data.items() if k != "csrfmiddlewaretoken"}
-
         entity = self.entity(**data)
         entity.save()
         return entity

@@ -7,5 +7,6 @@
     "batisteo.vscode-django",
     "thebarkman.vscode-djaneiro",
     "ms-python.python",
+    "junstyle.vscode-django-support",
   ]
 }

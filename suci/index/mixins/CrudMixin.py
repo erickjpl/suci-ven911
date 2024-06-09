@@ -10,7 +10,11 @@ class CrudService(ServiceUtilMixin):
         else:
             entities = self.repository.getAllFilter(search)
 
-        return self.paginate(entities, page)
+        data = []
+        for item in self.paginate(entities, page):
+            data.append(item.toJSON())
+
+        return data
 
     def creator(self, form, request):
         data = self.prepare_data(request)
@@ -20,9 +24,12 @@ class CrudService(ServiceUtilMixin):
         raise ValidationError(form.errors.as_json())
 
     def reader(self, id):
-        return self.repository.getById(id)
+        try:
+            return self.repository.getById(id)
+        except Usuario.DoesNotExist:
+            raise Http404("La cuenta de la red social no se ha encontrada")
 
-    def updater(self, put, id):
+    def updater(self, form, id, request):
         return self.repository.updateWithForm(id, put)
 
     def destroyer(self, id):

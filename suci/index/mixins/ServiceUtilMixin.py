@@ -1,11 +1,15 @@
+from index.mixins.BaseModelMixin import BaseModel
+
 from django.core.paginator import Paginator
 
 
 class ServiceUtilMixin:
     def prepare_data(self, request):
         data = request.POST.copy()
-        data["created_by"] = request.user
-        data["updated_by"] = request.user
+        user = request.user
+        if data.get("id") is None:
+            data["created_by"] = user
+        data["updated_by"] = user
         return data
 
     def paginate(self, entities, page):

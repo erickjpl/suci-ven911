@@ -39,9 +39,7 @@ class ListEquipament(LoginRequiredMixin, ListView):
         if request.headers.get("x-requested-with") == "XMLHttpRequest":
             data = {}
             try:
-                data = []
-                for item in self.get_queryset():
-                    data.append(item.toJSON())
+                data = self.get_queryset()
             except Exception as e:
                 data["error"] = str(e)
             return JsonResponse(data, safe=False)

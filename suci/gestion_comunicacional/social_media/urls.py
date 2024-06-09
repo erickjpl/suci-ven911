@@ -4,10 +4,8 @@ from django.urls import path
 
 from .controllers.accounts.CreateSocialMediaAccountController import CreateSocialMediaAccount
 from .controllers.accounts.ListSocialMediaAccountController import ListSocialMediaAccount
-from .controllers.accounts.SocialMediaAccountController import DeleteSocialMediaAccount
-from .controllers.accounts.SocialMediaAccountController import ReadSocialMediaAccount
+from .controllers.accounts.SocialMediaAccountController import DeleteSocialMediaAccount, ReadSocialMediaAccount
 from .controllers.accounts.UpdateSocialMediaAccountController import UpdateSocialMediaAccount
-
 
 urlpatterns = [
     path(

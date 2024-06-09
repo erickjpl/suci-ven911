@@ -25,4 +25,7 @@
   "autoflake-extension.remove-duplicate-keys": true,
   "autoflake-extension.remove-unused-variables": true,
   "autoflake-extension.extension.useIntegratedTerminal": false,
+  "[django-html]": {
+    "editor.defaultFormatter": "junstyle.vscode-django-support"
+  },
 }
