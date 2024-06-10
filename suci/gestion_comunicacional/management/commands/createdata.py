@@ -69,7 +69,7 @@ class Command(BaseCommand):
             password="pbkdf2_sha256$720000$4ojJVNjkvfY3KcZsqfYIgu$ZWb6ndDEB96vo0mTbmIEIXJaxT7wbCVdWisnm0irPFA=",
             is_staff=True,
             is_active=True,
-            is_superuser=True,
+            is_superuser=False,
         )
         print(f"Usuario {guest.username} con cédula de identidad {guest.dni} creado como usuario, su contraseña: guest")
 

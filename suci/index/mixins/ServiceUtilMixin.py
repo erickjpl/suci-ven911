@@ -22,3 +22,6 @@ class ServiceUtilMixin:
         except EmptyPage:
             items = paginator.page(paginator.num_pages)
         return items
+
+    class Meta:
+        abstract = True

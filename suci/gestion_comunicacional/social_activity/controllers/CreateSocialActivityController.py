@@ -1,17 +1,12 @@
-import json
-
 from gestion_comunicacional.social_activity.forms.SocialActivityForm import SocialActivityForm
 from gestion_comunicacional.social_activity.services.SocialActivityService import SocialActivityService
+from index.mixins.ControllerMixin import CreateController
 from templates.sneat import TemplateLayout
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import ValidationError
-from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
 
 
-class CreateSocialActivity(LoginRequiredMixin, CreateView):
+class CreateSocialActivity(CreateController):
     template_name = "gc/social-activity/create.html"
     form_class = SocialActivityForm
 
@@ -30,11 +25,3 @@ class CreateSocialActivity(LoginRequiredMixin, CreateView):
         context["urlForm"] = reverse_lazy("gc:sa:create-activity")
         context["methodForm"] = "POST"
         return TemplateLayout.init(self, context)
-
-    def post(self, request, *arg, **kwargs):
-        if request.method == "POST" and request.headers.get("X-Requested-With") == "XMLHttpRequest":
-            try:
-                self.service.creator(self.get_form(), request)
-                return JsonResponse({"message": "Se ha registro con éxito."})
-            except ValidationError as e:
-                return JsonResponse({"errors": json.loads(e.message.replace("'", '"'))})

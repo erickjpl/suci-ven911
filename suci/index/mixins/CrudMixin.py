@@ -37,3 +37,6 @@ class CrudService(ServiceUtilMixin):
 
     def destroyer(self, payload):
         return self.repository.delete(payload)
+
+    class Meta:
+        abstract = True

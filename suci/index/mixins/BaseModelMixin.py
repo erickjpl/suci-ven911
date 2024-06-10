@@ -1,9 +1,19 @@
+from datetime import datetime
+
 from django.conf import settings
 from django.contrib.auth import get_user
 from django.db import models
+from django.utils.timezone import get_current_timezone
+
+
+class BaseModelManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().exclude(deleted=True)
 
 
 class BaseModel(models.Model):
+    objects = BaseModelManager()
+
     created_by = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
         verbose_name="Creado por",
@@ -21,6 +31,7 @@ class BaseModel(models.Model):
         auto_now=True,
         verbose_name="Actualizado el",
     )
+    deleted = models.BooleanField(default=False, verbose_name="Está eliminado")
     deleted_by = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
         verbose_name="Eliminado por",
@@ -34,6 +45,20 @@ class BaseModel(models.Model):
         null=True,
         blank=True,
     )
+
+    def all(self):
+        # if get_user().is_superuser:
+        #     return super().get_queryset()
+        print("Query")
+        return self.exclude(deleted=True)
+
+    def delete(self):
+        self.deleted = True
+        self.deleted_at = datetime.now(tz=get_current_timezone())
+        self.save()
+
+    def hard_delete(self):
+        return super().delete()
 
     class Meta:
         abstract = True

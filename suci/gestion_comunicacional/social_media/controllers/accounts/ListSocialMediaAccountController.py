@@ -1,4 +1,5 @@
 from gestion_comunicacional.social_media.services.SocialMediaAccountService import SocialMediaAccountService
+from index.mixins.CheckPermisosMixin import CheckPermisosMixin
 from templates.sneat import TemplateLayout
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,8 +10,9 @@ from django.views.generic import ListView
 
 
 class ListSocialMediaAccount(LoginRequiredMixin, ListView):
-    # class ListSocialMediaAccount(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    #     permission_required = "gc.equipments.view_logentry"
+    # class ListSocialMediaAccount(LoginRequiredMixin, CheckPermisosMixin, ListView):
+    # permission_required = "session.change_session"
+    url_redirect = reverse_lazy("gc:info")
     template_name = "gc/social-media/accounts/listing.html"
 
     def __init__(self):

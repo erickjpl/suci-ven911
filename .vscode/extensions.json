@@ -8,5 +8,7 @@
     "thebarkman.vscode-djaneiro",
     "ms-python.python",
     "junstyle.vscode-django-support",
+    "ms-vscode-remote.remote-containers",
+    "ms-azuretools.vscode-docker",
   ]
 }

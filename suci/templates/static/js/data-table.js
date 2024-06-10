@@ -22,13 +22,13 @@ const setTBody = ({ url, columns, updateUrl, deleteUrl }) => {
         render: function (data, type, row) {
           let buttons = `
             <a href="${updateUrl.replace(
-              "0",
-              row.id
-            )}" class="btn btn-warning btn-xs btn-flat me-2"><i class="bx bx-edit-alt"></i></a>
+            "0",
+            row.id
+          )}" class="btn btn-warning btn-xs btn-flat me-2"><i class="bx bx-edit-alt"></i></a>
             <a href="${deleteUrl.replace(
-              "0",
-              row.id
-            )}" type="button" class="btn btn-danger btn-xs btn-flat"><i class="bx bx-trash"></i></a>
+            "0",
+            row.id
+          )}" type="button" class="btn btn-danger btn-xs btn-flat"><i class="bx bx-trash"></i></a>
           `;
           return buttons;
         },
@@ -41,7 +41,7 @@ const setTBody = ({ url, columns, updateUrl, deleteUrl }) => {
   });
 };
 
-function getColumns(stringColumns) {
+function getColumns (stringColumns) {
   columns = stringColumns.split("|").map((item) => ({ data: item }));
   columns.push({ data: "" });
   return columns;

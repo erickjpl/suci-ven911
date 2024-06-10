@@ -10,8 +10,6 @@ class LoginForm(AuthenticationForm):
         self.fields["username"].widget.attrs["class"] = "form-control"
         self.fields["username"].widget.attrs["maxlength"] = "10"
         self.fields["username"].widget.attrs["autocomplete"] = "off"
-        self.fields["username"].widget.attrs[
-            "placeholder"
-        ] = "Ingrese su cédula de identidad"
+        self.fields["username"].widget.attrs["placeholder"] = "Ingrese su cédula de identidad"
         self.fields["password"].widget.attrs["class"] = "form-control"
         self.fields["password"].widget.attrs["placeholder"] = "************"

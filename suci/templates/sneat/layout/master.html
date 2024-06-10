@@ -70,5 +70,15 @@
 
     <!--Page Javascript-->
     {% block page_js %} {% endblock %}
+
+    <script>
+      {% if messages %}
+            var html_mensaje = '';
+            {% for mensaje in messages %}
+                html_mensaje += '{{ mensaje }}';
+            {% endfor %}
+            toastWarning("Alerta..!", html_mensaje)
+        {% endif %}
+    </script>
   </body>
 </html>
