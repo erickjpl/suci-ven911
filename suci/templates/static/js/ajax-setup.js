@@ -1,9 +1,9 @@
-function getCookie(name) {
+function getCookie (name) {
   const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
   if (match) return match[2];
 }
 
-function csrfSafeMethod(method) {
+function csrfSafeMethod (method) {
   return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
 }
 

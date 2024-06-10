@@ -3,7 +3,7 @@ import json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages import error
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.http import Http404, HttpResponseRedirect, JsonResponse
+from django.http import Http404, HttpResponseRedirect, JsonResponse, QueryDict
 from django.views.generic import CreateView, DeleteView, UpdateView
 
 
@@ -26,6 +26,8 @@ class UpdateController(LoginRequiredMixin, UpdateView):
         except Exception:
             return HttpResponseRedirect(self.redirect_not_found)
 
+        if self.request.method.upper() == "PUT":
+            return self.put(request, *args, **kwargs)
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self, **kwargs):
@@ -41,8 +43,11 @@ class UpdateController(LoginRequiredMixin, UpdateView):
         else:
             error(self.request, "No se proporcionó ningún recurso válido")
 
-    def put(self, request, pk, *arg, **kwargs):
-        if request.method == "PUT" and request.headers.get("x-requested-with") == "XMLHttpRequest":
+    def get_form(self):
+        return self.form_class(QueryDict(self.request.body) or None, instance=self.get_object())
+
+    def put(self, request, *arg, **kwargs):
+        if self.request.headers.get("x-requested-with") == "XMLHttpRequest":
             try:
                 self.service.updater(self.get_object(), self.get_form())
                 return JsonResponse({"message": "Se ha actualizado con éxito."})

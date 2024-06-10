@@ -24,5 +24,5 @@ class UpdateSocialActivity(UpdateController):
         context["tag"] = "Editar"
         context["listUrl"] = reverse_lazy("gc:sa:listing-activity")
         context["urlForm"] = reverse_lazy("gc:sa:updater-activity", args=[self.kwargs.get("pk")])
-        context["methodForm"] = "POST"
+        context["methodForm"] = "PUT"
         return TemplateLayout.init(self, context)

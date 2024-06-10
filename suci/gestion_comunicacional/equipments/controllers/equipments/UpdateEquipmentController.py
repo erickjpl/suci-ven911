@@ -24,5 +24,5 @@ class UpdateEquipment(UpdateController):
         context["tag"] = "Editar"
         context["listUrl"] = reverse_lazy("gc:eq:listing-equipments")
         context["urlForm"] = reverse_lazy("gc:eq:updater-equipments", args=[self.kwargs.get("pk")])
-        context["methodForm"] = "POST"
+        context["methodForm"] = "PUT"
         return TemplateLayout.init(self, context)
