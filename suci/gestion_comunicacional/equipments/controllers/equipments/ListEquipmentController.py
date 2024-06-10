@@ -1,4 +1,4 @@
-from gestion_comunicacional.social_media.services.SocialMediaAccountService import SocialMediaAccountService
+from gestion_comunicacional.equipments.services.EquipmentService import EquipmentService
 from templates.sneat import TemplateLayout
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,31 +8,28 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView
 
 
-class ListSocialMediaAccount(LoginRequiredMixin, ListView):
-    # class ListSocialMediaAccount(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    #     permission_required = "gc.equipments.view_logentry"
-    template_name = "gc/social-media/accounts/listing.html"
+class ListEquipment(LoginRequiredMixin, ListView):
+    template_name = "gc/equipments/equipments/listing.html"
 
     def __init__(self):
-        self.service = SocialMediaAccountService()
+        self.service = EquipmentService()
 
     def get_context_data(self, **kwargs):
         self.object_list = self.get_queryset()
         context = super().get_context_data(**kwargs)
-        context["titlePage"] = "gc_sm_account_title_page"
+        context["titlePage"] = "gc_eq_equipments_title_page"
         context["indexUrl"] = reverse_lazy("gc:info")
         context["module"] = "gc_module_name"
-        context["submodule"] = "gc_sm_module_name"
-        context["createBtn"] = "gc_sm_account_title_btn_add"
-        context["createUrl"] = reverse_lazy("gc:sm:create-account")
-        context["listUrl"] = reverse_lazy("gc:sm:listing-account")
-        context["updateUrl"] = reverse_lazy("gc:sm:updater-account", args=[0])
-        context["deleteUrl"] = reverse_lazy("gc:sm:destroyer-account", args=[0])
-        context["columns"] = "id|platform|username_sm|followers|responsible|publications"
+        context["submodule"] = "gc_eq_module_name"
+        context["createBtn"] = "gc_eq_equipments_title_btn_add"
+        context["createUrl"] = reverse_lazy("gc:eq:create-equipments")
+        context["listUrl"] = reverse_lazy("gc:eq:listing-equipments")
+        context["updateUrl"] = reverse_lazy("gc:eq:updater-equipments", args=[0])
+        context["deleteUrl"] = reverse_lazy("gc:eq:destroyer-equipments", args=[0])
+        context["columns"] = "id|name|description|status"
         return TemplateLayout.init(self, context)
 
     def get_queryset(self):
-        # self.kwargs['page']
         page = self.request.GET.get("page") or 1
         search = self.request.GET.get("search") or None
 

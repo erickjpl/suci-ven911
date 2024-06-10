@@ -26,9 +26,9 @@ THEME_VARIABLES = {
     "gc_sm_account_title_btn_add": "Registrar una cuenta",
     ## Submodulo Equipos de Gestión
     "gc_eq_module_name": "Equipos",
-    "gc_eq_equipament_title_page": "Equipos (GC)",
-    "gc_eq_equipament_title_form": "Equipos para el departamento",
-    "gc_eq_equipament_title_btn_add": "Registrar Equipo",
+    "gc_eq_equipments_title_page": "Equipos (GC)",
+    "gc_eq_equipments_title_form": "Equipos para el departamento",
+    "gc_eq_equipments_title_btn_add": "Registrar Equipo",
     ## Submodulo Equipos Prestados de Gestión
     "gc_eq_module_name": "Equipos Asignados",
     "gc_eq_loan_title_page": "Equipos (Asignados)",

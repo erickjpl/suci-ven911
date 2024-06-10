@@ -1,25 +1,19 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
   <!-- ! Hide app brand if navbar-full -->
   {% if not navbar_full %}
-  <div class="app-brand demo">
-    <a href="{% url 'modulos' %}" class="menu-link">
-      <span class="app-brand-logo demo">
-        {% include './logo.html' with width=25 withbg="#696cff" %}
-      </span>
-      <span class="app-brand-text demo menu-text fw-bold ms-2">{% get_theme_variables 'template_name' %}</span>
-    </a>
+    <div class="app-brand demo">
+      <a href="{% url 'modulos' %}" class="menu-link">
+        <span class="app-brand-logo demo">{% include './logo.html' with width=25 withbg='#696cff' %}</span>
+        <span class="app-brand-text demo menu-text fw-bold ms-2">{% get_theme_variables 'template_name' %}</span>
+      </a>
 
-    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-      <i class="bx bx-chevron-left bx-sm align-middle"></i>
-    </a>
-  </div>
+      <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none"><i class="bx bx-chevron-left bx-sm align-middle"></i></a>
+    </div>
   {% endif %}
-
 
   <div class="menu-inner-shadow"></div>
 
   <ul class="menu-inner py-1">
-
     <li class="menu-item {% if 'index' == request.resolver_match.url_name or '/dashbord/' in request.path %}active open{% endif %}">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-home-circle"></i>
@@ -28,9 +22,7 @@
       </a>
       <ul class="menu-sub">
         <li class="menu-item {% if 'index' == request.resolver_match.url_name %}active{% endif %}">
-          <a href="{% url 'index' %}" class="menu-link">
-            <div class="text-truncate" data-i18n="Analytics">Analytics</div>
-          </a>
+          <a href="{% url 'index' %}" class="menu-link"><div class="text-truncate" data-i18n="Analytics">Analytics</div></a>
         </li>
       </ul>
     </li>
@@ -50,28 +42,22 @@
     <li class="menu-item {% if 'gc' in request.resolver_match.namespaces %}active open{% endif %}">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-layout"></i>
-        <div class="text-truncate" data-i18n="Layouts">{% get_theme_variables 'gc_module_name' %}</div>
+        <div class="text-truncate" data-i18n="Layouts">
+          {% get_theme_variables 'gc_module_name' %}
+        </div>
       </a>
       <ul class="menu-sub">
         <li class="menu-item {% if 'gc' in request.resolver_match.namespaces and 'info' == request.resolver_match.url_name %}active{% endif %}">
-          <a href="{% url 'gc:info' %}" class="menu-link">
-            <div class="text-truncate" data-i18n="Without menu">Inicio</div>
-          </a>
+          <a href="{% url 'gc:info' %}" class="menu-link"><div class="text-truncate" data-i18n="Without menu">Inicio</div></a>
         </li>
         <li class="menu-item {% if 'gc' in request.resolver_match.namespaces and 'sm' in request.resolver_match.namespaces and 'listing-account' == request.resolver_match.url_name %}active{% endif %}">
-          <a href="{% url 'gc:sm:listing-account' %}" class="menu-link">
-            <div class="text-truncate" data-i18n="Without navbar">Redes Sociales</div>
-          </a>
+          <a href="{% url 'gc:sm:listing-account' %}" class="menu-link"><div class="text-truncate" data-i18n="Without navbar">Redes Sociales</div></a>
         </li>
         <li class="menu-item {% if 'gc' in request.resolver_match.namespaces and 'sa' in request.resolver_match.namespaces and 'listing-activity' == request.resolver_match.url_name %}active{% endif %}">
-          <a href="{% url 'gc:sa:listing-activity' %}" class="menu-link">
-            <div class="text-truncate" data-i18n="Container">Actividades Sociales</div>
-          </a>
+          <a href="{% url 'gc:sa:listing-activity' %}" class="menu-link"><div class="text-truncate" data-i18n="Container">Actividades Sociales</div></a>
         </li>
-        <li class="menu-item {% if 'gc' in request.resolver_match.namespaces and 'eq' in request.resolver_match.namespaces and 'listing-equipament' == request.resolver_match.url_name %}active{% endif %}">
-          <a href="{% url 'gc:eq:listing-equipament' %}" class="menu-link">
-            <div class="text-truncate" data-i18n="Fluid">Equipos Asignados</div>
-          </a>
+        <li class="menu-item {% if 'gc' in request.resolver_match.namespaces and 'eq' in request.resolver_match.namespaces and 'listing-equipments' == request.resolver_match.url_name %}active{% endif %}">
+          <a href="{% url 'gc:eq:listing-equipments' %}" class="menu-link"><div class="text-truncate" data-i18n="Fluid">Equipos Asignados</div></a>
         </li>
       </ul>
     </li>

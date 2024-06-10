@@ -1,22 +1,42 @@
+import random
+
 import faker.providers
 from faker import Faker
-from gestion_comunicacional.equipament.entities.EquipamentEntity import EquipamentEntity
+from gestion_comunicacional.equipments.entities.EquipmentEntity import EquipmentEntity
 from gestion_comunicacional.social_activity.entities.SocialActivityEntity import SocialActivityEntity
 from gestion_comunicacional.social_media.entities.SocialMediaAccountEntity import SocialMediaAccountEntity
 from paneluser.models import UserEntity
 
 from django.core.management.base import BaseCommand
 
+STATUS_CHOICES = [
+    "available",
+    "loaned",
+    "maintenance",
+]
+
+ACTIVITY_TYPE_CHOICES = [
+    "workshop",
+    "conference",
+    "campaign",
+]
+
+PLATFORM_CHOICES = [
+    "Facebook",
+    "Instagram",
+    "Twitter",
+]
+
 
 class Provider(faker.providers.BaseProvider):
-    def equipment_status(self):
-        return self.random_element(EquipamentEntity.STATUS_CHOICES)
+    def equipments_status(self):
+        return self.random_element(STATUS_CHOICES)
 
     def social_activity_type(self):
-        return self.random_element(SocialActivityEntity.ACTIVITY_TYPE_CHOICES)
+        return self.random_element(ACTIVITY_TYPE_CHOICES)
 
     def social_media_account_platform(self):
-        return self.random_element(SocialMediaAccountEntity.PLATFORM_CHOICES)
+        return self.random_element(PLATFORM_CHOICES)
 
 
 class Command(BaseCommand):
@@ -53,20 +73,20 @@ class Command(BaseCommand):
         )
         print(f"Usuario {guest.username} con cédula de identidad {guest.dni} creado como usuario, su contraseña: guest")
 
-        for i in range(30):
-            equipment = EquipamentEntity.objects.create(
+        for _ in range(30):
+            equipments = EquipmentEntity.objects.create(
                 name=fake.paragraph(nb_sentences=1),
                 description=fake.paragraph(nb_sentences=3),
-                status=fake.unique.equipment_status(),
+                status=fake.equipments_status(),
                 created_by=admin,
                 updated_by=guest,
             )
-        equipment_count = EquipamentEntity.objects.count()
-        print(f"Hay {equipment_count} equipos en la base de datos")
+        equipments_count = EquipmentEntity.objects.count()
+        print(f"Hay {equipments_count} equipos en la base de datos")
 
-        for i in range(60):
+        for _ in range(60):
             social_activities = SocialActivityEntity.objects.create(
-                activity_type=fake.unique.social_activity_type(),
+                activity_type=fake.social_activity_type(),
                 date=fake.date(),
                 location=fake.address(),
                 description=fake.paragraph(nb_sentences=3),
@@ -75,19 +95,19 @@ class Command(BaseCommand):
                 created_by=admin,
                 updated_by=guest,
             )
-        social_activities_count = EquipamentEntity.objects.count()
+        social_activities_count = SocialActivityEntity.objects.count()
         print(f"Hay {social_activities_count} actividades sociales en la base de datos")
 
-        for i in range(15):
+        for _ in range(15):
             social_activities = SocialMediaAccountEntity.objects.create(
-                platform=fake.unique.social_media_account_platform(),
+                platform=fake.social_media_account_platform(),
                 username_sm=fake.unique.user_name(),
-                url=fake.url(),
+                url=fake.unique.url(),
                 followers=random.randint(1811, 19900),
                 responsible=fake.name(),
                 publications=random.randint(1811, 1990),
                 created_by=admin,
                 updated_by=guest,
             )
-        social_activities_count = EquipamentEntity.objects.count()
-        print(f"Hay {social_activities_count} cuentas de redes sociales en la base de datos")
+        social_media_account_count = SocialMediaAccountEntity.objects.count()
+        print(f"Hay {social_media_account_count} cuentas de redes sociales en la base de datos")
