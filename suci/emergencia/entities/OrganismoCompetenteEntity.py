@@ -8,3 +8,9 @@ class OrganismoCompetenteEntity(models.Model):
 
     def __str__(self):
         return self.nombre
+
+    class Meta:
+        db_table = "eme_organismo_competente"
+        verbose_name = "Organismo Competente"
+        verbose_name_plural = "Organismo Competentes"
+        ordering = ["nombre"]

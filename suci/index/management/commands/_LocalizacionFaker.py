@@ -2014,14 +2014,14 @@ PARROQUIAS = [
 ]
 
 
-class EmergencyFaker:
+class LocalizacionFaker:
     def cupaz(fake):
         for _ in range(15):
             equipments = CuadrantePazEntity.objects.create(
                 nombre=fake.paragraph(nb_sentences=1),
             )
-        estados = EstadoEntity.objects.count()
-        print(f"Se registraron {estados} estados en la base de datos")
+        cupaz = EstadoEntity.objects.count()
+        print(f"Se registraron {cupaz} cuadrantes de paz en la base de datos")
 
     def estados():
         for estado in ESTADOS:

@@ -7,9 +7,9 @@ from django.db.models import CASCADE, CharField, DateTimeField, ForeignKey, Text
 
 
 class EmergencyEntity(BaseModel):
-    parroquia_id = ForeignKey(ParroquiaEntity, on_delete=CASCADE, verbose_name="Parroquia")
-    organismo_id = ForeignKey(OrganismoCompetenteEntity, on_delete=CASCADE, verbose_name="Organismo")
-    incidencia_id = ForeignKey(IncidenciaEntity, on_delete=CASCADE, verbose_name="Incidencia")
+    parroquia = ForeignKey(ParroquiaEntity, on_delete=CASCADE, verbose_name="Parroquia")
+    organismo = ForeignKey(OrganismoCompetenteEntity, on_delete=CASCADE, verbose_name="Organismo")
+    incidencia = ForeignKey(IncidenciaEntity, on_delete=CASCADE, verbose_name="Incidencia")
 
     denunciante = CharField(max_length=150, verbose_name="Denunciante")
     telefono_denunciante = CharField(max_length=25, blank=True, verbose_name="Telefono del Denunciante")
@@ -18,7 +18,7 @@ class EmergencyEntity(BaseModel):
     datecompleted = DateTimeField(null=True, blank=True, verbose_name="Fecha de finalizacion")
 
     def __str__(self):
-        return f"Emergancia {self.incidencia_id}, denunciante {self.denunciante}"
+        return f"Emergancia {self.incidencia}, denunciante {self.denunciante}"
 
     def toJSON(self):
         return model_to_dict(self)

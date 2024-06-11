@@ -7,18 +7,18 @@ class EmergencyForm(ModelForm):
     class Meta:
         model = EmergencyEntity
         fields = [
-            "parroquia_id",
-            "organismo_id",
-            "incidencia_id",
+            "parroquia",
+            "organismo",
+            "incidencia",
             "denunciante",
             "telefono_denunciante",
             "direccion_incidencia",
             "observaciones",
         ]
         widgets = {
-            "parroquia_id": Select(attrs={"class": "form-select mb-3"}),
-            "organismo_id": Select(attrs={"class": "form-select mb-3"}),
-            "incidencia_id": Select(attrs={"class": "form-select mb-3"}),
+            "parroquia": Select(attrs={"class": "form-select mb-3"}),
+            "organismo": Select(attrs={"class": "form-select mb-3"}),
+            "incidencia": Select(attrs={"class": "form-select mb-3"}),
             "denunciante": TextInput(
                 attrs={
                     "class": "form-control mb-3",

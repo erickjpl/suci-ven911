@@ -2,8 +2,9 @@ import random
 
 import faker.providers
 from faker import Faker
+from index.management.commands._EmergencyFaker import EmergencyFaker
 from index.management.commands._GestionComunicacionalFaker import GestionComunicacionalFaker
-from index.management.commands._LocalizacionFaker import EmergencyFaker
+from index.management.commands._LocalizacionFaker import LocalizacionFaker
 from paneluser.models import UserEntity
 
 from django.core.management.base import BaseCommand
@@ -78,14 +79,15 @@ class Command(BaseCommand):
                 f"Usuario {guest.username} con cédula de identidad {guest.dni} creado como usuario, su contraseña: guest"
             )
 
-        if admin is None:
-            GestionComunicacionalFaker.Equipment(fake, admin, guest)
-            GestionComunicacionalFaker.SocialActivity(fake, admin, guest)
-            GestionComunicacionalFaker.SocialMediaAccount(fake, admin, guest)
+        GestionComunicacionalFaker.Equipment(fake, admin, guest)
+        GestionComunicacionalFaker.SocialActivity(fake, admin, guest)
+        GestionComunicacionalFaker.SocialMediaAccount(fake, admin, guest)
 
-        if admin is None:
-            EmergencyFaker.cupaz(fake)
-            EmergencyFaker.estados()
-            EmergencyFaker.ciudades()
-            EmergencyFaker.municipios()
-            EmergencyFaker.parroquias()
+        LocalizacionFaker.cupaz(fake)
+        LocalizacionFaker.estados()
+        LocalizacionFaker.ciudades()
+        LocalizacionFaker.municipios()
+        LocalizacionFaker.parroquias()
+
+        EmergencyFaker.incidencias(fake)
+        EmergencyFaker.organismos_competentes(fake)

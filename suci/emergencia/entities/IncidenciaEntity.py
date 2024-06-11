@@ -8,3 +8,9 @@ class IncidenciaEntity(models.Model):
 
     def __str__(self):
         return self.tipo
+
+    class Meta:
+        db_table = "eme_incidencia"
+        verbose_name = "Incidencia"
+        verbose_name_plural = "Incidencias"
+        ordering = ["tipo"]
