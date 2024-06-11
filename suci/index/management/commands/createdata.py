@@ -41,6 +41,7 @@ class Provider(faker.providers.BaseProvider):
 
 class Command(BaseCommand):
     help = "Command information"
+    parroquias = 0
 
     def handle(self, *args, **kwargs):
         fake = Faker("es_ES")
@@ -79,15 +80,17 @@ class Command(BaseCommand):
                 f"Usuario {guest.username} con cédula de identidad {guest.dni} creado como usuario, su contraseña: guest"
             )
 
-        GestionComunicacionalFaker.Equipment(fake, admin, guest)
-        GestionComunicacionalFaker.SocialActivity(fake, admin, guest)
-        GestionComunicacionalFaker.SocialMediaAccount(fake, admin, guest)
+        GestionComunicacionalFaker.equipment(fake, admin, guest)
+        GestionComunicacionalFaker.social_activity(fake, admin, guest)
+        GestionComunicacionalFaker.social_media_account(fake, admin, guest)
 
-        LocalizacionFaker.cupaz(fake)
-        LocalizacionFaker.estados()
-        LocalizacionFaker.ciudades()
-        LocalizacionFaker.municipios()
-        LocalizacionFaker.parroquias()
+        if admin is None:
+            LocalizacionFaker.cupaz(fake)
+            LocalizacionFaker.estados()
+            LocalizacionFaker.ciudades()
+            LocalizacionFaker.municipios()
+            self.parroquias = LocalizacionFaker.parroquias()
 
         EmergencyFaker.incidencias(fake)
         EmergencyFaker.organismos_competentes(fake)
+        EmergencyFaker.emergencias(fake, self.parroquias, guest)

@@ -4,24 +4,32 @@ from gestion_comunicacional.equipments.entities.EquipmentEntity import Equipment
 from gestion_comunicacional.social_activity.entities.SocialActivityEntity import SocialActivityEntity
 from gestion_comunicacional.social_media.entities.SocialMediaAccountEntity import SocialMediaAccountEntity
 
+from django.db.models import Q
+
 
 class GestionComunicacionalFaker:
-    def SocialMediaAccount(fake, admin, guest):
+    def social_media_account(fake, admin, guest):
         for _ in range(15):
-            social_activities = SocialMediaAccountEntity.objects.create(
-                platform=fake.social_media_account_platform(),
-                username_sm=fake.unique.user_name(),
-                url=fake.unique.url(),
-                followers=random.randint(1811, 19900),
-                responsible=fake.name(),
-                publications=random.randint(1811, 1990),
-                created_by=admin,
-                updated_by=guest,
-            )
+            user_name = fake.unique.user_name()
+            url = fake.unique.url()
+            try:
+                obj = SocialMediaAccountEntity.objects.get(Q(username_sm=user_name) | Q(url=url))
+            except SocialMediaAccountEntity.DoesNotExist:
+                social_activities = SocialMediaAccountEntity.objects.update_or_create(
+                    platform=fake.social_media_account_platform(),
+                    username_sm=fake.user_name,
+                    url=url,
+                    followers=random.randint(1811, 19900),
+                    responsible=fake.name(),
+                    publications=random.randint(1811, 1990),
+                    created_by=admin,
+                    updated_by=guest,
+                )
+
         social_media_account_count = SocialMediaAccountEntity.objects.count()
         print(f"Hay {social_media_account_count} cuentas de redes sociales en la base de datos")
 
-    def Equipment(fake, admin, guest):
+    def equipment(fake, admin, guest):
         for _ in range(30):
             equipments = EquipmentEntity.objects.create(
                 name=fake.paragraph(nb_sentences=1),
@@ -33,7 +41,7 @@ class GestionComunicacionalFaker:
         equipments_count = EquipmentEntity.objects.count()
         print(f"Hay {equipments_count} equipos en la base de datos")
 
-    def SocialActivity(fake, admin, guest):
+    def social_activity(fake, admin, guest):
         for _ in range(60):
             social_activities = SocialActivityEntity.objects.create(
                 activity_type=fake.social_activity_type(),

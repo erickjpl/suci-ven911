@@ -2063,3 +2063,4 @@ class LocalizacionFaker:
             )
         parroquias = ParroquiaEntity.objects.count()
         print(f"Se registraron {parroquias} parroquias en la base de datos")
+        return parroquias
