@@ -4,6 +4,7 @@ from index.entities.LocalizacionEntity import ParroquiaEntity
 from index.mixins.BaseModelMixin import BaseModel
 
 from django.db.models import CASCADE, CharField, DateTimeField, ForeignKey, TextField
+from django.forms import model_to_dict
 
 
 class EmergencyEntity(BaseModel):

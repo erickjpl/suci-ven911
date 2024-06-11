@@ -26,14 +26,14 @@ class ListEmergency(LoginRequiredMixin, ListView):
         context["listUrl"] = reverse_lazy("eme:list-emergency")
         context["updateUrl"] = reverse_lazy("gc:eq:updater-equipments", args=[0])
         context["deleteUrl"] = reverse_lazy("gc:eq:destroyer-equipments", args=[0])
-        context["columns"] = "id|denunciante|telefono_denunciante|datecompleted|user"
+        context["columns"] = "id|denunciante|telefono_denunciante|datecompleted"
         return TemplateLayout.init(self, context)
 
     def get_queryset(self):
         page = self.request.GET.get("page") or 1
         search = self.request.GET.get("search") or {"datecompleted__isnull": True}
 
-        return self.service.getAll(page, search)
+        return self.service.getAll(page, search, ("id", "denunciante", "telefono_denunciante", "datecompleted"))
 
     def get(self, request, *args, **kwargs):
         if request.headers.get("x-requested-with") == "XMLHttpRequest":

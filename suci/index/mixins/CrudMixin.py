@@ -4,11 +4,11 @@ from django.core.exceptions import ValidationError
 
 
 class CrudService(ServiceUtilMixin):
-    def getAll(self, page, search=None):
+    def getAll(self, page, search=None, select=("*")):
         if search is None:
-            entities = self.repository.getAll()
+            entities = self.repository.getAll(select)
         else:
-            entities = self.repository.getFilter(search)
+            entities = self.repository.getFilter(search, select)
 
         data = []
         for item in self.paginate(entities, page):
