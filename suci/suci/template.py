@@ -39,6 +39,14 @@ THEME_VARIABLES = {
     "gc_sa_title_page": "Actividades",
     "gc_sa_title_form": "Actividad Social",
     "gc_sa_title_btn_add": "Registrar Actividad Social",
+    ########## MODULO ##########
+    # Modulo Emergencias
+    "eme_module_name": "Emergencias",
+    ## Submodulo Emergencias
+    "eme_emergencia_module_name": "Listado de Emergencias",
+    "eme_title_page": "Emergencias",
+    "eme_title_form": "Emergencia e Incidencia",
+    "eme_title_btn_add": "Registrar una emergencia",
 }
 
 # ! Don't change THEME_LAYOUT_DIR unless it's required

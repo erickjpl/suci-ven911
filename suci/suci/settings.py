@@ -89,9 +89,10 @@ INSTALLED_APPS = [
     "seguridad",
     "planificacion",
     "rrhh",
-    "emergencia",
     "potencia",
+    # Modulos Migrados
     "gestion_comunicacional",
+    "emergencia",
 ]
 
 MIDDLEWARE = [

@@ -7,8 +7,8 @@ class Repository:
     def getAll(self):
         return self.entity.objects.all()
 
-    def getFilter(self, search):
-        return self.entity.objects.all()
+    def getFilter(self, criteria):
+        return self.entity.objects.filter(**criteria)
 
     def getById(self, id):
         entity = self.entity.objects.get(pk=id)

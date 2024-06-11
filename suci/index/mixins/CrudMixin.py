@@ -8,7 +8,7 @@ class CrudService(ServiceUtilMixin):
         if search is None:
             entities = self.repository.getAll()
         else:
-            entities = self.repository.getAllFilter(search)
+            entities = self.repository.getFilter(search)
 
         data = []
         for item in self.paginate(entities, page):

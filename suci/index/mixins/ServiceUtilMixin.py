@@ -1,6 +1,6 @@
 from index.mixins.BaseModelMixin import BaseModel
 
-from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
 class ServiceUtilMixin:

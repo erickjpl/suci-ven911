@@ -1,25 +1,17 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.db.models import Count
-from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from .forms import EmergencyForm
-from .models import (
-    Emergency,
-    Estado,
-    Municipio,
-    Parroquia,
-    Incidencia,
-    OrganismoCompetente,
-)
-from django.views.generic import ListView
+from django.core.paginator import Paginator
+from django.db.models import Count
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.views.generic import ListView
+
+from .EmergencyForm import EmergencyForm
+from .models import Emergency, Estado, Incidencia, Municipio, OrganismoCompetente, Parroquia
 
 
 @login_required
 def emergency(request):
-    emergencies = Emergency.objects.filter(
-        user=request.user, datecompleted__isnull=True
-    )
+    emergencies = Emergency.objects.filter(user=request.user, datecompleted__isnull=True)
     paginator = Paginator(emergencies, 10)  # Show 20 emergencies per page.
 
     page_number = request.GET.get("page", 1)
@@ -34,9 +26,7 @@ def emergency(request):
 @login_required
 def create_emergency(request):
     if request.method == "GET":
-        return render(
-            request, "emergencia/create_emergency.html", {"form": EmergencyForm}
-        )
+        return render(request, "emergencia/create_emergency.html", {"form": EmergencyForm})
 
     try:
         form = EmergencyForm(request.POST)
@@ -54,9 +44,7 @@ def create_emergency(request):
 
 @login_required
 def completed_emergency(request):
-    emergencies = Emergency.objects.filter(
-        user=request.user, datecompleted__isnull=False
-    )
+    emergencies = Emergency.objects.filter(user=request.user, datecompleted__isnull=False)
     paginator = Paginator(emergencies, 10)  # Show 20 emergencies per page.
 
     page_number = request.GET.get("page", 1)
@@ -74,11 +62,7 @@ def statistics_estado(request):
     data = []
 
     queryset1 = Estado.objects.order_by("-nombre")
-    queryset2 = (
-        Emergency.objects.values("id_estado")
-        .annotate(my_count=Count("id"))
-        .order_by("-id_estado")
-    )
+    queryset2 = Emergency.objects.values("id_estado").annotate(my_count=Count("id")).order_by("-id_estado")
     for estado in queryset1:
         labels.append(estado.nombre)
 
@@ -86,9 +70,7 @@ def statistics_estado(request):
         print(emergency["my_count"])
         data.append(emergency["my_count"])
 
-    return render(
-        request, "emergencia/statistics_estado.html", {"labels": labels, "data": data}
-    )
+    return render(request, "emergencia/statistics_estado.html", {"labels": labels, "data": data})
 
 
 @login_required
@@ -97,11 +79,7 @@ def statistics_municipio(request):
     data = []
 
     queryset1 = Municipio.objects.order_by("-nombre")
-    queryset2 = (
-        Emergency.objects.values("id_municipio")
-        .annotate(my_count=Count("id"))
-        .order_by("-id_municipio")
-    )
+    queryset2 = Emergency.objects.values("id_municipio").annotate(my_count=Count("id")).order_by("-id_municipio")
 
     for municipio in queryset1:
         labels.append(municipio.nombre)
@@ -122,11 +100,7 @@ def statistics_parroquia(request):
     data = []
 
     queryset1 = Parroquia.objects.order_by("-nombre")
-    queryset2 = (
-        Emergency.objects.values("id_parroquia")
-        .annotate(my_count=Count("id"))
-        .order_by("-id_parroquia")
-    )
+    queryset2 = Emergency.objects.values("id_parroquia").annotate(my_count=Count("id")).order_by("-id_parroquia")
 
     for parroquia in queryset1:
         labels.append(parroquia.nombre)
@@ -147,11 +121,7 @@ def statistics_incidencia(request):
     data = []
 
     queryset1 = Incidencia.objects.order_by("-tipo")
-    queryset2 = (
-        Emergency.objects.values("id_incidencia")
-        .annotate(my_count=Count("id"))
-        .order_by()
-    )
+    queryset2 = Emergency.objects.values("id_incidencia").annotate(my_count=Count("id")).order_by()
     for incidencia in queryset1:
         labels.append(incidencia.tipo)
 
@@ -171,11 +141,7 @@ def statistics_organismo(request):
     data = []
 
     queryset1 = OrganismoCompetente.objects.order_by("-nombre")
-    queryset2 = (
-        Emergency.objects.values("id_organismo")
-        .annotate(my_count=Count("id"))
-        .order_by("-id_organismo")
-    )
+    queryset2 = Emergency.objects.values("id_organismo").annotate(my_count=Count("id")).order_by("-id_organismo")
     for organismo in queryset1:
         labels.append(organismo.nombre)
 
@@ -241,6 +207,4 @@ class SearchEmergency(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get("q")
-        return Emergency.objects.filter(
-            denunciante__icontains=query, user=self.request.user
-        )
+        return Emergency.objects.filter(denunciante__icontains=query, user=self.request.user)
