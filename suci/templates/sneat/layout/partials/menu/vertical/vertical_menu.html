@@ -51,13 +51,43 @@
           <a href="{% url 'gc:info' %}" class="menu-link"><div class="text-truncate" data-i18n="Without menu">Inicio</div></a>
         </li>
         <li class="menu-item {% if 'gc' in request.resolver_match.namespaces and 'sm' in request.resolver_match.namespaces and 'listing-account' == request.resolver_match.url_name %}active{% endif %}">
-          <a href="{% url 'gc:sm:listing-account' %}" class="menu-link"><div class="text-truncate" data-i18n="Without navbar">Redes Sociales</div></a>
+          <a href="{% url 'gc:sm:listing-account' %}" class="menu-link">
+            <div class="text-truncate" data-i18n="Without navbar">
+              {% get_theme_variables 'gc_sm_module_name' %}
+            </div>
+          </a>
         </li>
         <li class="menu-item {% if 'gc' in request.resolver_match.namespaces and 'sa' in request.resolver_match.namespaces and 'listing-activity' == request.resolver_match.url_name %}active{% endif %}">
-          <a href="{% url 'gc:sa:listing-activity' %}" class="menu-link"><div class="text-truncate" data-i18n="Container">Actividades Sociales</div></a>
+          <a href="{% url 'gc:sa:listing-activity' %}" class="menu-link">
+            <div class="text-truncate" data-i18n="Container">
+              {% get_theme_variables 'gc_sa_module_name' %}
+            </div>
+          </a>
         </li>
         <li class="menu-item {% if 'gc' in request.resolver_match.namespaces and 'eq' in request.resolver_match.namespaces and 'listing-equipments' == request.resolver_match.url_name %}active{% endif %}">
-          <a href="{% url 'gc:eq:listing-equipments' %}" class="menu-link"><div class="text-truncate" data-i18n="Fluid">Equipos Asignados</div></a>
+          <a href="{% url 'gc:eq:listing-equipments' %}" class="menu-link">
+            <div class="text-truncate" data-i18n="Fluid">
+              {% get_theme_variables 'gc_eq_module_name' %}
+            </div>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="menu-item {% if 'eme' in request.resolver_match.namespaces %}active open{% endif %}">
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-layout"></i>
+        <div class="text-truncate" data-i18n="Layouts">
+          {% get_theme_variables 'eme_module_name' %}
+        </div>
+      </a>
+      <ul class="menu-sub">
+        <li class="menu-item {% if 'eme' in request.resolver_match.namespaces and 'list-emergency' == request.resolver_match.url_name %}active{% endif %}">
+          <a href="{% url 'eme:list-emergency' %}" class="menu-link">
+            <div class="text-truncate" data-i18n="Without navbar">
+              {% get_theme_variables 'eme_emergencia_module_name' %}
+            </div>
+          </a>
         </li>
       </ul>
     </li>
