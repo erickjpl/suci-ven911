@@ -85,15 +85,17 @@ python manage.py migrate
 #### Crear un superusuario
 
 ```
-python manage.py createsuperuser --dni=26530315 --username=super --email=superuser@suci.com
+python manage.py createdata
 ```
 
 #### Ejemplo: usuario de prueba
 
 ```
-user: 26530315
-email: superuser@mail.com
-pass: asdzxc
+user-admin: 100
+pass: admin
+
+user-guest: 200
+pass: guest
 ```
 
 ## Paso 9

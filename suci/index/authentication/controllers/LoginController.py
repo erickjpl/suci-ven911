@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 
 class LoginController(LoginView):
     form_class = LoginForm
-    next_page = reverse_lazy("modulos")
+    next_page = reverse_lazy("modules:modulos")
 
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
