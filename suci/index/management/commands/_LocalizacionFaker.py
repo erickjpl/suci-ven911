@@ -2016,14 +2016,22 @@ PARROQUIAS = [
 
 class LocalizacionFaker:
     def cupaz(fake):
+        cupaz = CuadrantePazEntity.objects.count()
+        if cupaz > 0:
+            return
+
         for _ in range(15):
-            equipments = CuadrantePazEntity.objects.create(
+            CuadrantePazEntity.objects.create(
                 nombre=fake.paragraph(nb_sentences=1),
             )
-        cupaz = EstadoEntity.objects.count()
+        cupaz = CuadrantePazEntity.objects.count()
         print(f"Se registraron {cupaz} cuadrantes de paz en la base de datos")
 
     def estados():
+        estados = EstadoEntity.objects.count()
+        if estados > 0:
+            return
+
         for estado in ESTADOS:
             estado = EstadoEntity.objects.create(
                 id=estado["estado"],
@@ -2044,6 +2052,10 @@ class LocalizacionFaker:
         # print(f"Se registraron {ciudades} ciudades en la base de datos")
 
     def municipios():
+        municipios = MunicipioEntity.objects.count()
+        if municipios > 0:
+            return
+
         for municipio in MUNICIPIOS:
             municipio = MunicipioEntity.objects.create(
                 id=municipio["municipio"],
@@ -2054,6 +2066,11 @@ class LocalizacionFaker:
         print(f"Se registraron {municipios} municipios en la base de datos")
 
     def parroquias():
+        parroquias = ParroquiaEntity.objects.count()
+
+        if parroquias > 0:
+            return parroquias
+
         for parroquia in PARROQUIAS:
             parroquia = ParroquiaEntity.objects.create(
                 id=parroquia["parroquia"],

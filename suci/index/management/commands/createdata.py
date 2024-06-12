@@ -84,12 +84,11 @@ class Command(BaseCommand):
         GestionComunicacionalFaker.social_activity(fake, admin, guest)
         GestionComunicacionalFaker.social_media_account(fake, admin, guest)
 
-        if admin is None:
-            LocalizacionFaker.cupaz(fake)
-            LocalizacionFaker.estados()
-            LocalizacionFaker.ciudades()
-            LocalizacionFaker.municipios()
-            self.parroquias = LocalizacionFaker.parroquias()
+        LocalizacionFaker.cupaz(fake)
+        LocalizacionFaker.estados()
+        LocalizacionFaker.ciudades()
+        LocalizacionFaker.municipios()
+        self.parroquias = LocalizacionFaker.parroquias()
 
         EmergencyFaker.incidencias(fake)
         EmergencyFaker.organismos_competentes(fake)

@@ -5,9 +5,11 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
 class Repository:
     def getAll(self, select):
+        return self.entity.objects.all()
         return self.entity.objects.all().only(*select)  # values o values_list
 
     def getFilter(self, criteria, select):
+        return self.entity.objects.filter(**criteria)
         return self.entity.objects.filter(**criteria).only(*select)  # values o values_list
 
     def getById(self, id):
