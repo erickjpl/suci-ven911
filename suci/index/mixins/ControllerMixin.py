@@ -21,6 +21,7 @@ class UpdateController(LoginRequiredMixin, UpdateView):
     redirect_not_found = None
 
     def dispatch(self, request, *args, **kwargs):
+        print(f"URL: {self.redirect_not_found}")
         try:
             self.object = self.get_object()
         except Exception:

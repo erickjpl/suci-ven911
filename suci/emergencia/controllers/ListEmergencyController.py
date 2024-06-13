@@ -24,8 +24,8 @@ class ListEmergency(LoginRequiredMixin, ListView):
         context["createBtn"] = "eme_title_btn_add"
         context["createUrl"] = reverse_lazy("eme:create-emergency")
         context["listUrl"] = reverse_lazy("eme:list-emergency")
-        context["updateUrl"] = reverse_lazy("gc:eq:updater-equipments", args=[0])
-        context["deleteUrl"] = reverse_lazy("gc:eq:destroyer-equipments", args=[0])
+        context["updateUrl"] = reverse_lazy("eme:update-emergency", args=[0])
+        context["deleteUrl"] = reverse_lazy("eme:delete-emergency", args=[0])
         context["columns"] = "id|denunciante|telefono_denunciante|datecompleted"
         return TemplateLayout.init(self, context)
 
