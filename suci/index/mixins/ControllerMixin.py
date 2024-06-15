@@ -4,7 +4,32 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages import error
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.http import Http404, HttpResponseRedirect, JsonResponse, QueryDict
-from django.views.generic import CreateView, DeleteView, UpdateView
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+
+
+class ListController(LoginRequiredMixin, ListView):
+    def get_queryset(self):
+        page = self.request.GET.get("page") or 1
+        search = self.request.GET.get("search") or None
+
+        return self.service.getAll(page, search)
+
+    def get(self, request, *args, **kwargs):
+        if request.headers.get("x-requested-with") == "XMLHttpRequest":
+            data = {}
+            try:
+                data = self.get_queryset()
+            except Exception as e:
+                data["error"] = str(e)
+            return JsonResponse(data, safe=False)
+
+        context = self.get_context_data(**kwargs)
+        return render(request, self.template_name, context)
+
+    class Meta:
+        abstract = True
 
 
 class CreateController(LoginRequiredMixin, CreateView):
@@ -16,16 +41,23 @@ class CreateController(LoginRequiredMixin, CreateView):
             except ValidationError as e:
                 return JsonResponse({"errors": json.loads(e.message.replace("'", '"'))})
 
+    class Meta:
+        abstract = True
+
 
 class UpdateController(LoginRequiredMixin, UpdateView):
     redirect_not_found = None
 
+    def get_url_redirect(self):
+        if self.redirect_not_found is None:
+            return reverse_lazy("auth:login")
+        return self.redirect_not_found
+
     def dispatch(self, request, *args, **kwargs):
-        print(f"URL: {self.redirect_not_found}")
         try:
             self.object = self.get_object()
-        except Exception:
-            return HttpResponseRedirect(self.redirect_not_found)
+        except Exception as e:
+            return HttpResponseRedirect(self.get_url_redirect())
 
         if self.request.method.upper() == "PUT":
             return self.put(request, *args, **kwargs)
@@ -40,6 +72,7 @@ class UpdateController(LoginRequiredMixin, UpdateView):
                 data.updated_by = self.request.user
                 return data
             except ObjectDoesNotExist:
+                print(f"REDIRECT ObjectDoesNotExist {ObjectDoesNotExist}")
                 error(self.request, "El recurso no se ha encontrado")
         else:
             error(self.request, "No se proporcionó ningún recurso válido")
@@ -55,15 +88,23 @@ class UpdateController(LoginRequiredMixin, UpdateView):
             except ValidationError as e:
                 return JsonResponse({"errors": json.loads(e.message)})
 
+    class Meta:
+        abstract = True
+
 
 class DeleteController(LoginRequiredMixin, DeleteView):
     redirect_not_found = None
+
+    def get_url_redirect(self):
+        if self.redirect_not_found is None:
+            return reverse_lazy("auth:login")
+        return self.redirect_not_found
 
     def dispatch(self, request, *args, **kwargs):
         try:
             self.object = self.get_object()
         except Exception:
-            return HttpResponseRedirect(self.redirect_not_found)
+            return HttpResponseRedirect(self.get_url_redirect())
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -88,3 +129,6 @@ class DeleteController(LoginRequiredMixin, DeleteView):
                 return JsonResponse({"message": "Se ha eliminado con éxito."})
             except ValidationError as e:
                 return JsonResponse({"errors": json.loads(e.message)})
+
+    class Meta:
+        abstract = True

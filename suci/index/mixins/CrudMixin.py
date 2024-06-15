@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 
 class CrudService(ServiceUtilMixin):
-    def getAll(self, page, search=None, select=("*")):
+    def getAll(self, page, search=None, select=("")):
         if search is None:
             entities = self.repository.getAll(select)
         else:
@@ -12,7 +12,7 @@ class CrudService(ServiceUtilMixin):
 
         data = []
         for item in self.paginate(entities, page):
-            data.append(item.toJSON())
+            data.append(item)
 
         return data
 
@@ -23,9 +23,9 @@ class CrudService(ServiceUtilMixin):
             return self.repository.create(data)
         raise ValidationError(form.errors.as_json())
 
-    def reader(self, id):
+    def reader(self, id, select=("")):
         try:
-            return self.repository.getById(id)
+            return self.repository.getById(id, select)
         except Usuario.DoesNotExist:
             raise Http404("La cuenta de la red social no se ha encontrada")
 

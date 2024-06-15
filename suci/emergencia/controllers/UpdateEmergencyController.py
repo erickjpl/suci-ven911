@@ -1,7 +1,5 @@
 from emergencia.EmergencyForm import EmergencyForm
-from emergencia.EmergencyService import EmergencyService
 from index.mixins.ControllerMixin import UpdateController
-from templates.sneat import TemplateLayout
 
 from django.urls import reverse_lazy
 
@@ -12,6 +10,7 @@ class UpdateEmergency(UpdateController):
     redirect_not_found = reverse_lazy("eme:list-emergency")
 
     def __init__(self):
+        print(f"UpdateEmergency {self.redirect_not_found}")
         self.service = EmergencyService()
 
     def get_context_data(self, **kwargs):

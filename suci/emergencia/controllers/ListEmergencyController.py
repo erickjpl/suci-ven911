@@ -1,14 +1,11 @@
 from emergencia.EmergencyService import EmergencyService
+from index.mixins.ControllerMixin import ListController
 from templates.sneat import TemplateLayout
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
-from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView
 
 
-class ListEmergency(LoginRequiredMixin, ListView):
+class ListEmergency(ListController):
     template_name = "emergencia/listing.html"
 
     def __init__(self):
@@ -34,15 +31,3 @@ class ListEmergency(LoginRequiredMixin, ListView):
         search = self.request.GET.get("search") or {"datecompleted__isnull": True}
 
         return self.service.getAll(page, search, ("id", "denunciante", "telefono_denunciante", "datecompleted"))
-
-    def get(self, request, *args, **kwargs):
-        if request.headers.get("x-requested-with") == "XMLHttpRequest":
-            data = {}
-            try:
-                data = self.get_queryset()
-            except Exception as e:
-                data["error"] = str(e)
-            return JsonResponse(data, safe=False)
-
-        context = self.get_context_data(**kwargs)
-        return render(request, self.template_name, context)
