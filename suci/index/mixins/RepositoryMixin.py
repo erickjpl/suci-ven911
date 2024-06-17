@@ -8,7 +8,7 @@ class Repository:
         return self.entity.objects.all().values(*select)
 
     def getFilter(self, criteria, select):
-        return self.entity.objects.filter(**criteria).values(*select)
+        return self.entity.objects.filter(criteria).values(*select)
 
     def getById(self, id, select):
         entity = self.entity.objects.get(pk=id).values(*select)

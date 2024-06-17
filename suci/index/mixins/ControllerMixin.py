@@ -3,6 +3,7 @@ import json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages import error
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect, JsonResponse, QueryDict
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -11,10 +12,15 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 class ListController(LoginRequiredMixin, ListView):
     def get_queryset(self):
-        page = self.request.GET.get("page") or 1
-        search = self.request.GET.get("search") or None
+        print("LIST MIXIN")
+        draw = int(self.request.GET.get("draw")) if self.request.GET.get("draw") else 1
+        start = int(self.request.GET.get("start")) if self.request.GET.get("start") else 1
+        length = int(self.request.GET.get("length")) if self.request.GET.get("length") else 10
+        search = (
+            Q(id__icontains=self.request.GET.get("search[value]")) if self.request.GET.get("search[value]") else None
+        )
 
-        return self.service.getAll(page, search)
+        return self.service.getAll(draw, start, length, search)
 
     def get(self, request, *args, **kwargs):
         if request.headers.get("x-requested-with") == "XMLHttpRequest":
@@ -24,9 +30,6 @@ class ListController(LoginRequiredMixin, ListView):
             except Exception as e:
                 data["error"] = str(e)
             return JsonResponse(data, safe=False)
-
-        context = self.get_context_data(**kwargs)
-        return render(request, self.template_name, context)
 
     class Meta:
         abstract = True

@@ -12,15 +12,16 @@ class ServiceUtilMixin:
         data["updated_by"] = user
         return data
 
-    def paginate(self, entities, page):
-        paginator = Paginator(entities, 15)
+    def paginate(self, data, start, length, draw):
+        entities = data[start : start + length]
+        paginator = Paginator(entities, length)
 
         try:
-            items = paginator.page(page)
+            items = paginator.page(draw).object_list
         except PageNotAnInteger:
-            items = paginator.page(1)
+            items = paginator.page(draw).object_list
         except EmptyPage:
-            items = paginator.page(paginator.num_pages)
+            items = paginator.page(paginator.num_pages).object_list
         return items
 
     class Meta:

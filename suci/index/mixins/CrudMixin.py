@@ -4,17 +4,26 @@ from django.core.exceptions import ValidationError
 
 
 class CrudService(ServiceUtilMixin):
-    def getAll(self, page, search=None, select=("")):
+    def getAll(self, draw, start, length, search=None, select=("")):
+        response = {}
+
         if search is None:
             entities = self.repository.getAll(select)
         else:
             entities = self.repository.getFilter(search, select)
 
         data = []
-        for item in self.paginate(entities, page):
+        for item in self.paginate(entities, start, length, draw):
             data.append(item)
 
-        return data
+        records_total = entities.count()
+
+        response["draw"] = draw
+        response["entities"] = data
+        response["recordsTotal"] = records_total
+        response["recordsFiltered"] = records_total
+
+        return response
 
     def creator(self, form, request):
         data = self.prepare_data(request)
