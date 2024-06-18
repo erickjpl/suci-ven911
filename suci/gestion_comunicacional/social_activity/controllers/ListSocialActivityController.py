@@ -1,4 +1,5 @@
 from gestion_comunicacional.social_activity.services.SocialActivityService import SocialActivityService
+from index.mixins.CheckPermisosMixin import CheckPermisosMixin
 from index.mixins.ControllerMixin import ListController
 from templates.sneat import TemplateLayout
 
@@ -7,8 +8,9 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 
 
-class ListSocialActivityView(LoginRequiredMixin, TemplateView):
+class ListSocialActivityView(LoginRequiredMixin, CheckPermisosMixin, TemplateView):
     template_name = "gc/social-activity/listing.html"
+    permission_required = "gc.view_social_activity"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,5 +28,7 @@ class ListSocialActivityView(LoginRequiredMixin, TemplateView):
 
 
 class ListSocialActivity(ListController):
+    permission_required = "gc.view_social_activity"
+
     def __init__(self):
         self.service = SocialActivityService()

@@ -29,3 +29,9 @@ class SocialActivityEntity(BaseModel):
         verbose_name = "Actividad social"
         verbose_name_plural = "Actividades sociales"
         ordering = ["activity_type"]
+        permissions = [
+            ("view_social_activity", "Can view social activity"),
+            ("add_social_activity", "Can add social activity"),
+            ("change_social_activity", "Can change social activity"),
+            ("delete_social_activity", "Can delete social activity"),
+        ]

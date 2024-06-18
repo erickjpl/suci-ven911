@@ -5,6 +5,7 @@ from faker import Faker
 from index.management.commands._EmergencyFaker import EmergencyFaker
 from index.management.commands._GestionComunicacionalFaker import GestionComunicacionalFaker
 from index.management.commands._LocalizacionFaker import LocalizacionFaker
+from index.management.commands._UserAndPermissionFaker import UserAndPermissionFaker
 from paneluser.models import UserEntity
 
 from django.core.management.base import BaseCommand
@@ -79,6 +80,11 @@ class Command(BaseCommand):
             print(
                 f"Usuario {guest.username} con cédula de identidad {guest.dni} creado como usuario, su contraseña: guest"
             )
+
+        UserAndPermissionFaker.user_permissions(guest)
+        # UserAndPermissionFaker.create_group()
+        # UserAndPermissionFaker.group_permissions()
+        # UserAndPermissionFaker.user_groups()
 
         GestionComunicacionalFaker.equipment(fake, admin, guest)
         GestionComunicacionalFaker.social_activity(fake, admin, guest)
