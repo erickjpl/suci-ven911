@@ -24,5 +24,19 @@ class ServiceUtilMixin:
             items = paginator.page(paginator.num_pages).object_list
         return items
 
+    def response(self, entities, start, length, draw):
+        response = {}
+        data = []
+        for item in self.paginate(entities, start, length, draw):
+            data.append(item)
+
+        records_total = entities.count()
+
+        response["draw"] = draw
+        response["entities"] = data
+        response["recordsTotal"] = records_total
+        response["recordsFiltered"] = records_total
+        return response
+
     class Meta:
         abstract = True

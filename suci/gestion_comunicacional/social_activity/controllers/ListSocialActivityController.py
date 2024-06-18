@@ -28,6 +28,3 @@ class ListSocialActivityView(LoginRequiredMixin, TemplateView):
 class ListSocialActivity(ListController):
     def __init__(self):
         self.service = SocialActivityService()
-
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
