@@ -80,7 +80,24 @@ class Command(BaseCommand):
             print(
                 f"Usuario {guest.username} con cédula de identidad {guest.dni} creado como usuario, su contraseña: guest"
             )
+        other = UserEntity.objects.filter(dni=300).first()
+        if other is None:
+            other = UserEntity.objects.create(
+                dni=300,
+                first_name="Other",
+                last_name="Other",
+                username="other",
+                email="other@suci.com",
+                password="pbkdf2_sha256$720000$Qr3Og7wGXM7qADiK7Vlx7V$Q8D6HF/H5CzO3W0ub+CTnwMjdnTzWdqJjxD78YEcTf0=",
+                is_staff=False,
+                is_active=True,
+                is_superuser=False,
+            )
+            print(
+                f"Usuario {other.username} con cédula de identidad {other.dni} creado como usuario, su contraseña: other"
+            )
 
+        UserAndPermissionFaker.create_permissions()
         UserAndPermissionFaker.user_permissions(guest)
         # UserAndPermissionFaker.create_group()
         # UserAndPermissionFaker.group_permissions()

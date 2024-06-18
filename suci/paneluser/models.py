@@ -2,32 +2,22 @@ from django.db import models
 
 
 class Departamentos(models.Model):
-    departamento = models.CharField(
-        max_length=64, verbose_name="Departamento:", default="", unique=True
-    )
-    estado = models.CharField(
-        max_length=64, verbose_name="Estado:", default="", unique=True
-    )
+    departamento = models.CharField(max_length=64, verbose_name="Departamento:", default="", unique=True)
+    estado = models.CharField(max_length=64, verbose_name="Estado:", default="", unique=True)
 
 
 class Sedes(models.Model):
-    direccion = models.CharField(
-        max_length=64, verbose_name="Direccion:", default="", unique=True
-    )
-    municipio = models.CharField(
-        max_length=64, verbose_name="Municipio:", default="", unique=True
-    )
-    estado = models.CharField(
-        max_length=64, verbose_name="Estado:", default="", unique=True
-    )
+    direccion = models.CharField(max_length=64, verbose_name="Direccion:", default="", unique=True)
+    municipio = models.CharField(max_length=64, verbose_name="Municipio:", default="", unique=True)
+    estado = models.CharField(max_length=64, verbose_name="Estado:", default="", unique=True)
 
 
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser, PermissionsMixin
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class UserEntity(AbstractUser, PermissionsMixin):
+class UserEntity(AbstractUser):
     image = models.ImageField(
         upload_to="users/%Y/%m/%d",
         verbose_name="Foto del perfil",
@@ -54,3 +44,6 @@ class UserEntity(AbstractUser, PermissionsMixin):
             return "{}{}".format(settings.MEDIA_URL, self.image)
         else:
             return "{}{}".format(settings.STATIC_URL, "img/admin.png")
+
+    def __str__(self):
+        return f"{self.username} - {self.dni}"

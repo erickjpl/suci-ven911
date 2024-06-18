@@ -1,3 +1,4 @@
+from gestion_comunicacional.social_activity.entities.SocialActivityEntity import SocialActivityEntity
 from gestion_comunicacional.social_activity.services.SocialActivityService import SocialActivityService
 from index.mixins.CheckPermisosMixin import CheckPermisosMixin
 from index.mixins.ControllerMixin import ListController
@@ -10,7 +11,7 @@ from django.views.generic import TemplateView
 
 class ListSocialActivityView(LoginRequiredMixin, CheckPermisosMixin, TemplateView):
     template_name = "gc/social-activity/listing.html"
-    permission_required = "gc.view_social_activity"
+    permission_required = SocialActivityEntity.VIEW_SOCIAL_ACTIVITY
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -27,8 +28,8 @@ class ListSocialActivityView(LoginRequiredMixin, CheckPermisosMixin, TemplateVie
         return TemplateLayout.init(self, context)
 
 
-class ListSocialActivity(ListController):
-    permission_required = "gc.view_social_activity"
+class ListSocialActivity(ListController, CheckPermisosMixin):
+    permission_required = SocialActivityEntity.VIEW_SOCIAL_ACTIVITY
 
     def __init__(self):
         self.service = SocialActivityService()

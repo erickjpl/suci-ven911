@@ -9,7 +9,7 @@ class CheckPermisosMixin(object):
 
     def get_perms(self):
         if isinstance(self.permission_required, str):
-            return self.permission_required
+            return [self.permission_required]
         else:
             return self.permission_required
 

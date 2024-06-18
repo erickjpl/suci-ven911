@@ -11,6 +11,11 @@ class SocialActivityEntity(BaseModel):
         ("campaign", "Campaña"),
     ]
 
+    VIEW_SOCIAL_ACTIVITY = "gc:view_social_activity"
+    ADD_SOCIAL_ACTIVITY = "gc:add_social_activity"
+    CHANGE_SOCIAL_ACTIVITY = "gc:change_social_activity"
+    DELETE_SOCIAL_ACTIVITY = "gc:delete_social_activity"
+
     activity_type = CharField(max_length=50, verbose_name="Tipo de actividad", choices=ACTIVITY_TYPE_CHOICES)
     date = DateField(verbose_name="Fecha de la actividad")
     location = CharField(max_length=255, verbose_name="Lugar de la actividad")
@@ -29,9 +34,3 @@ class SocialActivityEntity(BaseModel):
         verbose_name = "Actividad social"
         verbose_name_plural = "Actividades sociales"
         ordering = ["activity_type"]
-        permissions = [
-            ("view_social_activity", "Can view social activity"),
-            ("add_social_activity", "Can add social activity"),
-            ("change_social_activity", "Can change social activity"),
-            ("delete_social_activity", "Can delete social activity"),
-        ]

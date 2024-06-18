@@ -20,13 +20,12 @@ class ListController(LoginRequiredMixin, ListView):
         return self.service.getAll(draw, start, length, search)
 
     def get(self, request, *args, **kwargs):
-        if request.headers.get("x-requested-with") == "XMLHttpRequest":
-            data = {}
-            try:
-                data = self.get_queryset()
-            except Exception as e:
-                data["error"] = str(e)
-            return JsonResponse(data, safe=False)
+        data = {}
+        try:
+            data = self.get_queryset()
+        except Exception as e:
+            data["error"] = str(e)
+        return JsonResponse(data, safe=False)
 
     class Meta:
         abstract = True
