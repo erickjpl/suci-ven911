@@ -15,6 +15,7 @@ const setTBody = ({ url, columns, updateUrl, deleteUrl }) => {
       // contentType: "application/json",
       // accepts: "application/json; charset=utf-8",
     },
+    // columns: columns,
     columns: getColumns(columns),
     columnDefs: [
       {
@@ -44,9 +45,11 @@ const setTBody = ({ url, columns, updateUrl, deleteUrl }) => {
 };
 
 function getColumns (stringColumns) {
-  columns = stringColumns.split("|").map((item) => ({ data: item }));
-  columns.push({ data: "" });
-  return columns;
+  if (typeof stringColumns === "string")
+    stringColumns = stringColumns.split("|").map((item) => ({ data: item }));
+
+  stringColumns.push({ data: "" });
+  return stringColumns;
 }
 
 let language = {

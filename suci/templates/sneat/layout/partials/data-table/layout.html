@@ -25,6 +25,9 @@
         <thead>
           <tr>
             {% block thead %}
+              {% for column in heads %}
+                <th>{{ column.title }}</th>
+              {% endfor %}
             {% endblock %}
           </tr>
         </thead>
@@ -51,7 +54,7 @@ $(document).ready(function () {
   const url = "{{ listUrl }}"
   const updateUrl = "{{ updateUrl }}"
   const deleteUrl = "{{ deleteUrl }}"
-  const columns = "{{ columns }}"
+  const columns =  {{ columns|safe }}
   setTBody({url, columns, updateUrl, deleteUrl});
 });
 </script>
