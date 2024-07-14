@@ -1,0 +1,93 @@
+<div class="modal fade" id="updpersonalmovimiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="close closeupdmov" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+            <div class="modal-header">
+                <h2>Movimiento de Personal</h2>
+            </div>
+            <br>
+            <form id="form-editar" action="{% url 'ingresosPersonal' accion='movimiento' %}" method="post">
+                {% csrf_token %}
+                
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="id_persona_m" name="id_persona" value="">
+                    
+                        <div class="col-md-6">
+                            <label for="nacionalidad">Estatus</label>
+                            <select class='form-control' id="estatus_m" name="estatus">
+                                <option value="ACTIVO">ACTIVO</option>
+                                <option value="RETIRADO">RETIRADO</option>
+                                <option value="VACACIONES">VACACIONES</option>
+                                <option value="SUSPENDIDO">SUSPENDIDO</option>
+                                <option value="TRASLADADO">TRASLADADO</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="nacionalidad">Nacionalidad</label>
+                            <select class='form-control' id="nacionalidad_m" name="nacionalidad" readOnly>
+                                {% for nacionalidad in nacionalidades %}
+                                <option value="{{ nacionalidad.id }}">{{ nacionalidad.nacionalidad }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="cedula">Cédula</label>
+                            <input type="text" class="form-control" id="cedula_m" name="cedula" value="" readOnly>
+                        </div>
+
+                    
+                        <div class="col-md-6">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombres_m" name="nombres" value="" readOnly>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="apellido">Apellido</label>
+                            <input type="text" class="form-control" id="apellidos_m" name="apellidos" value="" readOnly>
+                        </div>
+                 
+
+                    <div class="col-md-12">
+                        <label for="departamento">Departamento</label>
+                        <select class='form-control' id="departamento_m" name="departamento">
+                            {% for departamento in departamentos %}
+                            <option value="{{ departamento.id }}">{{ departamento.departamento }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+
+                    <div class="col-md-12">
+                        <label for="sede">Sede</label>
+                        <select class='form-control' id="sede_m" name="sede">
+                            {% for sede in sedes %}
+                            <option value="{{ sede.id }}">{{ sede.sede }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="motivo">Motivo</label>
+                        <input type="text" class="form-control" id="motivo_m" name="motivo" value="">
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>fecha de Retiro</label>
+                        <br>
+                        <input type="date" class="form-control" id="fecha_r_m"  name="fecha_retiro" 
+                            placeholder="Fecha de retiro"  required readOnly>
+                    </div>
+                    
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

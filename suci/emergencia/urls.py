@@ -1,26 +1,23 @@
-from emergencia.controllers.CreateEmergencyController import CreateEmergency
-from emergencia.controllers.DeleteEmergencyController import DeleteEmergency
-from emergencia.controllers.ListEmergencyController import ListEmergency
-from emergencia.controllers.UpdateEmergencyController import UpdateController
-
-from django.conf import settings
-from django.conf.urls.static import static
 from django.urls import path
+from .import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
-    path("", ListEmergency.as_view(), name="list-emergency"),
-    path("create", CreateEmergency.as_view(), name="create-emergency"),
-    path("<int:pk>/actualizar", UpdateController.as_view(), name="update-emergency"),
-    path("<int:pk>/eliminar", DeleteEmergency.as_view(), name="delete-emergency"),
-    # path("completed", views.completed_emergency, name="completed_emergency"),
-    # path("search", views.SearchEmergency.as_view(), name="search_emergency"),
-    # path("statistics/estado", views.statistics_estado, name="statistics_estado"),
-    # path("statistics/municipio", views.statistics_municipio, name="statistics_municipio"),
-    # path("statistics/parroquia", views.statistics_parroquia, name="statistics_parroquia"),
-    # path("statistics/incidencia", views.statistics_incidencia, name="statistics_incidencia"),
-    # path("statistics/organismo", views.statistics_organismo, name="statistics_organismo"),
-    # path("<int:emergency_id>", views.update_emergency, name="update_emergency"),
-    # path("<int:emergency_id>/complete", views.complete_emergency, name="complete_emergency"),
+    path('', views.home, name='home'),
+    path('signup/', views.signup, name='signup'),
+    path('emergency/', views.emergency, name='emergency'),
+    path('emergency/completed/', views.completed_emergency, name='completed_emergency'),
+    path('emergency/statistics/estado', views.statistics_estado, name='statistics_estado'),
+    path('emergency/statistics/municipio', views.statistics_municipio, name='statistics_municipio'),
+    path('emergency/statistics/parroquia', views.statistics_parroquia, name='statistics_parroquia'),
+    path('emergency/statistics/incidencia', views.statistics_incidencia, name='statistics_incidencia'),
+    path('emergency/statistics/organismo', views.statistics_organismo, name='statistics_organismo'),
+    path('emergency/create/', views.create_emergency, name='create_emergency'),
+    path('emergency/<int:emergency_id>/', views.update_emergency, name='update_emergency'),
+    path('emergency/<int:emergency_id>/complete', views.complete_emergency, name='complete_emergency'),
+    path('emergency/<int:emergency_id>/delete', views.delete_emergency, name='delete_emergency'),
+    path('emergency/search', views.SearchEmergency.as_view(), name='search_emergency'),
+    path('logout/', views.signout, name='logout'),
+    path('signin/', views.signin, name='signin')
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

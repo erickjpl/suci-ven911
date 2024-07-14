@@ -1,5 +1,5 @@
 from entities.SocialMediaPostEntity import SocialMediaPostEntity
-from index.mixins.RepositoryMixin import Repository
+from gestion_comunicacional.mixins.RepositoryMixin import Repository
 
 
 class SocialMediaPostRepository(Repository):

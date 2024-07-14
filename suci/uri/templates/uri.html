@@ -1,0 +1,83 @@
+{% extends "baseuri.html" %}
+
+{% block title %} S.U.C.I | URI {% endblock %}
+
+{% load static %}
+
+
+{% block content %}
+
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2>Unidad de Respuesta Inmediata /<small> Registro Prehospitalario </small></h2>
+        </div>
+        <div class="user--info">
+            <img src="{% static 'img/ven911.jpg' %}">
+            <h2 class="title">V{{request.user.username}}</h2>
+        </div>
+    </div>
+    <div class="tabular--wrapper">
+        <h3 class="main--title"></h3>
+        <div class="user--info">
+            <form id="UriForm" method="GET" action="{% url 'uri' accion='consultar' %}"></form>
+                <div class="searh--box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <!--<input type="text" name="cedula" id="inputCedula" placeholder="Ingrese la cédula">
+                        <button type="submit" class="btn">Consultar</button>
+                        <button type="button" class="btn" onclick="location.href='{% url 'uri' accion='todos' %}'">Limpiar</button>-->
+                    </div>
+                
+               <!-- <button type="button" class="btn" onclick="location.href='{% url 'descargar-excel' %}'">Descargar Excel</button>
+                <button type="button" class="btn" onclick="window.location.href='{% url 'generar-pdf' %}'">Descargar PDF</button>-->
+            </form>
+            <button id="addUri" class="btn">Agregar Registro</button>
+            
+        </div>
+        
+        <br>
+        <div class="table-container-x">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Número de Reporte</th>
+                        <th>Institución</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Numero de Cedula</th>
+                        <th>Numero de Telefono</th>
+                        <!--<th>Acciones</th>-->
+                    </tr>
+                    <tbody> 
+                        {% for archivo in uri %}
+                            <tr>
+                                <td>{{ archivo.fecha_atencion }}</td>
+                                <td>{{ archivo.nroreporte }}</td>
+                                <td>{{ archivo.institucion }}</td>
+                                <td>{{ archivo.nombre }}</td>
+                                <td>{{ archivo.apellido}}</td>
+                                <td>{{ archivo.cedula }}</td>
+                                <td>{{ archivo.nro_telefono }}</td>
+                               <!--<td>
+                                    <a href="#" title="Editar registro" id="myBtnUpd" data-toggle="modal" data-id='{{ archivo.id }}'
+                                    class="btn-editar"
+                                    style="color: black;">
+                                    <i class="fa-solid fa-edit"></i>
+                                    </a>
+                                </td>-->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    {% include "modal/addUri.html" %}
+    
+    
+  
+    <script src="{% static 'js/uri.js' %}"></script>
+
+    {% endblock %}

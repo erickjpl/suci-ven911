@@ -1,0 +1,1123 @@
+<div id="addRegistro" class="modal">
+      <div class="modal-content prehospitalario container-prehospitalario">
+          <header class="container-prehospitalario-header">
+            <div class="modal-header modal-header-titulo">
+              <h2>Agregar Registro Pre hospitalario</h2>
+            </div>
+            <span class="closeadd" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+          </header>
+          <form id="registration-form" method="POST" action="{% url 'uri' accion='agregar' %}">
+              {% csrf_token %}
+              <div class="tab-buttons-prehospitalario">
+                <button type="button" class="tab-button-prehospitalario active">Información General</button>
+                <button type="button" class="tab-button-prehospitalario">Datos del Paciente</button>
+                <button type="button" class="tab-button-prehospitalario">Consentimiento Informado</button>
+                <button type="button" class="tab-button-prehospitalario">Dirección Exacta del Evento</button>
+                <button type="button" class="tab-button-prehospitalario">Información Clinica</button>
+                <button type="button" class="tab-button-prehospitalario">Respiración, Oxigenación y Circulación</button>
+                <button type="button" class="tab-button-prehospitalario">Signos Vitales y Tratamiento</button>
+              </div>
+              <div class="tab-content-prehospitalario">
+                <div class="tab-pane-prehospitalario active">
+                  <h4>Datos del servicio</h4>
+                  <br>
+                  <div class="form-group">
+                    <div class="col-md-3">
+                      <label>Fecha</label>
+                      <input type="date" class="form-control" name="{{form.fecha_atencion.html_name}}" id="fecha_nac" 
+                          placeholder="Ingrese la fecha">
+                    </div>
+                    <div class="col-md-3">
+                      <label>N° del Reporte</label>
+                      <input type="text" class="form-control" name="{{form.nroreporte.html_name}}"
+                          placeholder="Ingrese el número de reporte" maxlength="10">
+                    </div>
+  
+                    <div class="col-md-3">
+                      <label>Día de la semana</label>
+                      <select class='form-control' name="{{form.diareporte.html_name}}">
+                          <option value="">Seleccione un día de la semana</option>
+                          {% for dia in dias %}
+                          <option value="{{ dia.id }}">{{ dia.dia }} </option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Placa</label>
+                        <input type="text" class="form-control" name="{{form.placa.html_name}}"
+                            placeholder="Ingrese el número de placa" maxlength="10">
+                    </div>
+                    <div class="col-md-3">
+                      <label>Institución</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.institucion.html_name}}"
+                          placeholder="Ingrese institución" maxlength="300">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Tipo de Unidad</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.tipounidad.html_name}}"
+                            placeholder="Ingrese el tipo de unidad" maxlength="10">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Numeración interna</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.num_interna.html_name}}"
+                            placeholder="Ingrese numeración" maxlength="10">
+                    </div>
+                  </div>
+                  <h4>Información legal</h4>
+                  <br>
+                  <div class="form-group">
+                    <div class="col-md-6">
+                      <label>Descrip de servicios donde "Hubo contacto con el paciente"</label>
+                      <select class='form-control' name="{{form.contactoPaciente.html_name}}">
+                          <option value="">Seleccione una opción</option>
+                          {% for contacto in consultas %}
+                          <option value="{{ contacto.id }}">{{ contacto.contacto }} </option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label>Descrip de servicios donde "No hubo contacto con el paciente"</label>
+                      <select class='form-control' name="{{form.contactoNoPaciente.html_name}}">
+                          <option value="">Seleccione una opción</option>
+                          {% for no_contacto in noContacto %}
+                          <option value="{{ no_contacto.id }}">{{ no_contacto.no_contacto }} </option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <h4>Datos del centro asistencial donde fué recibido el paciente</h4>
+                  <br>
+                  <div class="form-group">
+                    <div class="col-md-6">
+                      <label>Ambulatorio/Hospital/Clinica</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.centroAsistencial.html_name}}"
+                          placeholder="Ingrese nombre del Ambulatorio/Hospital/Clinica" maxlength="50">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Servicio</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.servicioAsistencial.html_name}}"
+                            placeholder="Ingrese servicio" maxlength="50">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-6">
+                        <label>Médico que recibe</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.medicoRecibe.html_name}}"
+                            placeholder="Ingrese nombre"  maxlength="50">
+                    </div>
+                    <div class="col-md-6">
+                        <label>MSOS</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.msos.html_name}}"
+                            placeholder="Ingrese msos" maxlength="50">
+                    </div>
+                  </div>
+                  <h4>Registro visuales del servicio</h4>
+                  <br>
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <label>Hubo Registro Fotográfico</label>
+                      <select class='form-control' name="{{form.regFotografico.html_name}}">
+                          <option value="1">SI</option>
+                          <option value="0" selected>NO</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!--<input type="text" placeholder="Nombre" required>
+                  <input type="text" placeholder="Apellido" required>-->
+                </div>
+                <div class="tab-pane-prehospitalario">
+                  <h2>Datos del Paciente</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label>Nombres del Paciente</label>
+                      <input type="text" class="form-control" name="{{form.nombre.html_name}}"
+                          placeholder="Ingrese nombres del paciente" maxlength="50">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Apellidos del Paciente</label>
+                        <input type="text" class="form-control" name="{{form.apellido.html_name}}"
+                            placeholder="Ingrese apellidos del paciente" maxlength="50">
+                    </div>
+                    <div class="col-md-3">
+                      <label>Género</label>
+                      <select class='form-control' name="{{form.genero.html_name}}">
+                          <option value="">Seleccione un género</option>
+                          {% for genero in generos %}
+                          <option value="{{ genero.id }}">{{ genero.sexo }} </option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-1">
+                      <label>Edad</label>
+                      <input type="number" class="form-control" name="{{form.edad.html_name}}" 
+                           placeholder="Edad" maxlength="2">
+                    </div>
+                  
+                    <div class="col-md-2">
+                      <label>Cedula</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.cedula.html_name}}"
+                          placeholder="Ingrese Cédula del paciente" maxlength="10">
+                    </div>
+                    <div class="col-md-2">
+                        <label>Teléfono</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.nro_telefono.html_name}}"
+                            placeholder="Ingrese teléfono" maxlength="11">
+                    </div>
+                    <div class="col-md-8">
+                        <label>Dirección de Paciente</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.direccion_paciente.html_name}}"
+                            placeholder="Ingrese dirección del paciente" maxlength="300">
+                    </div>
+                  </div>
+                  <h2>Autoridades Presentes</h2><br>
+                    <div class="form-group">
+                      <div class="col-md-3">
+                        <label>Organismo</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.organismo1.html_name}}"
+                            placeholder="Ingrese organismo" maxlength="20">
+                      </div>
+                      <div class="col-md-3">
+                          <label>Jefe de la Comisión</label>
+                          <br>
+                          <input type="text" class="form-control" name="{{form.jefecomision1.html_name}}"
+                              placeholder="Ingrese de comisión" maxlength="50">
+                      </div>
+                      <div class="col-md-3">
+                          <label>Unidad/Placa</label>
+                          <br>
+                          <input type="text" class="form-control" name="{{form.unidadplaca1.html_name}}"
+                              placeholder="Ingrese de unidad/placa" maxlength="20">
+                      </div>
+                      <div class="col-md-3">
+                          <label>Firma</label>
+                          <br>
+                          <input type="text" class="form-control" name="{{form.firma1.html_name}}"
+                              placeholder="Firma" maxlength="20">
+                      </div>
+                      <div class="col-md-3">
+                        <label>Organismo</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.organismo2.html_name}}"
+                            placeholder="Ingrese organismo" maxlength="20">
+                      </div>
+                      <div class="col-md-3">
+                          <label>Jefe de la Comisión</label>
+                          <br>
+                          <input type="text" class="form-control" name="{{form.jefecomision2.html_name}}"
+                              placeholder="Ingrese de comisión" maxlength="50">
+                      </div>
+                      <div class="col-md-3">
+                          <label>Unidad/Placa</label>
+                          <br>
+                          <input type="text" class="form-control" name="{{form.unidadplaca2.html_name}}"
+                              placeholder="Ingrese de unidad/placa" maxlength="20">
+                      </div>
+                      <div class="col-md-3">
+                          <label>Firma</label>
+                          <br>
+                          <input type="text" class="form-control" name="{{form.firma2.html_name}}"
+                              placeholder="Firma" maxlength="20">
+                      </div>
+                      <div class="col-md-3">
+                        <label>Organismo</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.organismo3.html_name}}"
+                            placeholder="Ingrese organismo" maxlength="20">
+                      </div>
+                      <div class="col-md-3">
+                          <label>Jefe de la Comisión</label>
+                          <br>
+                          <input type="text" class="form-control" name="{{form.jefecomision3.html_name}}"
+                              placeholder="Ingrese de comisión" maxlength="50">
+                      </div>
+                      <div class="col-md-3">
+                          <label>Unidad/Placa</label>
+                          <br>
+                          <input type="text" class="form-control" name="{{form.unidadplaca2.html_name}}"
+                              placeholder="Ingrese de unidad/placa" maxlength="20">
+                      </div>
+                      <div class="col-md-3">
+                          <label>Firma</label>
+                          <br>
+                          <input type="text" class="form-control" name="{{form.firma3.html_name}}"
+                              placeholder="Firma" maxlength="20">
+                      </div>
+                    </div>
+                    
+                </div>
+                  
+               
+                <div class="tab-pane-prehospitalario">
+                  <h2>Datos del acompañante</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label>Nombres del Acompañante</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.nombreAcompanante.html_name}}"
+                          placeholder="Ingrese nombres del acompañante" maxlength="50">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Apellidos del Acompañante</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.apellidoAcompanante.html_name}}"
+                            placeholder="Ingrese apellidos del acompañante" maxlength="50">
+                    </div>
+                    <div class="col-md-1">
+                        <label>Edad</label>
+                        <br>
+                        <input type="number" class="form-control" name="{{form.edadAcompanate.html_name}}" 
+                            placeholder="Edad" maxlength="2">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Parentezco</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.parentezcoAcompanante.html_name}}" 
+                            placeholder="Ingrese parentezco con el paciente" maxlength="10">
+                    </div>
+                    <div class="col-md-4">
+                      <label>Cédula del Acompañante</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.cedulaAcompanante.html_name}}"
+                          placeholder="Ingrese Cédula del acompañante" maxlength="10">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Teléfono del Acompañante</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.telefonoAcompanate.html_name}}"
+                            placeholder="Ingrese teléfono del acompañante" maxlength="11">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Género del Acompañante</label>
+                        <select class='form-control' name="{{form.generoAcompanante.html_name}}">
+                            <option value="">Seleccione un género</option>
+                            {% for generoA in generosA %}
+                            <option value="{{ generoA.id }}">{{ generoA.sexo }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                      <label>Dirección de Acompañante</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.direccionAcompanante.html_name}}"
+                          placeholder="Ingrese dirección del acompañante" maxlength="300">
+                    </div>
+                  </div>
+                  <h2>Datos del testigo</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label>Nombres del Testigo</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.nombreTestigo.html_name}}"
+                          placeholder="Ingrese nombres del testigo" maxlength="50">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Apellidos del Testigo</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.apellidoTestigo.html_name}}"
+                            placeholder="Ingrese apellidos del testigo" maxlength="50">
+                    </div>
+                    <div class="col-md-1">
+                        <label>Edad</label>
+                        <br>
+                        <input type="number" class="form-control" name="{{form.edadTestigo.html_name}}" 
+                            placeholder="Edad" maxlength="2">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Cédula del Testigo</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.cedulaTestigo.html_name}}"
+                            placeholder="Ingrese Cédula del testigo" maxlength="10">
+                    </div>
+                    <div class="col-md-4">
+                      <label>Teléfono del Testigo</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.telefonoTestigo.html_name}}"
+                          placeholder="Ingrese teléfono del testigo" maxlength="11">
+                    </div>
+                    <div class="col-md-8">
+                      <label>Dirección del Testigo</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.direccionTestigo.html_name}}"
+                          placeholder="Ingrese dirección del acompañante" maxlength="300">
+                    </div>
+                  </div>
+                  <!--<input type="text" placeholder="Dirección" required>
+                  <input type="text" placeholder="Ciudad" required>-->
+                </div>
+                <div class="tab-pane-prehospitalario">
+                  <h2>Dirección</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label>Estado</label>
+                      <select class='form-control' name="{{form.estadoEvento.html_name}}">
+                          <option value="">Seleccione un estado</option>
+                          {% for estados in estado %}
+                          <option value="{{ estados.id }}">{{ estados.estado }} </option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Municipio</label>
+                        <select class='form-control' name="{{form.municipioEvento.html_name}}">
+                            <option value="">Seleccione un municipio</option>
+                            {% for municipio in municipios %}
+                            <option value="{{ municipio.id }}">{{ municipio.municipio }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Parroquia</label>
+                        <select class='form-control' name="{{form.parroquiaEvento.html_name}}">
+                            <option value="">Seleccione una parroquia</option>
+                            {% for parroquia in parroquias %}
+                            <option value="{{ parroquia.id }}">{{ parroquia.parroquia }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                      <label>Sector/Urb</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.sectorEvento.html_name}}"
+                          placeholder="Ingrese sector/urb  del evento" maxlength="300">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Calle/Avenida/Carrera</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.calleEvento.html_name}}"
+                            placeholder="Ingrese Calle/Avenida/Carrera del evento" maxlength="300">
+                    </div>
+                    <div class="col-md-2">
+                        <label>N° Casa/Edif</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.casaEvento.html_name}}"
+                            placeholder="Ingrese N° Casa/Edif" maxlength="20">
+                    </div>
+                    <div class="col-md-2">
+                        <label>Piso/Apto</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.pisoEvento.html_name}}"
+                            placeholder="Ingrese Piso/Apto" maxlength="20">
+                    </div>
+                    <div class="col-md-6">
+                      <label>Punto de referencia</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.referenciaEvento.html_name}}"
+                          placeholder="Ingrese Punto de referencia del evento" maxlength="300">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Eje</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.ejeEvento.html_name}}"
+                            placeholder="Ingrese eje del evento" maxlength="30">
+                    </div>
+                    <div class="col-md-3">
+                      <label>Lugar de Atención</label>
+                      <select class='form-control' name="{{form.lugarAtencion.html_name}}">
+                          <option value="">Seleccione un lugar</option>
+                          {% for lugar in lugares %}
+                          <option value="{{ lugar.id }}">{{ lugar.lugar }} </option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Modo de Traslado</label>
+                        <select class='form-control' name="{{form.modotraslado.html_name}}">
+                            <option value="">Seleccione un modo de traslado</option>
+                            {% for traslado in traslados %}
+                            <option value="{{ traslado.id }}">{{ traslado.traslado }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Via de Reporte</label>
+                        <select class='form-control' name="{{form.viaReporte.html_name}}">
+                            <option value="">Seleccione una via de reporte</option>
+                            {% for reporte in reportes %}
+                            <option value="{{ reporte.id }}">{{ reporte.reporte }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Tipo de Servicio</label>
+                        <select class='form-control' name="{{form.tipoServicio.html_name}}">
+                            <option value="">Seleccione un tipo de servicio</option>
+                            {% for servicio in servicios %}
+                            <option value="{{ servicio.id }}">{{ servicio.servicio }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                  <h2>Cronología del servicio</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-3">
+                      <label>Hora de Alarma</label>
+                      <br>
+                      <input type="time" class="form-control" name="{{form.horaAlarma.html_name}}">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Hora de Salida</label>
+                        <br>
+                        <input type="time" class="form-control" name="{{form.horaSalida.html_name}}">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Llegada al Procedimiento</label>
+                        <br>
+                        <input type="time" class="form-control" name="{{form.horaLlegada.html_name}}">
+                    </div>
+                    <div class="col-md-3">
+                      <label>Llegada al Hospital</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.hospital.html_name}}" maxlength="50">
+                    </div>
+                    <div class="col-md-4">
+                      <label>Transferencia al Servicio de Emergencia</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.transferenciaEmergencia.html_name}}"
+                      placeholder="Ingrese transferencia al Servicio de Emergencia" maxlength="50">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Hora de retorno a sede</label>
+                        <br>
+                        <input type="time" class="form-control" name="{{form.horaSede.html_name}}">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Tiempo de Servicio</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.tiempoServicio.html_name}}"
+                        placeholder="Ingrese tiempo de servicio" maxlength="50">
+                    </div>
+                    <div class="col-md-12">
+                        <label>Observación de Servicio</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.observacionesServicio.html_name}}"
+                        placeholder="Ingrese tiempo de servicio" maxlength="50">
+                    </div>
+                  </div>
+                  
+                  <!--<input type="text" placeholder="Estado/Provincia" required>
+                  <input type="text" placeholder="Código Postal" required>-->
+                </div>
+                <div class="tab-pane-prehospitalario">
+                  <h2>Trauma</h2><br>
+                  <!--<input type="text" placeholder="País" required>
+                  <input type="date" placeholder="Fecha de Nacimiento" required>-->
+                  <div class="form-group">
+                    <div class="col-md-3">
+                      <label>Accidente Vehicular</label>
+                      <select class='form-control' name="{{form.accidenteVehicular.html_name}}">
+                          <option value="1">SI</option>
+                          <option value="0" selected>NO</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Tipo de Accidente Vehicular</label>
+                        <select class='form-control' name="{{form.tipoAccidente.html_name}}">
+                            <option value="">Seleccione un tipo de accidente</option>
+                            {% for accidente in accidentes %}
+                            <option value="{{ accidente.id }}">{{ accidente.tipo_accidente }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label>Vehiculo</label>
+                      <select class='form-control' name="{{form.traumaVehiculo.html_name}}">
+                          <option value="">Seleccione un tipo de vehiculo</option>
+                          {% for vehiculo in vehiculos %}
+                          <option value="{{ vehiculo.id }}">{{ vehiculo.vehiculo }} </option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Viajaba como</label>
+                        <select class='form-control' name="{{form.viajaba.html_name}}">
+                            <option value="">Seleccione un tipo </option>
+                            {% for viajaba in viajabas %}
+                            <option value="{{ viajaba.id }}">{{ viajaba.viajaba }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label>Enfrentamiento Armado</label>
+                      <select class='form-control' name="{{form.enfrentamientoArmado.html_name}}">
+                          <option value="1">SI</option>
+                          <option value="0" selected>NO</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Tipo de Arma</label>
+                        <select class='form-control' name="{{form.tipoArma.html_name}}">
+                            <option value="">Seleccione un tipo de arma</option>
+                            {% for arma in armas %}
+                            <option value="{{ arma.id }}">{{ arma.tipo_arma }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label>Sustancias Peligrosas</label>
+                      <select class='form-control' name="{{form.sustanciaPeligrosa.html_name}}" >
+                          <option value="1">SI</option>
+                          <option value="0" selected>NO</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Inflamable</label>
+                        <select class='form-control' name="{{form.inflamable.html_name}}">
+                            <option value="1">SI</option>
+                            <option value="0" selected>NO</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Explosivo</label>
+                        <select class='form-control' name="{{form.explosivo.html_name}}">
+                            <option value="1">SI</option>
+                            <option value="0" selected>NO</option>
+                        </select>
+                    </div>
+                    <div class="col-md-9">
+                        <label>Observación de sustancias peligrosas</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.observacionesSustancia.html_name}}"
+                        placeholder="Ingrese observaciòn"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                      <label>Trauma no Intencional</label>
+                      <select class='form-control' name="{{form.traumaNoIntencional.html_name}}" >
+                          <option value="">Seleccione un tipo de trauma </option>
+                          {% for trauma in traumas %}
+                          <option value="{{ trauma.id }}">{{ trauma.noIntencional }} </option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-8">
+                      <label>Observación de trauma no intencional </label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.observacionesNo.html_name}}"
+                      placeholder="Ingrese observaciòn"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                      <label>Emergencias Medicas No Traumaticas</label>
+                      <select class='form-control' name="{{form.emergenciaMedica.html_name}}" >
+                          <option value="" >Ninguna de las anteriores </option>
+                          {% for emergencia in emergencias %}
+                          {% if emergencia.id == 2 %}<option value="{{ emergencia.id }}" selected>{{ emergencia.emergencia }} </option> {% else %} <option value="{{ emergencia.id}}">{{ emergencia.emergencia }}</option> {% endif %}
+                          {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <h2>Evaluación inicial + intervenciones criticas</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-3">
+                      <label>Hemorragias</label>
+                      <select class='form-control' name="{{form.hemorragia.html_name}}">
+                          <option value="1">SI</option>
+                          <option value="0" selected>NO</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Presion Directa</label>
+                        <select class='form-control' name="{{form.presion.html_name}}">
+                            <option value="1">SI</option>
+                            <option value="0" selected>NO</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Empaquetado de la Herida</label>
+                        <select class='form-control' name="{{form.empaquetado.html_name}}">
+                            <option value="1">SI</option>
+                            <option value="0" selected>NO</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Torniquete</label>
+                        <select class='form-control' name="{{form.torniquete.html_name}}">
+                            <option value="1">SI</option>
+                            <option value="0" selected>NO</option>
+                        </select>
+                    </div>
+                  </div>
+                  <h2>Vía aerea y control cervical</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label>Evaluación</label>
+                      <select class='form-control' name="{{form.evaluacion.html_name}}" >
+                          <option value="">Seleccione una opción </option>
+                          {% for evaluacion in evaluaciones %}
+                          <option value="{{ evaluacion.id }}">{{ evaluacion.evaluacion }} </option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Intervención</label>
+                        <select class='form-control' name="{{form.intervencion.html_name}}" >
+                            <option value="">Seleccione una opción </option>
+                            {% for intervencion in intervenciones %}
+                            <option value="{{ intervencion.id }}">{{ intervencion.intervencion }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Resultados</label>
+                        <select class='form-control' name="{{form.resultado.html_name}}" >
+                            <option value="">Seleccione una opción </option>
+                            {% for resultado in resultados %}
+                            <option value="{{ resultado.id }}">{{ resultado.resultado }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Descripción Adicional</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.descripcionAdicional.html_name}}"
+                        placeholder="Ingrese una descripción"  maxlength="100">
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane-prehospitalario">
+                  <h2>Respiración y oxiginación</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label>Evaluación</label>
+                      <select class='form-control' name="{{form.evaluacionResp.html_name}}" >
+                          <option value="" >Seleccione una opción </option>
+                          {% for evaluacion in evaluacionesRespiracion %}
+                          {% if evaluacion.id == 6 %} <option value="{{ evaluacion.id }}" selected>{{ evaluacion.evaluacion }} </option> {% else %} <opcion value="{{ evaluacion.id }}"> {{ evaluacion.evaluacion }} </option> {% endif %}
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Intervención</label>
+                        <select class='form-control' name="{{form.intervencionResp.html_name}}" >
+                            <option value="">Seleccione una opcion</option>
+                            {% for intervencion in intervencionesRespiracion %}
+                            {% if intervencion.id == 2 %} <option value="{{ intervencion.id }}" selected>{{ intervencion.intervencion }}</option> {% else %} <option value="{{ intervencion.id }}">{{ intervencion.intervencion }}</option> {% endif %}
+                            
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Resultados</label>
+                        <select class='form-control' name="{{form.resultadoResp.html_name}}" >
+                            <option value="">Seleccione una opción </option>
+                            {% for resultado in resultadosRespiracion %}
+                            <option value="{{ resultado.id }}">{{ resultado.resultado }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-12">
+                      <label>Descripción Adicional</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.descripcionAdicionalResultado.html_name}}"
+                      placeholder="Ingrese una descripción"  maxlength="100">
+                    </div>
+                  </div>
+                  <h2>Circulación</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-3">
+                      <label>Color de Piel</label>
+                      <select class='form-control' name="{{form.colorPiel.html_name}}" >
+                          <option value="">Seleccione una opción </option>
+                          {% for color in colores %}
+                          <option value="{{ color.id }}">{{ color.color_piel }} </option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Temperatura de la Piel</label>
+                        <select class='form-control' name="{{form.temperaturaPiel.html_name}}" >
+                            <option value="">Seleccione una opción </option>
+                            {% for temperatura in temperaturas %}
+                            <option value="{{ temperatura.id }}">{{ temperatura.temperatura_piel }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Humedad de la Piel</label>
+                        <select class='form-control' name="{{form.humedadPiel.html_name}}" >
+                            <option value="">Seleccione una opción </option>
+                            {% for humedad in humedades %}
+                            <option value="{{ humedad.id }}">{{ humedad.humedad_piel }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Pulsos Distales</label>
+                        <select class='form-control' name="{{form.pulso.html_name}}">
+                            <option value="1">SI</option>
+                            <option value="0" selected>NO</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label>Otras/Hemorr/Heridas</label>
+                      <select class='form-control' name="{{form.otrasHerida.html_name}}">
+                          <option value="1">SI</option>
+                          <option value="0" selected>NO</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Fracturas</label>
+                        <select class='form-control' name="{{form.fractura.html_name}}">
+                            <option value="1">SI</option>
+                            <option value="0" selected>NO</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Maniobra de Pelvis</label>
+                        <select class='form-control' name="{{form.maniobraPelvis.html_name}}" >
+                            <option value="">Seleccione una opción </option>
+                            {% for maniobra in maniobras %}
+                            <option value="{{ maniobra.id }}">{{ maniobra.maniobra }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                  <h2>Deficit Neurologico</h2><br>
+                  <h2>ECG</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-3">
+                      <label>O</label>
+                      <br>
+                      <input type="number" class="form-control" name="{{form.ecgO.html_name}}"
+                      placeholder="Ingrese una descripción"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>V</label>
+                        <br>
+                        <input type="number" class="form-control" name="{{form.ecgV.html_name}}"
+                        placeholder="Ingrese una descripción"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>M</label>
+                        <br>
+                        <input type="number" class="form-control" name="{{form.ecgM.html_name}}"
+                        placeholder="Ingrese una descripción"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                      <label>Total</label>
+                      <br>
+                      <input type="number" class="form-control" name="{{form.ecgTotal.html_name}}"
+                      placeholder="Ingrese una descripción"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                      <label>Reacción Pupilar</label>
+                      <select class='form-control' name="{{form.reaccionPupilar.html_name}}" >
+                          <option value="">Seleccione una opción </option>
+                          {% for reaccion in reacciones %}
+                          <option value="{{ reaccion.id }}">{{ reaccion.reaccion }} </option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <h2>Exposición</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-3">
+                      <label>Hipotermia</label>
+                      <select class='form-control' name="{{form.hipotermia.html_name}}">
+                          <option value="1">SI</option>
+                          <option value="0" selected>NO</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Tipo de Atención Hipotermia</label>
+                        <select class='form-control' name="{{form.hipotermiaopcion.html_name}}" >
+                            <option value="" >Seleccione una opción </option>
+                            {% for opcion in opciones %}
+                            {% if opcion.id == 2 %} <option value="{{ opcion.id }}" selected>{{ opcion.opcion }} </option> {% else %} <option value="{{opcion.id}}"> {{ opcion.opcion }} </opcion> {% endif %}
+
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Singnos y Sintomas</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.signosSintomas.html_name}}"
+                        placeholder="Ingrese los sintomas"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Alergias </label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.alergias.html_name}}"
+                        placeholder="Ingrese los sintomas"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Medicamentos</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.medicamentos.html_name}}"
+                        placeholder="Ingrese los medicamentos"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Preexistencias</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.preexistencias.html_name}}"
+                        placeholder="Ingrese las preexistencias"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Ultima Comida</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.ultimaComida.html_name}}"
+                        placeholder="Ingrese la ultima comida"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Evento</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.evento.html_name}}"
+                        placeholder="Ingrese el evento"  maxlength="100">
+                    </div>
+                  </div>
+                  
+                </div>
+
+                <div class="tab-pane-prehospitalario">
+                  <h2>Signos vitales</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-3">
+                      <label>Hora de la Medición</label>
+                      <br>
+                      <input type="time" class="form-control" name="{{form.horaMedicion.html_name}}">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Frecuencia Cardiaca</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.frecuenciaCardiaca.html_name}}"
+                        placeholder="Ingrese la frecuencia cardiaca"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Frecuencia Respiratoria</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.frecuenciaRespiratoria.html_name}}"
+                        placeholder="Ingrese la frecuencia Respiratoria"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Presión Arterial</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.presionArterial.html_name}}"
+                        placeholder="Ingrese la Presión Arterial"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>SPO2</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.spo2.html_name}}"
+                        placeholder="Ingrese el spo2"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Temperatura</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.temperatura.html_name}}"
+                        placeholder="Ingrese la temperatura"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Llenado Capilar</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.llenadoCapilar.html_name}}"
+                        placeholder="Ingrese el llenado capilar"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Glicemia Capilar</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.glicemiaCapilar.html_name}}"
+                        placeholder="Ingrese la glicemia  capilar"  maxlength="100">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Escala de Glasgow</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.escalaGlasgow.html_name}}"
+                        placeholder="Ingrese la escala de glasgow"  maxlength="100">
+                    </div>
+                  </div>
+                  <h2>Tratamiento</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label>Medicamento</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.medicamento1.html_name}}"
+                      placeholder="Ingrese el medicamento"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Dosis</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.dosis1.html_name}}"
+                        placeholder="Ingrese la dosis"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Hora</label>
+                        <br>
+                        <input type="time" class="form-control" name="{{form.hora1.html_name}}"
+                        placeholder="Ingrese la hora" maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Medicamento</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.medicamento2.html_name}}"
+                        placeholder="Ingrese el medicamento"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Dosis</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.dosis2.html_name}}"
+                        placeholder="Ingrese la dosis"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Hora</label>
+                        <br>
+                        <input type="time" class="form-control" name="{{form.hora2.html_name}}"
+                        placeholder="Ingrese la hora"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Medicamento</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.medicamento3.html_name}}"
+                        placeholder="Ingrese el medicamento"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Dosis</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.dosis3.html_name}}"
+                        placeholder="Ingrese la dosis"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Hora</label>
+                        <br>
+                        <input type="time" class="form-control" name="{{form.hora3.html_name}}"
+                        placeholder="Ingrese la hora "  maxlength="100">
+                    </div>
+                    <div class="col-md-12">
+                      <label>Resultado de la Evaluación Física Cefalo Caudal</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.resultadoEvaluacion.html_name}}"
+                      placeholder="Ingrese el resultado de la evaluación"  maxlength="100">
+                    </div>
+                  </div>
+                  <h2>Registro de referencias y contra referencias</h2><br>
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <label>El paciente fue referido del centro asistencial al que fue trasladado inicialmente</label>
+                      <select class='form-control' name="{{form.trasladoIncial.html_name}}">
+                          <option value="1">SI</option>
+                          <option value="0" selected>NO</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Hospital Origen</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.hospitalOrigen.html_name}}"
+                        placeholder="Ingrese el Hospital de origen"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Medico que refiere</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.medicoRefiere.html_name}}"
+                        placeholder="Ingrese el medico que refiere"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Hora de salida</label>
+                        <br>
+                        <input type="time" class="form-control" name="{{form.horaSalidaHosp.html_name}}"
+                        placeholder="Ingrese la hora"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Hospital que recibe</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.hospitalDestino.html_name}}"
+                        placeholder="Ingrese el hospital que lo recibe"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Hora de llegada</label>
+                        <br>
+                        <input type="time" class="form-control" name="{{form.horaLlegadaHosp.html_name}}"
+                        placeholder="Ingrese la hora"  maxlength="100">
+                    </div>
+                    <div class="col-md-4">
+                        <label>Causas</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.causa.html_name}}"
+                        placeholder="Ingrese las causas"  maxlength="100">
+                    </div>
+                    <div class="col-md-6">
+                      <label>Tècnico de Emergencias Mèdicas</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.tecnicoEmergencia.html_name}}"
+                      placeholder="Ingrese tecnico de emergencias medicas"  maxlength="100">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Cedula del tècnico de Emergencias Mèdicas</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.cedulaTecnico.html_name}}"
+                        placeholder="Ingrese la cedula tecnico de emergencias medicas"  maxlength="100">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Tercer Tripulante</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.tercerTripulante.html_name}}"
+                        placeholder="Ingrese nombre del tercer tripulante"  maxlength="100">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Cèdula del Tercer Tripulante</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.cedulaTripulante.html_name}}"
+                        placeholder="Ingrese cedula del tercer tripulante"  maxlength="100">
+                    </div>
+                    <div class="col-md-6">
+                      <label>Conductor de la Unidad</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.conductorUnidad.html_name}}"
+                      placeholder="Ingrese nombre del conductor de la unidad"  maxlength="100">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Cèdula del Conductor de la Unidad</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.cedulaConductor.html_name}}"
+                        placeholder="Ingrese cedula del conductor de la unidad"  maxlength="100">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Supervisor de Guardia</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.supervisorGuardia.html_name}}"
+                        placeholder="Ingrese nombre del supervisor de guardia"  maxlength="100">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Cèdula del Supervisor de Guardia</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.cedulaSupervisor.html_name}}"
+                        placeholder="Ingrese cedula del supervisor de guardia"  maxlength="100">
+                    </div>
+                    <div class="col-md-6">
+                      <label>Mèdico de Guardia</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.medicoGuardia.html_name}}"
+                      placeholder="Ingrese nombre del medico de guardia"  maxlength="100">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Cèdula del Mèdico de Guardia</label>
+                        <br>
+                        <input type="text" class="form-control" name="{{form.cedulaMedico.html_name}}"
+                        placeholder="Ingrese cedula del medico de guardia"  maxlength="100">
+                    </div>
+                    <div class="col-md-6">
+                      <label>Sello/MSDS</label>
+                      <br>
+                      <input type="text" class="form-control" name="{{form.selloMsds.html_name}}"
+                      placeholder="Ingrese Msds del medico de guardia"  maxlength="100">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="tab-buttons-prehospitalario">
+                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Anterior</button>
+                <button type="button" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
+                <button type="submit" id="saveBtn" onclick="">Guardar registro</button>
+              </div>
+          </form>
+        </div>
+    </div>

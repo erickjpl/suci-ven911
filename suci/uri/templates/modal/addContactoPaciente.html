@@ -1,0 +1,26 @@
+<div id="addContactoP" class="modal">
+    <div class="modal-content">
+        <span class="close" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+        <div class="modal-header">
+            <h2>Agregar un Tipo de Contacto con el Paciente</h2>
+        </div>
+        <br>
+        <form method="POST" action="{% url 'contacto' accion='agregar'%}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Nombre del Tipo de Contacto con el Paciente</label>
+                    <br>
+                    <br>
+                    <input type="text" class="form-group" name="{{ form.contacto.name}}" value=""
+                        placeholder="Ingrese un nombre" maxlength="100">
+                </div>
+            </div>
+            <br>
+            <div>
+                <input type="submit" value="enviar" class="btn" style="width: 90px;">
+            </div>
+        </form>
+    </div>
+</div>

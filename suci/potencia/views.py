@@ -1,30 +1,34 @@
-from django.shortcuts import render, redirect, HttpResponse
-from django.http import HttpRequest
-from .forms import FormularioIncidencias
+from django.shortcuts import render, redirect
+from .forms import IncidenciasForm, IncidenciasEForm
 from .models import Incidencias
 
-def Home(request):
-    return render (request, "home.html")
+# Create your views here.
 
-class FormularioIncidencias(HttpRequest):
-    def index(request):
-        Incidencias = FormularioIncidencias()
-        return render(request, "incidencia.html")
-    
-    def procesar_incidencia(request):
-        Incidencias = FormularioIncidencias()
-        if Incidencia.is_valid():
-            Incidencia.save()
-            Incidencia = FormularioIncidencias()
+def potencia(request):
+    if request.method == 'POST':
+        formpi = IncidenciasForm(request.POST)
+        if formpi.is_valid():
+            formpi.save()
+        else:
+            context = {'formpi': formpi}
+            return render(request, 'potencia.html', context)
+    incidenciass = Incidencias.objects.all()
+    context = {'formpi': IncidenciasForm(), 'formegh': IncidenciasEForm(), 'incidenciass': incidenciass}
+    return render(request, 'potencia.html', context)
 
-        return render(request, "incidencia.html", {"form": Incidencia, "mensaje": 'Perfecto'})    
+# VISTAS DE ACTUALIZACIÓN DE POTENCIA
+def update_potencia(request, id):
+    queryset = Incidencias.objects.get(id=id)
+    form = IncidenciasEForm(instance=queryset)
+    if request.method == 'POST':
+        form = IncidenciasEForm(request.POST, instance=queryset)
+        if form.is_valid():
+            form.save()
+            return redirect('/potencia#updatesuccess')
 
-def Incidencia(request):
-    return render (request, "incidencia.html")
-
-def Estatus(request):
-    return render (request, "estatus.html")
-
-def Reportes(request):
-    return render (request, "reportes.html")
-
+# VISTAS DE ELIMINACIÓN DE POTENCIA
+def del_potencia(request, id):
+    if request.method == 'POST':
+        form = Incidencias.objects.get(id=id)
+        form.delete()
+        return redirect('/potencia#deletesuccess')

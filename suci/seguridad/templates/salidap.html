@@ -48,26 +48,12 @@
                 <span>Gestión</span>
             </a>
         </li>
-            <li class="dropdown__list">
-                <a href="#" class="dropdown__link">
-                    <i class="fa-solid fa-car-side"></i>
-                    <span class="dropdown__span">Vehículos</span>
-                    <input type="checkbox" class="dropdown__check">
-                </a>
-                <div class="dropdown__content">
-                    <ul class="dropdown__sub">
-                        <li class="dropdown__li">
-                            <a href="../ambulancia" class="dropdown__anchor">Ambulancia</a>
-                        </li>
-                        <li class="dropdown__li">
-                            <a href="../patrulla" class="dropdown__anchor">Patrulla</a>
-                        </li>
-                        <li class="dropdown__li">
-                            <a href="../particular" class="dropdown__anchor">Particular</a>
-                        </li>
-                    </li>
-                </ul>
-            </div>
+        <li>
+            <a href="../vehiculos">
+                <i class="fa-solid fa-car-side"></i>
+                <span>Vehiculos</span>
+            </a>
+        </li> 
             <li class="logout.new">
                 <a href="../../modulos">
                     <i class="fa-solid fa-arrow-left"></i>
@@ -106,7 +92,7 @@
         <form id="formConsulta" method="GET" action="{% url 'salidap_consultar' accion='consultar' %}">
             <div class="searh--box">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" name="name" id="inputname" placeholder="Buscar">
+                <input type="text" name="name" id="name" placeholder="Buscar">
                 <button type="submit" class="btn">Consultar</button>
                 <button type="button" class="btn" onclick="location.href='{% url 'salidap' %}'">Limpiar</button>      
             </div>
@@ -157,42 +143,42 @@
                 <div class="form-items">
                     <label>Nombre</label>
                     <br>
-                    <input type="text" class="form-control" name="{{form2.name.html_name}}" placeholder="Ingrese el nombre" required>
+                    <input type="text" class="form-control" name="{{form3.name.html_name}}" placeholder="Ingrese el nombre" required>
                 </div>
                 <div class="form-items">
                     <label>Apellido</label>
                     <br>
-                    <input type="text" class="form-control" name="{{form2.apellido.html_name}}" placeholder="Ingrese el apellido" required>
+                    <input type="text" class="form-control" name="{{form3.apellido.html_name}}" placeholder="Ingrese el apellido" required>
                 </div>
                 <div class="form-items">
                     <label>Cédula</label>
                     <br>
-                    <input type="number" class="form-control" name="{{form2.cedula.html_name}}" placeholder="Ingrese la cédula" required>
+                    <input type="number" class="form-control" name="{{form3.cedula.html_name}}" placeholder="Ingrese la cédula" required>
                 </div>
                 <div class="form-items">
                     <label>Teléfono</label>
                     <br>
-                    <input type="number" class="form-control" name="{{form2.telefono.html_name}}" placeholder="Ingrese el teléfono" required>
+                    <input type="number" class="form-control" name="{{form3.telefono.html_name}}" placeholder="Ingrese el teléfono" required>
                 </div>
                 <div class="form-items">
                     <label>Fecha</label>
                     <br>
-                    <input type="date" class="form-control" name="{{form2.fecha.html_name}}" placeholder="Ingrese la fecha" required>
+                    <input type="date" class="form-control" name="{{form3.fecha.html_name}}" placeholder="Ingrese la fecha" required>
                 </div>
                 <div class="form-items">
                     <label>Hora</label>
                     <br>
-                    <input type="time" class="form-control" name="{{form2.hora.html_name}}" placeholder="Ingrese la hora" required>
+                    <input type="time" class="form-control" name="{{form3.hora.html_name}}" placeholder="Ingrese la hora" required>
                 </div>
                 <div class="form-items">
                     <label>Dirección</label>
                     <br>
-                    <input type="text" class="form-control" name="{{form2.direccion.html_name}}" placeholder="Ingrese la dirección" required>
+                    <input type="text" class="form-control" name="{{form3.direccion.html_name}}" placeholder="Ingrese la dirección" required>
                 </div>
                 <div class="form-items">
                     <label>Cargo</label>
                     <br>
-                    <input type="text" class="form-control" name="{{form2.cargo.html_name}}" placeholder="Ingrese el cargo" required>
+                    <input type="text" class="form-control" name="{{form3.cargo.html_name}}" placeholder="Ingrese el cargo" required>
                 </div>
             </div>
             <br>
@@ -230,9 +216,9 @@
                             <td>{{ archivo.cargo }}</td>
                             <td>{{ archivo.hora }}</td>
                             <td>
-                                <a href="#" id="myBtnn3{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="#" title="Editar" id="myBtnn3{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-pen-to-square"></i></a>
                                 &nbsp;&nbsp;&nbsp;
-                                <a href="#" id="myBtnn2{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-trash"></i></a>
+                                <a href="#" title="Eliminar" id="myBtnn2{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-trash"></i></a>
                                 <div id="myModall3{{ archivo.id }}" class="modal">
                                     <div class="modal-content">
                                         <span class="closee3{{ archivo.id }} close" style="margin-top: -10px;">&times;</span>
@@ -316,7 +302,7 @@
                                     <div class="modal-content">
                                         <span class="closee2{{ archivo.id }} close" style="margin-top: -10px;">&times;</span>
                                         <div class="modal-header">
-                                            <form action="entradap/delete/{{ archivo.id }}" method="POST">
+                                            <form action="salidap/delete/{{ archivo.id }}" method="POST">
                                                 {% csrf_token %}
                                                 <br>
                                                 <div align="center">

@@ -1,0 +1,62 @@
+{% extends "mantenimientosUri/baseMantenimientosUri.html" %}
+
+{% block title %} S.U.C.I | Mantenimiento/Intervenciones {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2>Mantenimiento /<small>Intervenciones</small></h2>
+        </div>
+        <div class="user--info">
+            <img src="{% static 'img/ven911.jpg' %}">
+            <h2 class="title">V{{request.user.username}}</h2>
+        </div>
+    </div>
+
+    <div align="right" style="margin-right: 100px; margin-bottom: -10px;">
+        <button id="addIntervencion" class="btn">Agregar</button>
+        <input type="hidden" class="btn" onclick="location.href='{% url 'intervencion' accion='todos'  %}'"></input>
+    </div>
+
+
+    <div class="tabular--wrapper">
+        <h3 class="main--title">Recientes</h3>
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Tipo de Intervención</th>
+                        <th>Acciones</th>
+                    </tr>
+                <tbody>
+                    {% for intervenciones in intervencion %}
+                    <tr>
+                        <td>{{ intervenciones.id }}</td>
+                        <td>{{ intervenciones.intervencion }}</td>
+                        <td>
+                            <a href="#" title="Editar tipo de Intervención" id="myBtnUpd" data-toggle="modal" data-id='{{ intervenciones.id }}'
+                            class="btn-editar"
+                            style="color: black;">
+                            <i class="fa-solid fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
+    {% include "modal/addIntervencion.html" %}
+    {% include "modal/updIntervencion.html" %}
+
+    <script src="{% static 'js/intervencion.js' %}"></script> 
+    
+    {% endblock %}

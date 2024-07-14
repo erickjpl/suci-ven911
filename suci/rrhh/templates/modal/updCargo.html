@@ -1,0 +1,38 @@
+<div class="modal fade" id="updcargo" tabindex="-1" role="dialog" aria-labelledby="modal-editar-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="close closeupd" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+            <div class="modal-header">
+                <h2>Editar Cargo </h2>
+            </div>
+            <br>
+            <form id="form-editar" action="{% url 'cargo' accion='editar' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="id_e" name="id" value="">
+
+                    <div class="col-md-6">
+                        <label for="estatus">Estatus</label>
+                        <select class='form-control' id="estatus_e" name="estatus" readOnly>
+                            <option value="ACTIVO" readOnly>ACTIVO</option>
+                            <!--<option value="AGOTADO" readOnly>AGOTADO</option>-->
+                            <option value="NO DISPONIBLE" readOnly>NO DISPONIBLE</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="cargo">Cargo</label>
+                        <input type="text" class="form-control" id="cargo_e" name="cargo" readOnly>
+                    </div>
+
+                    
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

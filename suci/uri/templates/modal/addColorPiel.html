@@ -1,0 +1,26 @@
+<div id="addColorPiel" class="modal">
+    <div class="modal-content">
+        <span class="close" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+        <div class="modal-header">
+            <h2>Agregar el Color de la Piel</h2>
+        </div>
+        <br>
+        <form method="POST" action="{% url 'colorPiel' accion='agregar'%}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Color de Piel</label>
+                    <br>
+                    <br>
+                    <input type="text" class="form-group" name="{{ form.color_piel.name}}" value=""
+                        placeholder="Ingrese un color de piel" maxlength="15">
+                </div>
+            </div>
+            <br>
+            <div>
+                <input type="submit" value="enviar" class="btn" style="width: 90px;">
+            </div>
+        </form>
+    </div>
+</div>

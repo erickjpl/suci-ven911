@@ -1,4 +1,4 @@
-{% extends "mantenimientos/base.html" %}
+{% extends "mantenimientos/baseMantenimientos.html" %}
 
 {% block title %} S.U.C.I | Mantenimiento/Tallas de Zapato {% endblock %}
 
@@ -12,10 +12,6 @@
             <h2>Mantenimiento /<small> Tallas de Zapato </small></h2>
         </div>
         <div class="user--info">
-            <div class="searh--box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Buscar" />
-            </div>
             <img src="{% static 'img/ven911.jpg' %}">
             <h2 class="title">V{{request.user.username}}</h2>
         </div>
@@ -23,6 +19,7 @@
 
     <div align="right" style="margin-right: 100px; margin-bottom: -10px;">
         <button id="myBtnAddZapato" class="btn">Agregar</button>
+        <input type="hidden" class="btn" onclick="location.href='{% url 'tallaZapato' accion='todos'  %}'"></input>
     </div>
 
 
@@ -40,8 +37,14 @@
                     {% for mantTallaZapato in talla_zapato %}
                     <tr>
                         <td>{{ mantTallaZapato.talla_zapato }}</td>
-                        <td>Activo</td>
-                        <td><i class="fa-solid fa-trash-can"></i></td>
+                        <td>{{ mantTallaZapato.estatus }}</td>
+                        <td>
+                            <a href="#" title="Editar Talla" id="myBtnUpd" data-toggle="modal" data-id='{{ mantTallaZapato.id }}'
+                            class="btn-editar"
+                            style="color: black;">
+                            <i class="fa-solid fa-trash-can"></i>
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -52,32 +55,10 @@
 
     <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
     {% include "modal/addTallaZapato.html" %}
+    {% include "modal/updTallaZapato.html" %}
 
+    <script src="{% static 'js/tallaZ.js' %}"></script> 
 
-    <script>
-
-        //  JAVASCRIPT PARA ADD TALLA DE ZAPATO
-        var modal = document.getElementById("addTallaZapato");
-        var btn = document.getElementById("myBtnAddZapato");
-        var span = document.getElementsByClassName("close")[0];
-        btn.onclick = function () {
-            modal.style.visibility = "visible";
-            modal.style.opacity = 1;
-        }
-
-        span.onclick = function () {
-            modal.style.visibility = "hidden";
-            modal.style.opacity = 0;
-        }
-
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.visibility = "hidden";
-                modal.style.opacity = 0;
-            }
-        }
-    </script>
-
-
+ 
 
     {% endblock %}

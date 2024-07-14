@@ -1,0 +1,64 @@
+{% extends "mantenimientos/baseMantenimientos.html" %}
+
+{% block title %} S.U.C.I | Mantenimiento/Primas por profesionalismo {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2>Mantenimiento /<small> Primas por profesionalismo </small></h2>
+        </div>
+        <div class="user--info">
+            <img src="{% static 'img/ven911.jpg' %}">
+            <h2 class="title">V{{request.user.username}}</h2>
+        </div>
+    </div>
+
+    <div align="right" style="margin-right: 100px; margin-bottom: -10px;">
+        <button id="addPrima" class="btn">Agregar</button>
+    
+    </div>
+
+
+    <div class="tabular--wrapper">
+        <h3 class="main--title">Recientes</h3>
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Estatus</th>
+                        <th>Título</th>
+                        <th>Porcentaje</th>
+                        <th>Acciones</th>
+                    </tr>
+                <tbody>
+                    {% for prima in primasProfesionales %}
+                    <tr>
+                        <td>{{ prima.estatus }}</td>
+                        <td>{{ prima.titulo }}</td>
+                        <td>{{ prima.porcentaje }}</td>
+                        <td>
+                            <a href="#" title="Editar prima" id="myBtnUpd" data-toggle="modal" data-id='{{ prima.id }}'
+                            class="btn-editar"
+                            style="color: black;">
+                            <i class="fa-solid fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
+    {% include "modal/addPrimaProfesional.html" %}
+    {% include "modal/updPrima.html" %}
+
+    <script src="{% static 'js/prima_profesional.js' %}"></script> 
+    
+    {% endblock %}

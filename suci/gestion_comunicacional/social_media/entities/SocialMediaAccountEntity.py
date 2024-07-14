@@ -1,10 +1,20 @@
-from index.mixins.BaseModelMixin import BaseModel
+from gestion_comunicacional.mixins.BaseModelMixin import BaseModel
 
 from django.db.models import CharField, PositiveSmallIntegerField, URLField
 from django.forms import model_to_dict
 
 
 class SocialMediaAccountEntity(BaseModel):
+    PERMISSION_VIEW_SOCIAL_MEDIA = "view_social_media"
+    PERMISSION_ADD_SOCIAL_MEDIA = "add_social_media"
+    PERMISSION_CHANGE_SOCIAL_MEDIA = "change_social_media"
+    PERMISSION_DELETE_SOCIAL_MEDIA = "delete_social_media"
+    
+    VIEW_SOCIAL_MEDIA = "gc:view_social_media"
+    ADD_SOCIAL_MEDIA = "gc:add_social_media"
+    CHANGE_SOCIAL_MEDIA = "gc:change_social_media"
+    DELETE_SOCIAL_MEDIA = "gc:delete_social_media"
+    
     PLATFORM_CHOICES = [
         ("Facebook", "Facebook"),
         ("Instagram", "Instagram"),

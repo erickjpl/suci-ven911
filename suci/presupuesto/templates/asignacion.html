@@ -37,18 +37,18 @@
                 <div class="dropdown__content">
                     <ul class="dropdown__sub">
                         <li class="dropdown__li">
-                            <a href="../proyecto" class="dropdown__anchor">Proyecto</a>
+                            <a href="../../proyecto" class="dropdown__anchor">Proyecto</a>
                         </li>
 
                         <li class="dropdown__li">
                             <ul class="dropdown__sub">
-                            <a href="../acciones" class="dropdown__anchor">Acciones Centralizadas</a>
+                            <a href="../../acciones" class="dropdown__anchor">Acciones Centralizadas</a>
                             </li>
                         </li>
                     </ul>
                 </div>
             <li>
-                <a href="../asignacion">
+                <a href="../../asignacion">
                     <i class="fa-solid fa-clone"></i>
                     <span>Asignación</span>
                 </a>
@@ -62,7 +62,7 @@
                 <div class="dropdown__content">
                     <ul class="dropdown__sub">
                         <li class="dropdown__li">
-                            <a href="../cedente" class="dropdown__anchor">Cedente</a>
+                            <a href="../../cedente" class="dropdown__anchor">Cedente</a>
                         </li>
 
                         <li class="dropdown__li">
@@ -73,7 +73,7 @@
                     </ul>
                 </div>
             <li class="logout.new">
-                <a href="../modulos">
+                <a href="../../modulos">
                     <i class="fa-solid fa-arrow-left"></i>
                     <span>Volver</span>
                 </a>
@@ -151,7 +151,7 @@
     <div class="modal-content">
         <span class="close" style="margin-top: -10px;">&times;</span>
         <div class="modal-header">
-            <h2>Agregar Asignación</h2>
+            <h2 align="center">Agregar Asignación</h2>
         </div>
         <br>
         <form method="POST">
@@ -216,14 +216,14 @@
                             <td><strong>{{ archivo.objeanual }}</strong></td>
                             <td>{{ archivo.numpartida }}</td>
                             <td>
-                                <a href="#" id="myBtnn3{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="#" title="Editar" id="myBtnn3{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-pen-to-square"></i></a>
                                 &nbsp;&nbsp;&nbsp;
-                                <a href="#" id="myBtnn2{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-trash"></i></a>
+                                <a href="#" title="Eliminar" id="myBtnn2{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-trash"></i></a>
                                 <div id="myModall3{{ archivo.id }}" class="modal">
                                     <div class="modal-content">
                                         <span class="closee3{{ archivo.id }} close" style="margin-top: -10px;">&times;</span>
                                         <div class="modal-header">
-                                            <h2>Modificar Asignación</h2>
+                                            <h2 align="center">Modificar Asignación</h2>
                                         </div>
                                         <br>
                                         <form method="POST" action="asignacion/update/{{ archivo.id }}">

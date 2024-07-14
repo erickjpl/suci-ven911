@@ -1,4 +1,4 @@
-{% extends "mantenimientos/base.html" %}
+{% extends "mantenimientos/baseMantenimientos.html" %}
 
 {% block title %} S.U.C.I | Mantenimiento/Sedes {% endblock %}
 
@@ -12,10 +12,6 @@
             <h2>Mantenimiento /<small> Sedes </small></h2>
         </div>
         <div class="user--info">
-            <div class="searh--box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Buscar" />
-            </div>
             <img src="{% static 'img/ven911.jpg' %}">
             <h2 class="title">V{{request.user.username}}</h2>
         </div>
@@ -23,6 +19,7 @@
 
     <div align="right" style="margin-right: 100px; margin-bottom: -10px;">
         <button id="myBtnAddSedes" class="btn">Agregar</button>
+        <input type="hidden" class="btn" onclick="location.href='{% url 'departamento' accion='todos'  %}'"></input>
     </div>
 
 
@@ -40,8 +37,14 @@
                     {% for mantSedes in sedes %}
                     <tr>
                         <td>{{ mantSedes.sede }}</td>
-                        <td>Activo</td>
-                        <td><i class="fa-solid fa-trash-can"></i></td>
+                        <td>{{ mantSedes.estatus }}</td>
+                        <td>
+                            <a href="#" title="Editar Talla" id="myBtnUpd" data-toggle="modal" data-id='{{ mantSedes.id }}'
+                            class="btn-editar"
+                            style="color: black;">
+                            <i class="fa-solid fa-trash-can"></i>
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -52,35 +55,8 @@
 
     <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
     {% include "modal/addSedes.html" %}
+    {% include "modal/updSede.html" %}
 
-
-    <script>
-
-        //  JAVASCRIPT PARA ADD SEDES
-        var modal = document.getElementById("addSede");
-        var btn = document.getElementById("myBtnAddSedes");
-        var span = document.getElementsByClassName("close")[0];
-        btn.onclick = function () {
-            modal.style.visibility = "visible";
-            modal.style.opacity = 1;
-        }
-
-        span.onclick = function () {
-            modal.style.visibility = "hidden";
-            modal.style.opacity = 0;
-        }
-
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.visibility = "hidden";
-                modal.style.opacity = 0;
-            }
-        }
-
-       
-
-    </script>
-
-
+    <script src="{% static 'js/sedes.js' %}"></script> 
 
     {% endblock %}

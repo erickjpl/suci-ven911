@@ -1,0 +1,26 @@
+<div id="addHumedadPiel" class="modal">
+    <div class="modal-content">
+        <span class="close" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+        <div class="modal-header">
+            <h2>Agregar Humedad de la Piel</h2>
+        </div>
+        <br>
+        <form method="POST" action="{% url 'humedadPiel' accion='agregar'%}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Humedad de la Piel</label>
+                    <br>
+                    <br>
+                    <input type="text" class="form-group" name="{{ form.humedad_piel.name}}" value=""
+                        placeholder="Ingrese humedad de la piel" maxlength="15">
+                </div>
+            </div>
+            <br>
+            <div>
+                <input type="submit" value="enviar" class="btn" style="width: 90px;">
+            </div>
+        </form>
+    </div>
+</div>

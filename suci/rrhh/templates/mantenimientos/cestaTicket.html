@@ -1,0 +1,63 @@
+{% extends "mantenimientos/baseMantenimientos.html" %}
+
+{% block title %} S.U.C.I | Mantenimiento/CestaTicket {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2>Mantenimiento /<small> Cesta Ticket </small></h2>
+        </div>
+        <div class="user--info">
+            <img src="{% static 'img/ven911.jpg' %}">
+            <h2 class="title">V{{request.user.username}}</h2>
+        </div>
+    </div>
+
+    <div align="right" style="margin-right: 100px; margin-bottom: -10px;">
+        
+        <input type="hidden" class="btn" onclick="location.href='{% url 'cestaticket' accion='todos'  %}'"></input>
+    </div>
+
+
+    <div class="tabular--wrapper">
+        <h3 class="main--title">Recientes</h3>
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Estatus</th>
+                        <th>Descripcion</th>
+                        <th>Monto</th>
+                        <th>Acciones</th>
+                    </tr>
+                <tbody>
+                    {% if cestaticket %}
+                    <tr>
+                        <td>{{ cestaticket.estatus }}</td>
+                        <td>{{ cestaticket.descripcion }}</td>
+                        <td>{{ cestaticket.monto }} $</td>
+                        <td>
+                            <a href="#" title="Editar Monto del Cesta Ticket" id="myBtnUpd" data-toggle="modal" data-id='{{ cestaticket.id }}'
+                            class="btn-editar"
+                            style="color: black;">
+                            <i class="fa-solid fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
+    {% include "modal/updCestaTicket.html" %}
+
+    <script src="{% static 'js/cestaTicket.js' %}"></script> 
+    
+    {% endblock %}

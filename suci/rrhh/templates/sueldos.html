@@ -1,0 +1,101 @@
+{% extends "baserrhh.html" %}
+
+{% block title %} S.U.C.I | Nómina {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2>Gestión Humana /<small> Sueldos </small></h2>
+        </div>
+        <div class="user--info">
+            <img src="{% static 'img/ven911.jpg' %}">
+            <h2 class="title">V{{request.user.username}}</h2>
+        </div>
+    </div>
+    
+    <div align="right" style="margin-right: 100px; margin-bottom: -10px;">
+       <button type="button" class="btn" onclick="location.href='{% url 'descargar-excel-sueldos' %}'">Descargar Excel</button>
+       <button type="button" class="btn" onclick="window.location.href='{% url 'generar-pdf-sueldos' %}'">Descargar PDF</button>
+    </div>
+
+    <div class="tabular--wrapper">
+        <h3 class="main--title"></h3>
+        <div class="user--info">
+            <!--<form id="formConsulta" method="" action="">
+                <div class="searh--box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" name="cedula" id="inputCedula" placeholder="Ingrese la cédula">
+                    <button type="submit" class="btn">Consultar</button>
+                    <button type="button" class="btn" onclick="location.href='{% url 'sueldos' %}'">Limpiar</button>
+                </div>
+            </form>-->
+        </div>
+        
+        <br>
+        <div class="table-container-x">
+            <table class="table-x table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Cédula</th>
+                        <th>Departamento</th>
+                        <th>Cargo</th>
+                        <th>Sueldo Base</th>
+                        <th>Prima Profesionalismo</th>
+                        <th>Cesta Ticket</th>
+                        <th>Bono de Guerra</th>
+                        <th colspan="2">Acciones</th>
+                    </tr>
+                <tbody>
+                    
+                    {% for sueldo, cesta, bono in datos_combinados %}
+                    <tr>
+                        <td>{{ sueldo.personal.nombres }}</td>
+                        <td>{{ sueldo.personal.apellidos }}</td>
+                        <td>{{ sueldo.personal.cedula }}</td>    
+                        <td>{{ sueldo.personal.departamento }}</td>
+                        <td>{{ sueldo.personal.cargo }}</td>
+                        <td>{{ sueldo.sueldo_base }} Bs.</td>
+                        <td>{{ sueldo.prima_profesionalismo }} Bs.</td>
+                        <td>{{ cesta|floatformat:2 }} Bs</td>
+                        <td>{{ bono|floatformat:2 }} Bs</td>
+                        <td>
+                           <a href="#" title="Editar Personal" id="myBtnUpd" data-toggle="modal" data-id='{{ sueldo.id }}'
+                                class="btn-editar"
+                                style="color: black;">
+                                <ion-icon class="fa-solid fa-eye" name="create-outline" style="font-size: 22px;"></ion-icon>
+                            </a>
+                        </td>
+                        <!--<td>
+                            <a href="#" title="Movimiento de Personal" id="myBtnUpdMov" data-toggle="modal" data-id='{{ personal.id }}'
+                                class="btn-editar-mov"
+                                style="color: black;">
+                                <ion-icon name="folder-open" style="font-size: 22px;"></ion-icon>
+                            </a>
+                        </td>-->
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
+    {% include "modal/addPersonal.html" %}
+    {% include "modal/updPersonal.html" %}
+    {% include "modal/udpSueldos.html" %}
+    {% include "modal/delPersonal.html" %}
+
+  
+    <script src="{% static 'js/sueldo.js' %}"></script> 
+
+
+    {% endblock %}

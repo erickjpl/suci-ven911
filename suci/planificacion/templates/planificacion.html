@@ -23,51 +23,70 @@
                     <span class="title">S.U.C.I</span>
                 </a>
             </li>
+            <a href="../inicio">
+                <i class="fa-solid fa-house"></i>
+                <span>Inicio</span>
+            </a>
+        </li>
+        <li class="dropdown__list">
+            <a href="#" class="dropdown__link">
+                <i class="fa-solid fa-ruler-combined"></i>
+                <span class="dropdown__span">Planificacion</span>
+                <input type="checkbox" class="dropdown__check">
+            </a>
+            <div class="dropdown__content">
+                <ul class="dropdown__sub">
+                    <li class="dropdown__li">
+                         <a href="../actividades" class="dropdown__anchor">Actividades programadas</a>
+                    </li>
+                    <li class="dropdown__li">
+                        <ul class="dropdown__sub">
+                        <a href="../objetivos" class="dropdown__anchor">Objetivos</a>
+                        </li>
+                    </li>
+                </ul>
+            </div>
             <li>
-                <a href="../inicio">
-                    <i class="fa-solid fa-house"></i>
-                    <span>Inicio</span>
-                </a>
-            </li>
-            <li>
-                <a href="../planificacion">
-                    <i class="fa-solid fa-ruler-combined"></i>
-                    <span>Planificacion</span>
-                </a>
-            </li>
-            <li>
-                <a href="../objetivos">
+                <a href="../metas">
                     <i class="fa-solid fa-bullseye"></i>
-                    <span>Objetivos</span>
+                    <span>Metas Físicas</span>
+                </a>
+            </li>    
+            <li class="dropdown__list">
+                <a href="#" class="dropdown__link">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span class="dropdown__span">Estadísticas</span>
+                    <input type="checkbox" class="dropdown__check">
+                </a>
+                <div class="dropdown__content">
+                    <ul class="dropdown__sub">
+                        <li class="dropdown__li">
+                            <a href="../llamadas" class="dropdown__anchor">Llamadas</a>
+                        </li>
+                        <li class="dropdown__li">
+                            <a href="../infraestructura" class="dropdown__anchor">Infraestructura</a>
+                        </li>
+                    </ul>
+                </div>
+        <li class="logout.new">
+                <a href="../modulos">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Volver</span>
                 </a>
             </li>
-            <li>
-                <a href="../estadisticas">
-                    <i class="fa-solid fa-square-poll-vertical"></i>
-                    <span>Estadísticas</span>
+            <li class="logout" style="background: none;">
+                <a href="{% url 'logout' %}">
+                    <label class="switch" for="checkbox">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="slider">
+                            <path
+                            d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V256c0 17.7 14.3 32 32 32s32-14.3 32-32V32zM143.5 120.6c13.6-11.3 15.4-31.5 4.1-45.1s-31.5-15.4-45.1-4.1C49.7 115.4 16 181.8 16 256c0 132.5 107.5 240 240 240s240-107.5 240-240c0-74.2-33.8-140.6-86.6-184.6c-13.6-11.3-33.8-9.4-45.1 4.1s-9.4 33.8 4.1 45.1c38.9 32.3 63.5 81 63.5 135.4c0 97.2-78.8 176-176 176s-176-78.8-176-176c0-54.4 24.7-103.1 63.5-135.4z"
+                            ></path>
+                        </svg>
+                    </label>
                 </a>
             </li>
-            <li class="logout.new">
-                    <a href="../modulos">
-                        <i class="fa-solid fa-arrow-left"></i>
-                        <span>Volver</span>
-                    </a>
-                </li>
-                <li class="logout" style="background: none;">
-                    <a href="{% url 'logout' %}">
-                        <input id="checkbox" type="checkbox" />
-                        <label class="switch" for="checkbox">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="slider">
-                                <path
-                                d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V256c0 17.7 14.3 32 32 32s32-14.3 32-32V32zM143.5 120.6c13.6-11.3 15.4-31.5 4.1-45.1s-31.5-15.4-45.1-4.1C49.7 115.4 16 181.8 16 256c0 132.5 107.5 240 240 240s240-107.5 240-240c0-74.2-33.8-140.6-86.6-184.6c-13.6-11.3-33.8-9.4-45.1 4.1s-9.4 33.8 4.1 45.1c38.9 32.3 63.5 81 63.5 135.4c0 97.2-78.8 176-176 176s-176-78.8-176-176c0-54.4 24.7-103.1 63.5-135.4z"
-                                ></path>
-                            </svg>
-                        </label>
-                        <span class="title" style="margin-left: 40px;">Salir</span>
-                    </a>
-                </li>
-        </ul>
-    </div>
+    </ul>
+</div>
 <!-- ========================= Menú de usuario  ==================== -->
 <div class="main--content">
     <div class="header--wrapper">

@@ -1,5 +1,5 @@
 from gestion_comunicacional.social_media.repositories.SocialMediaPostRepository import SocialMediaPostRepository
-from index.mixins.CrudMixin import CrudService
+from gestion_comunicacional.mixins.CrudMixin import CrudService
 
 
 class SocialMediaPostService(CrudService):

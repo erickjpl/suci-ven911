@@ -1,0 +1,52 @@
+{% extends "mantenimientosUri/baseMantenimientosUri.html" %}
+
+{% block title %} S.U.C.I | Mantenimiento/Temperatura de la Piel{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2>Mantenimiento /<small>Temperatura de la Piel </small></h2>
+        </div>
+        <div class="user--info">
+            <img src="{% static 'img/ven911.jpg' %}">
+            <h2 class="title">V{{request.user.username}}</h2>
+        </div>
+    </div>
+
+    <div align="right" style="margin-right: 100px; margin-bottom: -10px;">
+        <button id="addTemperatura" class="btn">Agregar</button>
+        <input type="hidden" class="btn" onclick="location.href='{% url 'temperaturaPiel' accion='todos'  %}'"></input>
+    </div>
+
+
+    <div class="tabular--wrapper">
+        <h3 class="main--title">Recientes</h3>
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Temperatura de la Piel</th>
+                    </tr>
+                <tbody>
+                    {% for temperatura in temperatura_piel %}
+                    <tr>
+                        <td>{{ temperatura.id }}</td>
+                        <td>{{ temperatura.temperatura_piel }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
+    {% include "modal/addTemperaturaPiel.html" %}
+    <script src="{% static 'js/temperaturaPiel.js' %}"></script> 
+    
+    {% endblock %}

@@ -3,13 +3,19 @@ from .forms import ProyectoForm, ProyectoEForm, CedenteForm, CedenteUForm, Recep
 from .models import Proyecto, Acciones, Cedente, Receptor, Asignacion
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.template.loader import get_template
+from index.decorators import no_autenticado, allowed_users
+from django.contrib.auth.decorators import login_required
 from xhtml2pdf import pisa
 
 # VISTAS DE PRESUPESTO
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def iniciopre(request):
     return render(request, "inicio.html")
 
 # VISTAS DE PRESUPUESTO - PROYECTO
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def proyecto(request):
     if request.method == 'POST':
         form9 = ProyectoForm(request.POST)
@@ -34,11 +40,13 @@ def proyecto(request):
     return render(request, 'proyecto.html', context)
 
 # VISTAS DE PRESUPUESTO - CONSULTAR - PROYECTO
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def proyecto_consultar(request, accion):
     if accion == 'consultar':
         if 'nombrep' in request.GET:
             nombrep = request.GET['nombrep']
-            proyectoo = Proyecto.objects.filter(nombrep=nombrep)
+            proyectoo = Proyecto.objects.filter(nombrep__contains=nombrep).values()
             paginator = Paginator(proyectoo, 5) # 14 objetos por página
         pagina = request.GET.get('page')
         try:
@@ -54,6 +62,8 @@ def proyecto_consultar(request, accion):
         return render(request, 'proyecto.html', context)
 
 # VISTAS DE ACTUALIZACIÓN DE PRESUPUESTO - PROYECTO
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def update_proyecto(request, id):
     queryset = Proyecto.objects.get(id=id)
     form9 = ProyectoEForm(instance=queryset)
@@ -61,16 +71,20 @@ def update_proyecto(request, id):
         form9 = ProyectoEForm(request.POST, instance=queryset)
         if form9.is_valid():
             form9.save()
-            return redirect('/presupuesto/proyecto#updatesuccess')
+            return redirect('/proyecto#updatesuccess')
 
 # VISTAS DE ELIMINACIÓN DE PRESUPUESTO - PROYECTO
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'superusuario'])
 def del_proyecto(request, id):
     if request.method == 'POST':
-        form9 = Proyecto.objects.get(id=id)
-        form9.delete()
-        return redirect('/presupuesto/proyecto#deletesuccess')
+        form = Proyecto.objects.get(id=id)
+        form.delete()
+        return redirect('/proyecto#deletesuccess')
     
 #GENERACION DE PDF PRESUPUESTO - PROYECTO
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'superusuario'])
 def generar_pdf(request):
     Proyectoo = Proyecto.objects.all()
     template_path = 'proyectopdf.html'
@@ -86,17 +100,9 @@ def generar_pdf(request):
         return HttpResponse('Error' + html)
     return response
 
-# VISTAS DE ACTUALIZACIÓN DE PRESUPUESTO - PROYECTO
-def update_proyecto(request, id):
-    queryset = Proyecto.objects.get(id=id)
-    form9 = ProyectoEForm(instance=queryset)
-    if request.method == 'POST':
-        form9 = ProyectoEForm(request.POST, instance=queryset)
-        if form9.is_valid():
-            form9.save()
-            return redirect('/presupuesto/proyecto#updatesuccess')
-
 # VISTAS DE PRESUPUESTO - ACCIONES
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def acciones(request):
     if request.method == 'POST':
         form14 = AccionesForm(request.POST)
@@ -121,11 +127,13 @@ def acciones(request):
     return render(request, 'accionescen.html', context)
 
 # VISTAS DE PRESUPUESTO - CONSULTAR - ACCIONES
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def acciones_consultar(request, accion):
     if accion == 'consultar':
         if 'nombrep' in request.GET:
             nombrep = request.GET['nombrep']
-            accioness = Acciones.objects.filter(nombrep=nombrep)
+            accioness = Acciones.objects.filter(nombrep__contains=nombrep).values()
             paginator = Paginator(accioness, 5) # 14 objetos por página
         pagina = request.GET.get('page')
         try:
@@ -137,10 +145,12 @@ def acciones_consultar(request, accion):
         except EmptyPage:
             # Si la página está fuera de rango, redirigir a la última página
             pagina_actual = paginator.page(paginator.num_pages)
-        context = {'form14': AccionesForm(), 'formesp': AccionesEForm(), 'accioness': pagina_actual}
+        context = {'form14': AccionesForm(), 'formacc': AccionesEForm(), 'accioness': pagina_actual}
         return render(request, 'accionescen.html', context)
 
 # VISTAS DE ACTUALIZACIÓN DE PRESUPUESTO - ACCIONES
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'superusuario'])
 def update_acciones(request, id):
     queryset = Acciones.objects.get(id=id)
     form9 = AccionesEForm(instance=queryset)
@@ -148,62 +158,20 @@ def update_acciones(request, id):
         form14 = AccionesForm(request.POST, instance=queryset)
         if form14.is_valid():
             form14.save()
-            return redirect('/presupuesto/acciones#updatesuccess')
+            return redirect('/acciones#updatesuccess')
 
 # VISTAS DE ELIMINACIÓN DE PRESUPUESTO - ACCIONES
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'superusuario'])
 def del_acciones(request, id):
     if request.method == 'POST':
         form14 = Acciones.objects.get(id=id)
         form14.delete()
-        return redirect('/presupuesto/acciones#deletesuccess')
-
-# VISTAS DE GENERAR PDF - PRESUPUESTO - ACCIONES
-def acciones_pdf(request):
-    accioness = Acciones.objects.all()
-    template_path = 'accionespdf.html'
-    context = {'accioness': accioness}
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'filename="Acciones.pdf"'
-    template = get_template(template_path)
-    html = template.render(context)
-    pisa_status = pisa.CreatePDF(
-        html, dest=response)
-    
-    if pisa_status.err:
-        return HttpResponse('Error' + html)
-    return response
-
-# VISTAS DE PRESUPUESTO - CONSULTAR
-def asignacion_consultar(request, accion):
-    if accion == 'consultar':
-        if 'nombredir' in request.GET:
-            nombredir = request.GET['nombredir']
-            asignacionn = Asignacion.objects.filter(nombredir=nombredir)
-            paginator = Paginator(asignacionn, 15) # 15 objetos por página
-        pagina = request.GET.get('page')
-        try:
-            # Obtener la página solicitada
-            pagina_actual = paginator.page(pagina)
-        except PageNotAnInteger:
-            # Si la página no es un entero, redirigir a la primera página
-            pagina_actual = paginator.page(1)
-        except EmptyPage:
-            # Si la página está fuera de rango, redirigir a la última página
-            pagina_actual = paginator.page(paginator.num_pages)
-        context = {'form11': AsignacionForm(), 'formedit': AsignacionUForm(), 'asignacionn': pagina_actual}
-        return render(request, 'asignacion.html', context)
-
-# VISTAS DE ACTUALIZACIÓN DE ASIGNACION
-def update_asignacion(request, id):
-    queryset = Asignacion.objects.get(id=id)
-    form11 = AsignacionUForm(instance=queryset)
-    if request.method == 'POST':
-        form11 = AsignacionUForm(request.POST, instance=queryset)
-        if form11.is_valid():
-            form11.save()
-            return redirect('/presupuesto/asignacion#updatesuccess')
+        return redirect('/acciones#deletesuccess')
 
 # VISTAS DE ASIGNACIÓN
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def asignacion(request):
     if request.method == 'POST':
         form11 = AsignacionForm(request.POST)
@@ -227,7 +195,61 @@ def asignacion(request):
     context = {'form11': AsignacionForm(), 'formedit': AsignacionUForm(), 'asignacionn': pagina_actual}
     return render(request, 'asignacion.html', context)
 
+# VISTAS DE GENERAR PDF - PRESUPUESTO - ACCIONES
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
+def acciones_pdf(request):
+    accioness = Acciones.objects.all()
+    template_path = 'accionespdf.html'
+    context = {'accioness': accioness}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="Acciones.pdf"'
+    template = get_template(template_path)
+    html = template.render(context)
+    pisa_status = pisa.CreatePDF(
+        html, dest=response)
+    
+    if pisa_status.err:
+        return HttpResponse('Error' + html)
+    return response
+
 # VISTAS DE PRESUPUESTO - CONSULTAR
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
+def asignacion_consultar(request, accion):
+    if accion == 'consultar':
+        if 'nombredir' in request.GET:
+            nombredir = request.GET['nombredir']
+            asignacionn = Asignacion.objects.filter(nombredir__contains=nombredir).values()
+            paginator = Paginator(asignacionn, 15) # 15 objetos por página
+        pagina = request.GET.get('page')
+        try:
+            # Obtener la página solicitada
+            pagina_actual = paginator.page(pagina)
+        except PageNotAnInteger:
+            # Si la página no es un entero, redirigir a la primera página
+            pagina_actual = paginator.page(1)
+        except EmptyPage:
+            # Si la página está fuera de rango, redirigir a la última página
+            pagina_actual = paginator.page(paginator.num_pages)
+        context = {'form11': AsignacionForm(), 'formedit': AsignacionUForm(), 'asignacionn': pagina_actual}
+        return render(request, 'asignacion.html', context)
+
+# VISTAS DE ACTUALIZACIÓN DE ASIGNACION
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'superusuario'])
+def update_asignacion(request, id):
+    queryset = Asignacion.objects.get(id=id)
+    form11 = AsignacionUForm(instance=queryset)
+    if request.method == 'POST':
+        form11 = AsignacionUForm(request.POST, instance=queryset)
+        if form11.is_valid():
+            form11.save()
+            return redirect('/presupuesto/asignacion#updatesuccess')
+
+# VISTAS DE PRESUPUESTO - CONSULTAR
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def asignacion_consultar(request, accion):
     if accion == 'consultar':
         if 'nombredir' in request.GET:
@@ -248,6 +270,8 @@ def asignacion_consultar(request, accion):
         return render(request, 'asignacion.html', context)
 
 # VISTAS DE ELIMINACIÓN DE ASIGNACION
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'superusuario'])
 def del_asignacion(request, id):
     if request.method == 'POST':
         form11 = Asignacion.objects.get(id=id)
@@ -255,6 +279,8 @@ def del_asignacion(request, id):
         return redirect('/presupuesto/asignacion#deletesuccess')
 
 # VISTAS DE GENERAR PDF - PRESUPUESTO - ASIGNACION
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def asignacion_pdf(request):
     asignacionn = Asignacion.objects.all()
     template_path = 'asignacionpdf.html'
@@ -271,6 +297,8 @@ def asignacion_pdf(request):
     return response
 
 # VISTAS DE PRESUPUESTO - CEDENTE
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def cedente(request):
     if request.method == 'POST':
         form15 = CedenteForm(request.POST)
@@ -295,6 +323,8 @@ def cedente(request):
     return render(request, 'cedente.html', context)
 
 # VISTAS DE PRESUPUESTO CEDENTE - CONSULTAR
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def cedente_consultar(request, accion):
     if accion == 'consultar':
         if 'partidac' in request.GET:
@@ -315,6 +345,8 @@ def cedente_consultar(request, accion):
         return render(request, 'cedente.html', context)
 
 # VISTAS DE ACTUALIZACION PRESUPUESTO - CEDENTE  
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'superusuario'])
 def update_cedente(request, id):
     queryset = Cedente.objects.get(id=id)
     form15 = CedenteUForm(instance=queryset)
@@ -325,6 +357,8 @@ def update_cedente(request, id):
             return redirect('/presupuesto/cedente#updatesuccess')
 
 # VISTAS DE ELIMINACIÓN DE PRESUPUESTO - CEDENTE
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'superusuario'])
 def del_cedente(request, id):
     if request.method == 'POST':
         form15 = Cedente.objects.get(id=id)
@@ -332,6 +366,8 @@ def del_cedente(request, id):
         return redirect('/presupuesto/cedente#deletesuccess')
     
 # VISTAS DE GENERAR PDF DE PRESUPUESTO - CEDENTE
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def cedente_pdf(request):
     cedentee = Cedente.objects.all()
     template_path = 'cedentepdf.html'
@@ -348,6 +384,8 @@ def cedente_pdf(request):
     return response
 
 # VISTAS DE PRESUPUESTO - RECEPTOR
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def receptor(request):
     if request.method == 'POST':
         form16 = ReceptorForm(request.POST)
@@ -372,6 +410,8 @@ def receptor(request):
     return render(request, 'receptor.html', context)
 
 # VISTAS DE PRESUPUESTO RECEPTOR - CONSULTAR
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def receptor_consultar(request, accion):
     if accion == 'consultar':
         if 'partidar' in request.GET:
@@ -392,6 +432,8 @@ def receptor_consultar(request, accion):
         return render(request, 'receptor.html', context)
 
 # VISTAS DE ACTUALIZACION PRESUPUESTO - RECEPTOR  
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'superusuario'])
 def update_receptor(request, id):
     queryset = Receptor.objects.get(id=id)
     form16 = ReceptorUForm(instance=queryset)
@@ -402,6 +444,8 @@ def update_receptor(request, id):
             return redirect('/presupuesto/receptor#updatesuccess')
 
 # VISTAS DE ELIMINACIÓN DE PRESUPUESTO - RECEPTOR
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'superusuario'])
 def del_receptor(request, id):
     if request.method == 'POST':
         form16 = Receptor.objects.get(id=id)
@@ -409,6 +453,8 @@ def del_receptor(request, id):
         return redirect('/presupuesto/receptor#deletesuccess')
 
 # VISTAS DE GENERAR PDF DE PRESUPUESTO - RECEPTOR
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['presu_plani_admin', 'presu_plani_estandar', 'usuario_solo_vista', 'superusuario'])
 def receptor_pdf(request):
     receptorr = Receptor.objects.all()
     template_path = 'receptorpdf.html'

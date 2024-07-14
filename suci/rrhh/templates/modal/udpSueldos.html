@@ -1,0 +1,72 @@
+<div class="modal fade" id="updSede" tabindex="-1" role="dialog" aria-labelledby="modal-editar-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="close closeupd" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+            <div class="modal-header">
+                <h2>Visualizar Sueldo</h2>
+            </div>
+            <br>
+            <form id="form-editar" action="{% url 'sueldos'  %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="id_e" name="id" value="">
+
+                    <div class="col-md-6">
+                        <label for="estatus">Estatus</label>
+                        <select class='form-control' id="estatus_e" name="estatus" readOnly>
+                            <option value="ACTIVO" readOnly>ACTIVO</option>
+                            <!--<option value="AGOTADO" readOnly>AGOTADO</option>-->
+                            <option value="NO DISPONIBLE" readOnly>NO DISPONIBLE</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="sueldo_base">Sueldo Base</label>
+                        <input type="text" class="form-control" id="sueldo_base_e" name="sueldo_base" readOnly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="prima_profesionalismo">Prima por Profesionalización</label>
+                        <input type="text" class="form-control" id="prima_profesionalismo_e" name="prima_profesionalismo" readOnly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="p_discapacidad">Prima por Discapacidad</label>
+                        <input type="text" class="form-control" id="p_discapacidad_e" name="p_discapacidad" readOnly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="p_hijos_menor_12">Prima por hijos</label>
+                        <input type="text" class="form-control" id="p_hijos_menor_12_e" name="p_hijos_menor_12" readOnly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="p_hijos_discapacidad">Prima por hijos con Discapacidad</label>
+                        <input type="text" class="form-control" id="p_hijos_discapacidad_e" name="p_hijos_discapacidad" readOnly>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label for="monto_t">Cesta Ticket</label>
+                        <input type="text" class="form-control" id="monto_t_e" name="monto_t" readOnly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="monto_b">Bono de Guerra</label>
+                        <input type="text" class="form-control" id="monto_b_e" name="monto_b" readOnly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="personal">Personal</label>
+                        <input type="text" class="form-control" id="personal_e" name="personal" readOnly>
+                    </div>
+                    
+                    
+                    <div class="col-md-6">
+                        <label for="n_fasmij">Fasmij</label>
+                        <input type="text" class="form-control" id="n_fasmij_e" name="n_fasmij" readOnly>
+                    </div>
+                    
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

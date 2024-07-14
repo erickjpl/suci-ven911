@@ -48,26 +48,12 @@
                 <span>Gestión</span>
             </a>
         </li>
-        <li class="dropdown__list">
-            <a href="#" class="dropdown__link">
+        <li>
+            <a href="../vehiculos">
                 <i class="fa-solid fa-car-side"></i>
-                <span class="dropdown__span">Vehículos</span>
-                <input type="checkbox" class="dropdown__check">
+                <span>Vehiculos</span>
             </a>
-            <div class="dropdown__content">
-                <ul class="dropdown__sub">
-                    <li class="dropdown__li">
-                        <a href="../ambulancia" class="dropdown__anchor">Ambulancia</a>
-                    </li>
-                    <li class="dropdown__li">
-                        <a href="../patrulla" class="dropdown__anchor">Patrulla</a>
-                    </li>
-                    <li class="dropdown__li">
-                        <a href="../particular" class="dropdown__anchor">Particular</a>
-                    </li>
-                </li>
-            </ul>
-        </div>
+        </li> 
             <li class="logout.new">
                 <a href="../../modulos">
                     <i class="fa-solid fa-arrow-left"></i>
@@ -251,9 +237,9 @@
                             <td>{{ archivo.hora }}</td>
                             <td>{{ archivo.cargo }}</td>
                             <td>
-                                <a href="#" id="myBtnn3{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="#" title="Editar" id="myBtnn3{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-pen-to-square"></i></a>
                                 &nbsp;&nbsp;&nbsp;
-                                <a href="#" id="myBtnn2{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-trash"></i></a>
+                                <a href="#" title="Eliminar" id="myBtnn2{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-trash"></i></a>
                                 <div id="myModall3{{ archivo.id }}" class="modal">
                                     <div class="modal-content">
                                         <span class="closee3{{ archivo.id }} close" style="margin-top: -10px;">&times;</span>
@@ -261,7 +247,7 @@
                                             <h2>Modificar Incidente</h2>
                                         </div>
                                         <br>
-                                        <form method="POST" action="gestion/update/{{ archivo.pk }}">
+                                        <form method="POST" action="update/{{ archivo.pk }}">
                                             {% csrf_token %}
                                             <div class="form-group">
                                                 <div class="form-items">
@@ -356,7 +342,7 @@
                                     <div class="modal-content">
                                         <span class="closee2{{ archivo.id }} close" style="margin-top: -10px;">&times;</span>
                                         <div class="modal-header">
-                                            <form action="gestion/delete/{{ archivo.id }}" method="POST">
+                                            <form action="delete/{{ archivo.id }}" method="POST">
                                                 {% csrf_token %}
                                                 <br>
                                                 <div align="center">

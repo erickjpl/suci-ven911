@@ -1,0 +1,60 @@
+<div id="addbienes" class="modal">
+    <div class="modal-content">
+        <span class="close closeadd" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+        <div class="modal-header">
+            <h2>Agregar Bienes</h2>
+        </div>
+        <br>
+        <form method="POST" action="{% url 'bienes' accion='agregar' departamentofilter=1 %}">
+            {% csrf_token %}
+            
+                <div class="col-md-12">
+                    <label>Estatus</label>
+                    <br>
+                    <input type="text" class="form-control" name="{{form.estatus.html_name}}"
+                        placeholder="Ingrese el nombre" value="ACTIVO" readonly required/>
+                </div>
+
+                <div class="col-md-12">
+                    <label>Sede</label>
+                    <select class='form-control' name="{{form.sede.html_name}}">
+                        <option value="">Seleccione una sede</option>
+                        {% for sede in sedes %}
+                        <option value="{{ sede.id }}">{{ sede.sede }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label>Departamento</label>
+                    <select class='form-control' name="{{form.departamento.html_name}}">
+                        <option value="">Seleccione el departamento</option>
+                        {% for departamento in departamentos %}
+                        <option value="{{ departamento.id }}">{{ departamento.departamento }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+           
+            
+                <div class="col-md-6">
+                    <label>Nombre</label>
+                    <br>
+                    <input type="text" class="form-control" name="{{form.nombre.html_name}}" maxlength="20"
+                        placeholder="Ingrese el nombre del bien nacional" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label>Cantidad</label>
+                    <br>
+                    <input type="number" class="form-control" name="{{form.cantidad.html_name}}"
+                        placeholder="Ingrese la cantidad" required>
+                </div>
+            
+            <br>
+            <div align="center">
+                <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                <input type="submit" class="btn" value="Guardar registro" >
+            </div>
+        </form>
+    </div>
+</div>

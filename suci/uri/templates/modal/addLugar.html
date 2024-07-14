@@ -1,0 +1,26 @@
+<div id="addLugar" class="modal">
+    <div class="modal-content">
+        <span class="close" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+        <div class="modal-header">
+            <h2>Agregar un lugar de atención</h2>
+        </div>
+        <br>
+        <form method="POST" action="{% url 'lugares' accion='agregar'%}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Nombre de lugar</label>
+                    <br>
+                    <br>
+                    <input type="text" class="form-group" name="{{ form.lugar.name}}" value=""
+                        placeholder="Ingrese un lugar" maxlength="15">
+                </div>
+            </div>
+            <br>
+            <div>
+                <input type="submit" value="enviar" class="btn" style="width: 90px;">
+            </div>
+        </form>
+    </div>
+</div>

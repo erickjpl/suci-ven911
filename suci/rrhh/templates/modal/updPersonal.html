@@ -1,388 +1,418 @@
-<div class="modal fade" id="modal-editar" tabindex="-1" role="dialog" aria-labelledby="modal-editar-label">
+<div class="modal fade" id="updpersonal" tabindex="-1" role="dialog" aria-labelledby="modal-editar-label">
     <div class="modal-dialog">
         <div class="modal-content">
-            <span class="close2" style="margin-top: -10px;">&times;</span>
+            <span class="close closeupd" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
             <div class="modal-header">
                 <h2>Editar Personal</h2>
             </div>
             <br>
-            <form id="form-editar" action="" method="post">
+            <form id="form-editar" action="{% url 'ingresosPersonal' accion='editar' %}" method="post">
                 {% csrf_token %}
                 <div class="modal-body">
-                    <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
+                    <input type="hidden" class="form-control" id="id_persona_e" name="id_persona" value="">
 
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" value="">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="apellido">Apellido</label>
-                            <input type="text" class="form-control" id="apellido" name="apellido" value="">
-                        </div>
+                    <div class="col-md-6">
+                        <label for="nacionalidad">Estatus</label>
+                        <select class='form-control' id="estatus_e" name="estatus" readOnly>
+                            <option value="ACTIVO" readOnly>ACTIVO</option>
+                            <option value="RETIRADO" readOnly>RETIRADO</option>
+                            <option value="VACACIONES" readOnly>VACACIONES</option>
+                            <option value="SUSPENDIDO" readOnly>SUSPENDIDO</option>
+                            <option value="TRASLADADO" readOnly>TRASLADADO</option>
+                        </select>
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <label for="nacionalidad">Nacionalidad</label>
-                            <select class='form-control' id="nacionalidad" name="nacionalidad">
-                                {% for nacionalidad in nacionalidades %}
-                                <option value="{{ nacionalidad.nacionalidad }}">{{ nacionalidad.nacionalidad }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="cedula">Cédula</label>
-                            <input type="text" class="form-control" id="cedula" name="cedula" value="">
-                        </div>
+                    <div class="col-md-6">
+                        <label for="nacionalidad">Nacionalidad</label>
+                        <select class='form-control' id="nacionalidad_e" name="nacionalidad" readOnly>
+                            {% for nacionalidad in nacionalidades %}
+                            <option value="{{ nacionalidad.id }}">{{ nacionalidad.nacionalidad }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <label for="sexo">Sexo</label>
-                            <select class='form-control' id="sexo" name="sexo">
-                                {% for sexo in sexos %}
-                                <option value="{{ sexo.sexo }}">{{ sexo.sexo }} </option>
-                                {% endfor %}
-                            </select>
-                        </div>
+                    <div class="col-md-6">
+                        <label for="cedula">Cédula</label>
+                        <input type="text" class="form-control" id="cedula_e" name="cedula" value="" readOnly>
+                    </div>
 
-                        <div class="col-md-12">
-                            <label for="cedula">Fecha Nacimiento</label>
-                            <input type="date" class="form-control" id="nacimiento" name="nacimiento" value="">
-                        </div>
+                
+                    <div class="col-md-6">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombres_e" name="nombres" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" class="form-control" id="apellidos_e" name="apellidos" value="">
                     </div>
 
                     <div class="col-md-12">
-                        <div class="col-md-12">
-                            <label for="cedula">Edad</label>
-                            <input type="number" class="form-control" id="edad" name="edad" value="" readOnly>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <label for="cedula">Telefono</label>
-                            <input type="text" class="form-control" id="telefono" name="telefono" value="">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="estado">Estado Civil</label>
-                            <select class='form-control' id="estado" name="estado">
-                                {% for estado in estados %}
-                                <option value="{{ estado.estado_civil }}">{{ estado.estado_civil }} </option>
-                                {% endfor %}
-                            </select>
-                        </div>
+                        <label>Sexo</label>
+                        <select class='form-control' id="sexo_e" name="sexo" readOnly>
+                            <option value="">Seleccione un sexo </option>
+                            {% for sexo in sexos %}
+                            <option value="{{ sexo.id }}">{{ sexo.sexo }} </option>
+                            {% endfor %}
+                        </select>
                     </div>
 
                     <div class="col-md-12">
-                        <label for="conyugue">Conyugue</label>
-                        <select class='form-control' id="conyugue" name="conyugue">
+                        <label>fecha_nac</label>
+                        <br>
+                        <input type="date" class="form-control" name="fecha_nac" id="fecha_nac_e" 
+                            placeholder="Ingrese la fecha de nacimiento"  required readOnly>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Edad</label>
+                        <br>
+                        <input type="text" class="form-control" id="edad_e" name="edad"  placeholder="Ingrese la edad"
+                            required readOnly>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>Telefono</label>
+                        <br>
+                        <input type="text" class="form-control" id="telefono_e" name="telefono"
+                            placeholder="Ingrese su telefono" required>
+                    </div>
+    
+                    <div class="col-md-12">
+                        <label>Estado Civil</label>
+                        <select class='form-control' id="estado_civil_e" name="estado_civil" required>
+                            <option value="">Seleccione un Estado Civil</option>
+                            {% for estado in estados %}
+                            <option value="{{ estado.id }}">{{ estado.estado_civil }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Conyugue</label>
+                        <select class='form-control' id="conyugue_e" name="conyugue" onchange="MostrarConyugueEditar();">
                             <option value="SI">SI</option>
-                            <option value="NO">NO</option>
+                            <option value="NO" selected>NO</option>
                         </select>
                     </div>
-
-                    <div class="col-md-12">
-                        <label for="ciconyugue">Cedula Conyugue</label>
-                        <input type="text" class="form-control" id="ciconyugue" name="ciconyugue" value="">
+                    <div class="col-md-12" id="conyugue1_e" style="display: none;">
+                        <label>Cédula Conyugue</label>
+                        <br>
+                        <input type="number" class="form-control" id="cedula_conyugue_e" name="cedula_conyugue"
+                            placeholder="Ingrese las edades">
                     </div>
-
+        
                     <div class="col-md-12">
-                        <label for="sangre">Tipo de Sangre</label>
-                        <select class='form-control' id="sangre" name="sangre">
+                        <label>Tipo de Sangre</label>
+                        <select class='form-control' id="tipo_sangre_e" name="tipo_sangre" readOnly>
+                            <option value="">Seleccione un Tipo de Sangre</option>
                             {% for sangre in sangres %}
-                            <option value="{{ sangre.tipo_sangre }}">{{ sangre.tipo_sangre }} </option>
+                            <option value="{{ sangre.id }}">{{ sangre.tipo_sangre }} </option>
                             {% endfor %}
                         </select>
                     </div>
 
                     <div class="col-md-12">
-                        <label for="discapacitado">Discapacitado</label>
-                        <select class='form-control' id="discapacitado" name="discapacitado">
-                            <option value="true">SI</option>
-                            <option value="false">NO</option>
+                        <label>Discapacitado</label>
+                        <select class='form-control' id="discapacitado_e" name="discapacitado">
+                            <option value=true>SI</option>
+                            <option value=false selected>NO</option>
                         </select>
                     </div>
 
                     <div class="col-md-12">
-                        <label for="talla_camisa">Talla de Camisa</label>
-                        <select class='form-control' id="talla_camisa" name="talla_camisa">
+                        <label>Talla de Camisa</label>
+                        <select class='form-control' id="talla_camisa_e" name="talla_camisa">
+                            <option value="">Seleccione una talla de camisa</option>
                             {% for tallaCamisa in talla_camisa %}
-                            <option value="{{ tallaCamisa.talla_camisa }}">{{ tallaCamisa.talla_camisa }} </option>
+                            <option value="{{ tallaCamisa.id }}">{{ tallaCamisa.talla_camisa }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+        
+                    <div class="col-md-12">
+                        <label>Talla de Pantalón</label>
+                        <select class='form-control' id="talla_pantalon_e" name="talla_pantalon">
+                            <option value="">Seleccione una talla de pantalon</option>
+                            {% for tallaPantalon in talla_pantalon %}
+                            <option value="{{ tallaPantalon.id }}">{{ tallaPantalon.talla_pantalon }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+        
+                    <div class="col-md-12">
+                        <label>Talla de Zapatos</label>
+                        <select class='form-control' id="talla_zapato_e" name="talla_zapato">
+                            <option value="">Seleccione una talla de pantalon</option>
+                            {% for tallaZapatos in talla_zapato %}
+                            <option value="{{ tallaZapatos.id }}">{{ tallaZapatos.talla_zapato }} </option>
                             {% endfor %}
                         </select>
                     </div>
 
                     <div class="col-md-12">
-                        <label for="talla_pantalon">Talla de Pantalón</label>
-                        <select class='form-control' id="talla_pantalon" name="talla_pantalon">
-                            {% for tallaPantalon in talla_pantalon %}
-                            <option value="{{ tallaPantalon.talla_pantalon }}">{{ tallaPantalon.talla_pantalon }}
+                        <label>Dirección</label>
+                        <br>
+                        <input type="text" class="form-control" id="direccion_e" name="direccion"
+                            placeholder="Ingrese la dirección" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Número de Cuenta</label>
+                        <br>
+                        <input type="text" class="form-control" id="nro_cuenta_e" name="nro_cuenta"
+                            placeholder="Ingrese el número de cuenta" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Correo Electrónico</label>
+                        <br>
+                        <input type="text" class="form-control" id="email_e" name="email"
+                            placeholder="Ingrese el correo electrónico" required>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>Grado de Instrucción</label>
+                        <select class='form-control' id="grado_instruccion_e" name="grado_instruccion">
+                            <option value="">Seleccione un grado de instrucción</option>
+                            {% for gradoInstruccion in grado_instruccion %}
+                            <option value="{{ gradoInstruccion.id }}">{{ gradoInstruccion.grado_instruccion }}
                             </option>
                             {% endfor %}
                         </select>
                     </div>
 
                     <div class="col-md-12">
-                        <label for="talla_zapato">Talla de Zapatos</label>
-                        <select class='form-control' id="talla_zapato" name="talla_zapato">
-                            {% for tallaZapatos in talla_zapato %}
-                            <option value="{{ tallaZapatos.talla_zapato }}">{{ tallaZapatos.talla_zapato }} </option>
+                        <label>¿Estudia actualmente?</label>
+                        <select class='form-control' id="estudias_e" name="estudias">
+                            <option value=true>SI</option>
+                            <option value=false selected>NO</option>
+                        </select>
+                    </div>
+        
+                    <div class="col-md-12">
+                        <label>Comisión de Servicio</label>
+                        <select class='form-control' id="comision_servicio_e" name="comision_servicio">
+                            <option value=true>SI</option>
+                            <option value=false selected>NO</option>
+                        </select>
+                    </div>
+        
+                    <div class="col-md-12">
+                        <label>PNB</label>
+                        <select class='form-control' id="pnb_e" name="pnb">
+                            <option value=true>SI</option>
+                            <option value=false selected>NO</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>Tipo Personal</label>
+                        <select class='form-control' id="tipo_personal_e" name="tipo_personal">
+                            <option value="">Seleccione un tipo de personal</option>
+                            {% for tipoPersonal in tipo_personal %}
+                            <option value="{{ tipoPersonal.id }}">{{ tipoPersonal.tipo_personal }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Cargo</label>
+                        <select class='form-control' id="cargo_e" name="cargo">
+                            <option value="">Seleccione el cargo</option>
+                            {% for cargo in cargos %}
+                            <option value="{{ cargo.id }}">{{ cargo.cargo }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Fecha de ingreso al 911</label>
+                        <br>
+                        <input type="date" class="form-control" id="fecha_ingreso_911_e" name="fecha_ingreso_911"
+                            placeholder="Ingrese la fecha de ingreso al VEN911" required readOnly>
+                    </div>
+                    <div class="col-md-12">
+                        <label>Fecha de Ingreso en la APN</label>
+                        <br>
+                        <input type="date" class="form-control" id="fecha_ingreso_apn_e" name="fecha_ingreso_apn"
+                            placeholder="Ingrese la fecha de ingreso en la APN" required readOnly>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Contratos</label>
+                        <br>
+                        <input type="number" class="form-control" id="contratos_e" name="contratos"
+                            placeholder="Ingrese si posee contratos" required>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="departamento">Departamento</label>
+                        <select class='form-control' id="departamento_e" name="departamento" readOnly>
+                            {% for departamento in departamentos %}
+                            <option value="{{ departamento.id }}">{{ departamento.departamento }}
+                            </option>
                             {% endfor %}
                         </select>
                     </div>
 
                     <div class="col-md-12">
-                        <label for="fasmij">FASMIJ</label>
-                        <select class='form-control' id="fasmij" name="fasmij">
-                            <option value="true">SI</option>
-                            <option value="false">NO</option>
+                        <label>Niños menores de 12 años</label>
+                        <select class="form-control" id="nino_menor_12_e" name="nino_menor_12" onchange="">
+                            <option value="SI">SI</option>
+                            <option value="NO" selected>NO</option>
                         </select>
                     </div>
-
-                    <div class="col-md-12">
-                        <label for="direccion">Dirección</label>
-                        <input type="text" class="form-control" id="direccion" name="direccion" value="">
+        
+                    <div class="col-md-12" id="edades1e" style="">
+                        <label>Edades</label>
+                        <br>
+                        <input type="number" class="form-control"  id="edades1_e" name="edades1"
+                            placeholder="Ingrese las edades">
                     </div>
-
+                    
                     <div class="col-md-12">
-                        <label for="nro_cuenta">Número de Cuenta</label>
-                        <input type="text" class="form-control" id="nro_cuenta" name="nro_cuenta" value="">
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="email">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email" value="">
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="grado_instruccion">Grado de Instrucción</label>
-                        <select class='form-control' id="grado_instruccion" name="grado_instruccion">
-                            {% for gradoInstruccion in grado_instruccion %}
-                            <option value="{{ gradoInstruccion.grado_instruccion }}">{{
-                                gradoInstruccion.grado_instruccion }} </option>
-                            {% endfor %}
+                        <label>Hijos de 13 a 18 Años</label>
+                        <select class='form-control' id="hijos_13_18_e" name="hijos_13_18">
+                            <option value="SI">SI</option>
+                            <option value="NO" selected>NO</option>
                         </select>
                     </div>
+        
+                    <div class="col-md-12" id="edades2e" style="">
+                        <label>Edades</label>
+                        <br>
+                        <input type="number" class="form-control" id="edades2_e" name="edades2"
+                            placeholder="Ingrese las edades">
+                    </div>
 
                     <div class="col-md-12">
-                        <label for="estudia">¿Estudia actualmente?</label>
-                        <select class='form-control' id="estudia" name="estudia">
-                            <option value="true">SI</option>
-                            <option value="false">NO</option>
+                        <label>Niñas menores de 12 años</label>
+                        <select class="form-control" id="nina_menor_12_e" name="nina_menor_12" onchange="">
+                            <option value="SI">SI</option>
+                            <option value="NO" selected>NO</option>
                         </select>
                     </div>
+        
+                    <div class="col-md-12" id="edades3e" style="">
+                        <label>Edades</label>
+                        <br>
+                        <input type="number" class="form-control" id="edades3_e" name="edades3"
+                            placeholder="Ingrese las edades">
+                    </div>
 
                     <div class="col-md-12">
-                        <label for="comision_servicio">Comisión de Servicio</label>
-                        <select class='form-control' id="comision_servicio" name="comision_servicio">
-                            <option value="true">SI</option>
-                            <option value="false">NO</option>
+                        <label>Hijos con Discapacidad</label>
+                        <select class='form-control' id="hijos_discapacidad_e" name="hijos_discapacidad" onchange="">
+                            <option value="SI">SI</option>
+                            <option value="NO" selected>NO</option>
                         </select>
                     </div>
-
-                    <div class="col-md-12">
-                        <label for="pnb">PNB</label>
-                        <select class='form-control' id="pnb" name="pnb">
-                            <option value="true">SI</option>
-                            <option value="false">NO</option>
-                        </select>
+                    <div class="col-md-12" style="">
+                        <label>Edades</label>
+                        <br>
+                        <input type="number" class="form-control" id="edades4_e" name="edades4"
+                            placeholder="Ingrese las edades">
                     </div>
 
-                    <div class="form-group">
-                        <div class="col-md-6">
-                            <label for="tipo_personal">Tipo Personal</label>
-                            <select class='form-control' id="tipo_personal" name="tipo_personal">
-                                {% for tipoPersonal in tipo_personal %}
-                                <option value="{{ tipoPersonal.tipo_personal }}">{{ tipoPersonal.tipo_personal }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="cargo">Cargo</label>
-                            <select class='form-control' id="cargo" name="cargo">
-                                {% for cargo in cargos %}
-                                <option value="{{ cargo.cargo }}">{{ cargo.cargo }} </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="fecha_ingreso_911">Fecha de ingreso al 911</label>
-                        <input type="date" class="form-control" id="fecha_ingreso_911" name="fecha_ingreso_911"
-                            value="">
-                    </div>
-
-
-                    <div class="col-md-12">
-                        <label for="fecha_ingreso_apn">Fecha de ingreso APN </label>
-                        <input type="date" class="form-control" id="fecha_ingreso_apn" name="fecha_ingreso_apn"
-                            value="">
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-md-6">
-                            <label for="contratos">Contratos</label>
-                            <input type="text" class="form-control" id="contratos" name="contratos" value="">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="departamento">Departamento</label>
-                            <select class='form-control' id="departamento" name="departamento">
-                                {% for departamento in departamentos %}
-                                <option value="{{ departamento.departamento }}">{{ departamento.departamento }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="niño_menor_12">Niños Menores de 12 años</label>
-                        <select class='form-control' id="niño_menor_12" name="niño_menor_12">
-                            <option value="true">SI</option>
-                            <option value="false">NO</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="edades1">Edades</label>
-                        <input type="text" class="form-control" id="edades1" name="edades1" value="">
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="hijos_13_18">Hijos de 13 a 18 Años</label>
-                        <select class='form-control' id="hijos_13_18" name="hijos_13_18">
-                            <option value="true">SI</option>
-                            <option value="false">NO</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="edades2">Edades</label>
-                        <input type="text" class="form-control" id="edades2" name="edades2" value="">
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="niña_menor_12">Niñas Menores de 12 años</label>
-                        <select class='form-control' id="niña_menor_12" name="niña_menor_12">
-                            <option value="true">SI</option>
-                            <option value="false">NO</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="edades3">Edades</label>
-                        <input type="text" class="form-control" id="edades3" name="edades3" value="">
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="hijos_discapacidad">Hijos con Discapacidad</label>
-                        <select class='form-control' id="hijos_discapacidad" name="hijos_discapacidad">
-                            <option value="true">SI</option>
-                            <option value="false">NO</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="edades4">Edades</label>
-                        <input type="text" class="form-control" id="edades4" name="edades4" value="">
-                    </div>
 
                     <div class="col-md-12">
                         <label for="sede">Sede</label>
-                        <select class='form-control' id="sede" name="sede">
+                        <select class='form-control' id="sede_e" name="sede" readOnly>
                             {% for sede in sedes %}
-                            <option value="{{ sede.sede }}">{{ sede.sede }} </option>
+                            <option value="{{ sede.id }}">{{ sede.sede }} </option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="form-items" >
+
+                    <div class="col-md-12">
+                        <label for="motivo">Motivo</label>
+                        <input type="text" class="form-control" id="motivo_e" name="motivo" value="" readOnly>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>FASMIJ</label>
+                        <select class='form-control' id="fasmij_e" name="fasmij">
+                            <option value= true selected>SI</option>
+                            <option value= false>NO</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12" >
                         <label>Parentezco 1</label>
                         <br>
-                        <input type="text" class="form-control" id="parentezco1" name="parentezco1"
-                            placeholder="Parentezco" required>
+                        <input type="text" class="form-control" id="parentezco1_e" name="parentezco1"
+                            placeholder="Parentezco">
                     </div>
-                    <div class="form-items" >
+                    <div class="col-md-12" >
                         <label>Beneficiario 1</label>
                         <br>
-                        <input type="text" class="form-control" id="beneficiario1" name="beneficiario1"
-                            placeholder="Beneficiario" required>
+                        <input type="text" class="form-control" id="beneficiario1_e" name="beneficiario1"
+                            placeholder="Beneficiario">
                     </div>
-                    <div class="form-items" >
+                    <div class="col-md-12" >
                         <label>Cedula  1</label>
                         <br>
-                        <input type="text" class="form-control" id="cedula1" name="cedula1"
-                            placeholder="Cedula" required>
+                        <input type="text" class="form-control" id="cedula1_e" name="cedula1"
+                            placeholder="Cedula">
                     </div>
-                    <div class="form-items" >
+                    <div class="col-md-12" >
                         <label>Direccion 1</label>
                         <br>
-                        <input type="text" class="form-control" id="direccion1" name="direccion1"
-                            placeholder="Direccion" required>
+                        <input type="text" class="form-control" id="direccion1_e" name="direccion1"
+                            placeholder="Direccion">
                     </div>
-        
-                    <div class="form-items" >
+
+                    <div class="col-md-12" >
                         <label>Parentezco 2</label>
                         <br>
-                        <input type="text" class="form-control" id="parentezco2" name="parentezco2"
-                            placeholder="Parentezco" required>
+                        <input type="text" class="form-control" id="parentezco2_e" name="parentezco2"
+                            placeholder="Parentezco">
                     </div>
-                    <div class="form-items" >
+                    <div class="col-md-12" >
                         <label>Beneficiario 2</label>
                         <br>
-                        <input type="text" class="form-control" id="beneficiario2" name="beneficiario2"
-                            placeholder="Beneficiario" required>
+                        <input type="text" class="form-control" id="beneficiario2_e" name="beneficiario2"
+                            placeholder="Beneficiario">
                     </div>
-                    <div class="form-items" >
+                    <div class="col-md-12" >
                         <label>Cedula  2</label>
                         <br>
-                        <input type="text" class="form-control" id="cedula2" name="cedula2"
-                            placeholder="Cedula" required>
+                        <input type="text" class="form-control" id="cedula2_e" name="cedula2"
+                            placeholder="Cedula">
                     </div>
-                    <div class="form-items" >
+                    <div class="col-md-12" >
                         <label>Direccion 2</label>
                         <br>
-                        <input type="text" class="form-control" id="direccion2" name="direccion2"
-                            placeholder="Direccion" required>
+                        <input type="text" class="form-control" id="direccion2_e" name="direccion2"
+                            placeholder="Direccion">
                     </div>
-        
-                    <div class="form-items" >
+
+                    <div class="col-md-12" >
                         <label>Parentezco 3</label>
                         <br>
-                        <input type="text" class="form-control" id="parentezco3" name="parentezco3"
-                            placeholder="Parentezco" required>
+                        <input type="text" class="form-control" id="parentezco3_e" name="parentezco3"
+                            placeholder="Parentezco">
                     </div>
-                    <div class="form-items" >
+                    <div class="col-md-12" >
                         <label>Beneficiario 3</label>
                         <br>
-                        <input type="text" class="form-control" id="beneficiario3" name="beneficiario3"
-                            placeholder="Beneficiario" required>
+                        <input type="text" class="form-control" id="beneficiario3_e" name="beneficiario3"
+                            placeholder="Beneficiario">
                     </div>
-                    <div class="form-items" >
+                    <div class="col-md-12" >
                         <label>Cedula  3</label>
                         <br>
-                        <input type="text" class="form-control" id="cedula3" name="cedula3"
-                            placeholder="Cedula" required>
+                        <input type="text" class="form-control" id="cedula3_e" name="cedula3"
+                            placeholder="Cedula">
                     </div>
-                    <div class="form-items">
+                    <div class="col-md-12" >
                         <label>Direccion 3</label>
                         <br>
-                        <input type="text" class="form-control" id="direccion3" name="direccion3"
-                            placeholder="Direccion" required>
+                        <input type="text" class="form-control" id="direccion3_e" name="direccion3"
+                            placeholder="Direccion">
                     </div>
+
+                    
                 </div>
                 <br>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn">Actualizar Cambios</button>
                 </div>
             </form>
         </div>

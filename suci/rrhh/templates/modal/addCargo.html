@@ -5,11 +5,18 @@
             <h2>Agregar Cargo</h2>
         </div>
         <br>
-        <form method="POST">
+        <form method="POST" action="{% url 'cargo' accion='agregar'%}">
             {% csrf_token %}
+            <div class="col-md-12">
+                <label>Estatus</label>
+                <br>
+                <input type="text" class="form-control" name="{{form.estatus.html_name}}"
+                    placeholder="Ingrese el nombre" value="ACTIVO" readonly required/>
+            </div>
             <div class="form-group">
                 <div class="col-md-6">
                     <label>Cargo</label>
+                    <br>
                     <br>
                     <input type="text" class="form-group" name="{{ form.cargo.name}}" value=""
                         placeholder="Ingrese el cargo">

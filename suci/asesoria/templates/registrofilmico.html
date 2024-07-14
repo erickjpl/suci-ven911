@@ -1,0 +1,72 @@
+{% extends "baseaj.html" %}
+{% block title %} S.U.C.I | Asesoría jurídica {% endblock %}
+{% load static %}
+{% block content %}
+
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2> Asesoría jurídica /<small> Registro Fílmico </small></h2>
+        </div>
+        <div class="user--info">
+            <img src="{% static 'img/ven911.jpg' %}">
+            <h2 class="title">V{{request.user.username}}</h2>
+        </div>
+    </div>
+
+    <div class="tabular--wrapper">
+        <h3 class="main--title"></h3>
+        <div class="user--info">
+            <form id="formConsulta" method="GET" action="{% url 'registros' accion='consultar' %}">
+                <div class="searh--box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" name="camara" id="inputcamara" placeholder="Ingrese n° de cámara">
+                    <button type="submit" class="btn">Consultar</button>
+                    <button type="button" class="btn" onclick="location.href='{% url 'registros' accion='todos' %}'">Limpiar</button>
+                </div>
+            </form>
+            <button type="button" class="btn" onclick="location.href='{% url 'descargar-excel' %}'">Descargar Excel</button>
+            <button id="myBtnAdd" class="btn">Agregar</button>
+        </div>
+        
+        <br>
+        <div class="table-container-x">
+            <table class="table-x table-bordered">
+                <thead>
+                    <tr>
+                        <th>Estatus</th>
+                        <th>Direccion</th>
+                        <th>Cámara</th>
+                        <th>Motivo de la solicitud</th>
+                        <th>Ente solicitante</th>
+                        <th>Fecha de solicitud</th>
+                        <th colspan="2">Acciones</th>
+                    </tr>
+                <tbody>
+                    {% for registroFilmico in registroF %}
+                    <tr>
+                        <td>{{ registroFilmico.estatus }}</td>
+                        <td>{{ registroFilmico.direccion }}</td>
+                        <td>{{ registroFilmico.camara }}</td>
+                        <td>{{ registroFilmico.motivo_solicitud }}</td>
+                        <td>{{ registroFilmico.ente_solicita }}</td>
+                        <td>{{ registroFilmico.fecha_solicitud }}</td>
+                        <td>
+                            <a href="#" title="Editar registro" id="myBtnUpd" data-toggle="modal" data-id='{{ registroFilmico.id }}'
+                                class="btn-editar"
+                                style="color: black;">
+                                <ion-icon name="create-outline" style="font-size: 22px;"></ion-icon>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
+    {% include "modal/addRegistro.html" %}
+    {% include "modal/updRegistro.html" %}
+    <script src="{% static 'js/registro.js' %}"></script>
+    {% endblock %}

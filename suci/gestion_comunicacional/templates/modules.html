@@ -1,0 +1,60 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block title %}
+  {{ title }}
+{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/data-tables.css' %}" />
+{% endblock %}
+{% block content %}
+  <div class="tabular--wrapper">
+    <h3 class="main--title"></h3>
+    <div class="user--info">
+      {% comment %} <button type="button" class="btn" onclick="location.href='{% url 'descargar-excel' %}'">Descargar Excel</button> {% endcomment %}
+      {% comment %} <button type="button" class="btn" onclick="window.location.href='{% url 'generar-pdf' %}'">Descargar PDF</button> {% endcomment %}
+      <!-- <input type="button" value="Download PDF" onclick="window.location.href='/generate_pdf'"> -->
+      <button id="add-btn" class="btn">Agregar</button>
+    </div>
+
+    <br />
+    <div class="table-container-x">
+      <table id="data-table" class="table table-striped table-x table-bordered">
+        <thead>
+          <tr>
+            {% for column in heads %}
+              <th>{{ column.title }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0"></tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+
+{% block modal %}
+  {% if form == 'social-activity' %}{% include 'social-activity/form.html' %}{% endif %}
+  {% if form == 'social-media' %}{% include 'social-media/form.html' %}{% endif %}
+
+  {% include 'base/delete.html' %}
+{% endblock %}
+
+{% block extra_script %}
+  <script src="{% static 'js/libs/jquery-3.7.1.min.js' %}"></script>
+  <script src="{% static 'js/libs/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/libs/data-tables.js' %}"></script>
+  <script src="{% static 'js/ajax-setup.js' %}"></script>
+  <script src="{% static 'js/data-tables.js' %}"></script>
+  <script>
+    $(document).ready(() => {
+      const listUrl = "{{ listUrl }}"
+      const createUrl = "{{ createUrl }}"
+      const updateUrl = "{{ updateUrl }}"
+      const deleteUrl = "{{ deleteUrl }}"
+      const columns =  {{ columns|safe }}
+      
+      setup({url: createUrl})
+      setTBody({listUrl, columns, updateUrl, deleteUrl});
+    })
+  </script>
+{% endblock %}

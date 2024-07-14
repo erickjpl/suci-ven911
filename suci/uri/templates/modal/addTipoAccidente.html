@@ -1,0 +1,26 @@
+<div id="addTipoAccidente" class="modal">
+    <div class="modal-content">
+        <span class="close" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+        <div class="modal-header">
+            <h2>Agregar un Tipo de Accidente Vehicular</h2>
+        </div>
+        <br>
+        <form method="POST" action="{% url 'tipoAccidente' accion='agregar'%}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Nombre del Tipo de Accidente Vehicular</label>
+                    <br>
+                    <br>
+                    <input type="text" class="form-group" name="{{ form.tipo_accidente.name}}" value=""
+                        placeholder="Ingrese un nombre" maxlength="40">
+                </div>
+            </div>
+            <br>
+            <div>
+                <input type="submit" value="enviar" class="btn" style="width: 90px;">
+            </div>
+        </form>
+    </div>
+</div>

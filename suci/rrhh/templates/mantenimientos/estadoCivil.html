@@ -1,4 +1,4 @@
-{% extends "mantenimientos/base.html" %}
+{% extends "mantenimientos/baseMantenimientos.html" %}
 
 {% block title %} S.U.C.I | Mantenimiento/Estado Civil {% endblock %}
 
@@ -12,10 +12,6 @@
             <h2>Mantenimiento /<small> Estado Civil</small></h2>
         </div>
         <div class="user--info">
-            <div class="searh--box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Buscar" />
-            </div>
             <img src="{% static 'img/ven911.jpg' %}">
             <h2 class="title">V{{request.user.username}}</h2>
         </div>
@@ -33,15 +29,11 @@
                 <thead>
                     <tr>
                         <th>Estado Civil</th>
-                        <th>Estatus</th>
-                        <th>Acciones</th>
                     </tr>
                 <tbody>
                     {% for estadoCivil in estadosCiviles %}
                     <tr>
                         <td>{{ estadoCivil.estado_civil }}</td>
-                        <td>Activo</td>
-                        <td><i class="fa-solid fa-trash-can"></i></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -53,33 +45,8 @@
     <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
     {% include "modal/addEstadoCivil.html" %}
 
-
-    <script>
-
-        //  JAVASCRIPT PARA ADD PERSONAL
-        var modal = document.getElementById("addEstadoCivil");
-        var btn = document.getElementById("myBtnAddEstadoC");
-        var span = document.getElementsByClassName("close")[0];
-        btn.onclick = function () {
-            modal.style.visibility = "visible";
-            modal.style.opacity = 1;
-        }
-
-        span.onclick = function () {
-            modal.style.visibility = "hidden";
-            modal.style.opacity = 0;
-        }
-
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.visibility = "hidden";
-                modal.style.opacity = 0;
-            }
-        }
-
-
-    </script>
-
+    <script src="{% static 'js/estadoCivil.js' %}"></script> 
+    
 
 
     {% endblock %}

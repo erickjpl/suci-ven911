@@ -1,14 +1,29 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from gestion_comunicacional.info.InfoService import InfoService
 
-from templates.sneat import TemplateLayout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView
 
 
 class InfoController(LoginRequiredMixin, TemplateView):
-    login_url = "auth:login"
-    template_name = "gc/index.html"
+    template_name = "index.html"
 
     def get_context_data(self, **kwargs):
-        context = TemplateLayout.init(self, super().get_context_data(**kwargs))
-
+        context = super().get_context_data(**kwargs)
+        context["mainContentHeaderTitle"] = "Gestion Comunicacional"
+        context["urlIfoApi"] = reverse_lazy("api-gc:info")
         return context
+
+
+class InfoControllerApi(LoginRequiredMixin, TemplateView):
+    def __init__(self):
+        self.service = InfoService()
+
+    def get(self, request, *args, **kwargs):
+        data = {}
+        try:
+            data = self.service.info()
+        except Exception as e:
+            data["error"] = str(e)
+        return JsonResponse(data, safe=False)

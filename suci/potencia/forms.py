@@ -1,9 +1,14 @@
 from django import forms
-from django.forms import ModelForm
-from .models import *
-from potencia.models import Incidencias
+from .models import  Incidencias
 
-class FormularioIncidencias(forms.Form):
+# FORMULARIO DE INCIDENCIAS
+class IncidenciasForm(forms.ModelForm):
     class Meta:
         model = Incidencias
-        fields = '__all__'
+        fields = ('estado', 'sede', 'departamento', 'tipoincidencia', 'usuario', 'observaciones', 'tiposolicitud')
+
+# FORMULARIO DE ACTUALIZACIÓN DE INCIDENCIAS
+class IncidenciasEForm(forms.ModelForm):
+    class Meta:
+        model = Incidencias
+        fields = ('estado', 'sede', 'departamento', 'tipoincidencia', 'usuario', 'observaciones', 'tiposolicitud')

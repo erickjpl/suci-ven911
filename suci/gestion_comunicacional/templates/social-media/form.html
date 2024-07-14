@@ -1,0 +1,67 @@
+{% extends 'base/modal.html' %}
+
+{% block modalBody %}
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col col-form-label">Red social</label>
+    <div class="col-sm-12 col-md-8">
+      <select name="platform" class="form-control" autocomplete="off" required="" id="platform_id">
+        <option value="" selected="">---------</option>
+
+        <option value="Facebook">Facebook</option>
+
+        <option value="Instagram">Instagram</option>
+
+        <option value="Twitter">Twitter</option>
+      </select>
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col col-form-label">Nombre de usuario de la red social</label>
+    <div class="col-sm-12 col-md-8">
+      <input type="text" name="username_sm" maxlength="60" placeholder="Ingrese el usuario de la red social" class="form-control" autocomplete="off" required="" id="username_sm_id" />
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col col-form-label">Direccion web</label>
+    <div class="col-sm-12 col-md-8">
+      <input type="url" name="url" maxlength="200" placeholder="Ingrese la url de la red social" class="form-control" autocomplete="off" required="" id="url_id" />
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col col-form-label">Seguidores</label>
+    <div class="col-sm-12 col-md-8">
+      <input type="number" name="followers" min="0" placeholder="Ingrese la cantidad de seguidores de la red social" class="form-control" autocomplete="off" required="" id="followers_id" />
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col col-form-label">Responsable de la red social</label>
+    <div class="col-sm-12 col-md-8">
+      <input type="text" name="responsible" maxlength="100" placeholder="Ingrese el usuario responsable de la red social" class="form-control" autocomplete="off" required="" id="responsible_id" />
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col col-form-label">Publicaciones</label>
+    <div class="col-sm-12 col-md-8">
+      <input type="number" name="publications" min="0" placeholder="Ingrese la cantidad de publicaciones de la red social" class="form-control" autocomplete="off" required="" id="publications_id" />
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block modalFooter %}
+  <div class="d-flex gap-2 justify-content-end">
+    <button type="submit" class="btn btn-primary mr-2"><i class="bx bx-save scaleX-n1-rtl bx-sm me-1"></i>Guardar</button>
+
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+  </div>
+{% endblock %}

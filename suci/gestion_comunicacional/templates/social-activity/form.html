@@ -1,0 +1,67 @@
+{% extends 'base/modal.html' %}
+
+{% block modalBody %}
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col-form-label">Fecha de la actividad</label>
+    <div class="col-sm-12 col-md-8">
+      <input type="date" name="date" placeholder="Ingrese la fecha de la actividad" class="form-control" autocomplete="off" required="" id="id_date" />
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col-form-label">Lugar de la actividad</label>
+    <div class="col-sm-12 col-md-8">
+      <input type="text" name="location" maxlength="255" placeholder="Ingrese la direccion de la actividad" class="form-control" autocomplete="off" required="" id="id_location" />
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col-form-label">Tipo de actividad</label>
+    <div class="col-sm-12 col-md-8">
+      <select name="activity_type" class="form-control" autocomplete="off" required="" id="id_activity_type">
+        <option value="" selected="">---------</option>
+
+        <option value="workshop">Taller</option>
+
+        <option value="conference">Conferencia</option>
+
+        <option value="campaign">Campaña</option>
+      </select>
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col-form-label">Motivo para realizar la actividad</label>
+    <div class="col-sm-12 col-md-8">
+      <textarea name="reason" cols="40" rows="10" placeholder="Ingrese el motivio de la actividad" class="form-control" autocomplete="off" required="" id="id_reason"></textarea>
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col-form-label">Descripcion de la actividad</label>
+    <div class="col-sm-12 col-md-8">
+      <textarea name="description" cols="40" rows="10" placeholder="Ingrese la descripcion" class="form-control" autocomplete="off" required="" id="id_description"></textarea>
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputEmail3" class="col-sm-12 col-md-4 col-form-label">Cantidad de personas beneficiadas</label>
+    <div class="col-sm-12 col-md-8">
+      <input type="number" name="beneficiaries" placeholder="Ingrese la cantidad de beneficiarios" class="form-control" autocomplete="off" required="" id="id_beneficiaries" />
+      <div class="invalid-feedback"></div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block modalFooter %}
+  <div class="d-flex gap-2 justify-content-end">
+    <button type="submit" class="btn btn-primary mr-2"><i class="bx bx-save scaleX-n1-rtl bx-sm me-1"></i>Guardar</button>
+
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+  </div>
+{% endblock %}

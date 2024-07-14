@@ -1,0 +1,70 @@
+<div id="addregistro" class="modal">
+    <div class="modal-content">
+        <span class="close closeupd" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+        <div class="modal-header">
+            <h2>Agregar Solicitud</h2>
+        </div>
+        <br>
+        <form method="POST" action="{% url 'registros' accion='agregar'%}">
+            {% csrf_token %}
+            <div class="col-md-12">
+                <label>Estatus</label>
+                <br>
+                <input type="text" class="form-control" name="{{form.estatus.html_name}}"
+                    placeholder="Ingrese el nombre" value="ACTIVA" readonly required/>
+            </div>
+            
+            <div class="col-md-12">
+                <label>Dirección</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.direccion.name}}" value=""
+                    placeholder="La direccion">
+            </div>
+        
+            <div class="col-md-12">
+                <label>Cámara.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.camara.name}}" value=""
+                    placeholder="Ingrese informacion de la cámara">
+            </div>
+        
+            <div class="col-md-12">
+                <label>Motivo de la solicitud..</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.motivo_solicitud.name}}" value=""
+                    placeholder="Ingrese el motivo de la solicitud">
+            </div>
+          
+            <div class="col-md-12">
+                <label>Ente solicitante.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.ente_solicita.name}}" value=""
+                    placeholder="Ingrese el ente que la solicita">
+            </div>
+        
+            <div class="col-md-12">
+                <label>Fecha de la Solicitud.</label>
+                <br>
+                <br>
+                <input type="date" class="form-group" name="{{ form.fecha_solicitud.name}}" value=""
+                    placeholder="Ingrese una fecha">
+            </div>
+        
+            <div class="col-md-12">
+                <label>Fecha de Culminación.</label>
+                <br>
+                <br>
+                <input type="date" class="form-group" name="{{ form.fecha_culminacion.name}}" value=""
+                    placeholder="Ingrese una fecha">
+            </div>
+            <br>
+            <div>
+                <input type="submit" value="enviar" class="btn" style="width: 90px;">
+            </div>
+        </form>
+    </div>
+</div>

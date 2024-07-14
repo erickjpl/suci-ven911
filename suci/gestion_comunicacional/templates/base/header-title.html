@@ -1,0 +1,10 @@
+{% load static %}
+<div class="header--wrapper">
+  <div class="header--title">
+    <h2>{{ mainContentHeaderTitle }}</h2>
+  </div>
+  <div class="user--info">
+    <img src="{% static 'img/ven911.jpg' %}" />
+    <h2 class="title">V{{ request.user.username }}</h2>
+  </div>
+</div>

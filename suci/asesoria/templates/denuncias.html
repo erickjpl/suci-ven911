@@ -1,0 +1,84 @@
+{% extends "baseaj.html" %}
+{% block title %} S.U.C.I | Asesoría jurídica {% endblock %}
+{% load static %}
+{% block content %}
+
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2>Denuncias</h2>
+        </div>
+        <div class="user--info">
+            <img src="{% static 'img/ven911.jpg' %}">
+            <h2 class="title">V{{request.user.username}}</h2>
+        </div>
+    </div>
+
+    <div class="tabular--wrapper">
+        <h3 class="main--title"></h3>
+        <div class="user--info">
+            <form id="formConsulta" method="GET" action="{% url 'denuncias' accion='consultar' %}">
+                <div class="searh--box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" name="cedula" id="inputCedula" placeholder="Ingrese la cédula">
+                    <button type="submit" class="btn">Consultar</button>
+                    <button type="button" class="btn" onclick="location.href='{% url 'denuncias' accion='todos' %}'">Limpiar</button>
+                </div>
+            </form>
+            <button type="button" class="btn" onclick="location.href='{% url 'descargar-excel-denuncias' %}'">Descargar Excel</button>
+            <button id="myBtnAdd" class="btn">Agregar</button>
+        </div>
+        
+        <br>
+        <div class="table-container-x">
+            <table class="table-x table-bordered">
+                <thead>
+                    <tr>
+                        <th>Estatus</th>
+                 
+                        <th>Nombre del Denunciante</th>
+                        <th>Apellido del Denunciante</th>
+                        <th>Cédula del Denunciante</th>
+                        <th>Fecha</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Motivo</th>
+                        <th colspan="2">Acciones</th>
+                    </tr>
+                <tbody>
+                    {% for denuncia in denuncias %}
+                    <tr>
+                        <td>{{ denuncia.estatus }}</td>
+                        <td>{{ denuncia.nombres_d }}</td>
+                        <td>{{ denuncia.apellidos_d }}</td>
+                        <td>{{ denuncia.cedula_d }}</td>
+                        <td>{{ denuncia.fecha_denuncia }}</td>
+                        <td>{{ denuncia.telefono }}</td>
+                        <td>{{ denuncia.email }}</td>
+                        <td>{{ denuncia.motivo }}</td>
+                        <td>
+                            <a href="#" title="Editar Denuncias" id="myBtnUpd" data-toggle="modal" data-id='{{ denuncia.id }}'
+                                class="btn-editar"
+                                style="color: black;">
+                                <ion-icon name="create-outline" style="font-size: 22px;"></ion-icon>
+                            </a>
+                        </td>
+                        <!--<td>
+                            <a href="#" title="Movimiento de Personal" id="myBtnUpdMov" data-toggle="modal" data-id='{{ personal.id }}'
+                                class="btn-editar-mov"
+                                style="color: black;">
+                                <ion-icon name="folder-open" style="font-size: 22px;"></ion-icon>
+                            </a>
+                        </td>-->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
+    {% include "modal/addDenuncia.html" %}
+    {% include "modal/updDenuncia.html" %}
+    <script src="{% static 'js/denuncia.js' %}"></script>
+    {% endblock %}

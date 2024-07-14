@@ -1,0 +1,26 @@
+<div id="addTraslado" class="modal">
+    <div class="modal-content">
+        <span class="close" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+        <div class="modal-header">
+            <h2>Agregar un Modo de Traslado</h2>
+        </div>
+        <br>
+        <form method="POST" action="{% url 'traslados' accion='agregar'%}">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label>Nombre del Modo de Traslado</label>
+                    <br>
+                    <br>
+                    <input type="text" class="form-group" name="{{ form.traslado.name}}" value=""
+                        placeholder="Ingrese un nombre" maxlength="40">
+                </div>
+            </div>
+            <br>
+            <div>
+                <input type="submit" value="enviar" class="btn" style="width: 90px;">
+            </div>
+        </form>
+    </div>
+</div>

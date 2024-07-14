@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import *
-from .models import Entradap, Salidap, Gestion, Ambulancia, Patrulla, Particular
+from seguridad.models import Entradap, Salidap, Gestion, Vehiculos
 
 # FORMULARIO DE ENTRADA PERSONAL
 class EntradapForm(forms.ModelForm):
@@ -51,50 +51,18 @@ class GestionEForm(forms.ModelForm):
         model = Gestion
         fields = ('name', 'apellido', 'cedula', 'tipo', 'descripcion', 'fecha', 'direccion', 'cargo', 'hora')
 
-# FORMULARIO DE VEHICULOS - AMBULANCIA
-class AmbulanciaForm(forms.ModelForm):
+# FORMULARIO DE VEHICULOS
+class VehiculosForm(forms.ModelForm):
     fecha = forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
     hora = forms.CharField(widget=forms.TextInput(attrs={'type':'time'}))
     class Meta:
-        model = Ambulancia
-        fields = ('nombre', 'apellido', 'cedula', 'modelo', 'capagasolina', 'entratgasolina', 'salientgasolina', 'placa', 'fecha', 'hora')
+        model = Vehiculos
+        fields = ('nombre', 'apellido', 'cedula', 'modelo', 'vehiculo', 'motivo', 'capagasolina', 'cantigasolina', 'placa', 'fecha', 'hora')
 
-# FORMULARIO DE ACTUALIZACIÓN VEHICULOS - AMBULANCIA
-class AmbulanciaEForm(forms.ModelForm):
+# FORMULARIO DE ACTUALIZACIÓN VEHICULOS
+class VehiculosEForm(forms.ModelForm):
     fecha = forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
     hora = forms.CharField(widget=forms.TextInput(attrs={'type':'time'}))
     class Meta:
-        model = Ambulancia
-        fields = ('nombre', 'apellido', 'cedula', 'modelo', 'capagasolina', 'entratgasolina', 'salientgasolina', 'placa', 'fecha', 'hora')
-
-# FORMULARIO DE ACTUALIZACIÓN VEHICULOS - AMBULANCIA
-class PatrullaForm(forms.ModelForm):
-    fecha = forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
-    hora = forms.CharField(widget=forms.TextInput(attrs={'type':'time'}))
-    class Meta:
-        model = Patrulla
-        fields = ('nombre', 'apellido', 'cedula', 'modelo', 'capagasolina', 'entratgasolina', 'salientgasolina', 'placa', 'fecha', 'hora')
-
-# FORMULARIO DE ACTUALIZACIÓN VEHICULOS - AMBULANCIA
-class PatrullaEForm(forms.ModelForm):
-    fecha = forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
-    hora = forms.CharField(widget=forms.TextInput(attrs={'type':'time'}))
-    class Meta:
-        model = Patrulla
-        fields = ('nombre', 'apellido', 'cedula', 'modelo', 'capagasolina', 'entratgasolina', 'salientgasolina', 'placa', 'fecha', 'hora')
-
-# FORMULARIO DE ACTUALIZACIÓN VEHICULOS - AMBULANCIA
-class ParticularForm(forms.ModelForm):
-    fecha = forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
-    hora = forms.CharField(widget=forms.TextInput(attrs={'type':'time'}))
-    class Meta:
-        model = Particular
-        fields = ('nombre', 'apellido', 'cedula', 'modelo', 'capagasolina', 'entratgasolina', 'salientgasolina', 'placa', 'fecha', 'hora')
-
-# FORMULARIO DE ACTUALIZACIÓN VEHICULOS - AMBULANCIA
-class ParticularEForm(forms.ModelForm):
-    fecha = forms.CharField(widget=forms.TextInput(attrs={'type':'date'}))
-    hora = forms.CharField(widget=forms.TextInput(attrs={'type':'time'}))
-    class Meta:
-        model = Particular
-        fields = ('nombre', 'apellido', 'cedula', 'modelo', 'capagasolina', 'entratgasolina', 'salientgasolina', 'placa', 'fecha', 'hora')
+        model = Vehiculos
+        fields = ('nombre', 'apellido', 'cedula', 'modelo', 'vehiculo', 'motivo', 'capagasolina', 'cantigasolina', 'placa', 'fecha', 'hora')

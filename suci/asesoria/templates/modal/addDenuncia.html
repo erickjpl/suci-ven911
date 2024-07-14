@@ -1,0 +1,147 @@
+<div id="adddenuncia" class="modal">
+    <div class="modal-content">
+        <span class="close closeupd" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+        <div class="modal-header">
+            <h2>Agregar Denuncia</h2>
+        </div>
+        <br>
+        <form method="POST" action="{% url 'denuncias' accion='agregar'%}">
+            {% csrf_token %}
+            <div class="col-md-12">
+                <label>Estatus</label>
+                <br>
+                <input type="text" class="form-control" name="{{form.estatus.html_name}}"
+                    placeholder="Ingrese el nombre" value="ACTIVA" readonly required/>
+            </div>
+           
+            <div class="col-md-12">
+                <label>Ente</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.ente.name}}" 
+                    placeholder="Ingrese el Ente" required>
+            </div>
+        
+        
+            <div class="col-md-12">
+                <label>Nombres del denunciante.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.nombres_d.name}}" required
+                    placeholder="Ingrese el nombre">
+            </div>
+        
+        
+            <div class="col-md-12">
+                <label>Apellidos del denunciante.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.apellidos_d.name}}" required
+                    placeholder="Ingrese el apellido">
+            </div>
+     
+            <div class="col-md-12">
+                <label>Cédula del denunciante.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.cedula_d.name}}" required
+                    placeholder="Ingrese la cedula">
+            </div>
+        
+        
+            <div class="col-md-12">
+                <label>Teléfono del denunciante.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.telefono.name}}" required
+                    placeholder="Ingrese número telefonico">
+            </div>
+        
+        
+            <div class="col-md-12">
+                <label>Correo electrónico.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.email.name}}" value=""
+                    placeholder="Ingrese correo electrónico">
+            </div>
+        
+            
+            <div class="col-md-12">
+                <label>Dirección.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.direccion_d.name}}" required
+                    placeholder="Ingrese una dirección">
+            </div>
+    
+        
+            <div class="col-md-12">
+                <label>Nombres del denunciado.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.nombres_denunciado.name}}" value=""
+                    placeholder="Ingrese una dirección">
+            </div>
+        
+        
+            <div class="col-md-12">
+                <label>Apellidos del denunciado.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.apellidos_denunciado.name}}" value=""
+                    placeholder="Ingrese una dirección">
+            </div>
+            
+            
+            <div class="col-md-12">
+                <label>Cédula del denunciado.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.cedula_denunciado.name}}" value=""
+                    placeholder="Ingrese cédula del denunciado">
+            </div>
+        
+        
+            <div class="col-md-12">
+                <label>Motivo.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.motivo.name}}" required
+                    placeholder="Ingrese motivo de la denuncia">
+            </div>
+            
+            
+            <div class="col-md-12">
+                <label>Zona del incidente.</label>
+                <br>
+                <br>
+                <input type="text" class="form-group" name="{{ form.zona.name}}" required
+                    placeholder="Ingrese zona del incidente ">
+            </div>
+        
+        
+            <div class="col-md-12">
+                <label>Fecha del incidente.</label>
+                <br>
+                <br>
+                <input type="date" class="form-group" name="{{ form.fecha_incidente.name}}" required
+                    placeholder="Ingrese una fecha">
+            </div>
+        
+        
+            <div class="col-md-12">
+                <label>Fecha de la denuncia.</label>
+                <br>
+                <br>
+                <input type="date" class="form-group" name="{{ form.fecha_denuncia.name}}" required
+                    placeholder="Ingrese una fecha">
+            </div>
+           
+            <br>
+            <div>
+                <input type="submit" value="enviar" class="btn" style="width: 90px;">
+            </div>
+        </form>
+    </div>
+</div>

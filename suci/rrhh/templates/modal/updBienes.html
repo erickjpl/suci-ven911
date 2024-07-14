@@ -1,0 +1,63 @@
+<div class="modal fade" id="updbienes" tabindex="-1" role="dialog" aria-labelledby="modal-editar-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="close closeupd" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+            <div class="modal-header">
+                <h2>Editar Bienes</h2>
+            </div>
+            <br>
+            <form id="form-editar" action="{% url 'bienes' accion='editar' departamentofilter=1 %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="id_e" name="id" value="">
+
+                    <div class="col-md-6">
+                        <label for="nacionalidad">Estatus</label>
+                        <select class='form-control' id="estatus_e" name="estatus" readOnly>
+                            <option value="ACTIVO" readOnly>ACTIVO</option>
+                            <option value="RETIRADO" readOnly>RETIRADO</option>
+                            <option value="VACACIONES" readOnly>VACACIONES</option>
+                            <option value="SUSPENDIDO" readOnly>SUSPENDIDO</option>
+                            <option value="TRASLADADO" readOnly>TRASLADADO</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre_e" name="nombre" value="" maxlength="20">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="apellido">Cantidad</label>
+                        <input type="text" class="form-control" id="cantidad_e" name="cantidad" value="">
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="departamento">Departamento</label>
+                        <select class='form-control' id="departamento_e" name="departamento" readOnly>
+                            {% for departamento in departamentos %}
+                            <option value="{{ departamento.id }}">{{ departamento.departamento }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="sede">Sede</label>
+                        <select class='form-control' id="sede_e" name="sede" readOnly>
+                            {% for sede in sedes %}
+                            <option value="{{ sede.id }}">{{ sede.sede }} </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn">Actualizar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

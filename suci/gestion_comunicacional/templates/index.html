@@ -1,0 +1,158 @@
+{% extends 'base/index.html' %}
+{% load static %}
+{% block content %}
+  <!-- ========================= Tarjetas ====================== -->
+  <div class="card--container">
+    <div class="card--wrapper gc-info">
+      <div class="payment--card light-green gc-info-container" data-social-media>
+        <div class="card--header gc-info-header">
+          <div class="amount">
+            <span class="title">Redes Sociales</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="payment--card light-green" data-social-activity>
+        <div class="card--header">
+          <div class="amount">
+            <span class="title">Actividades Sociales</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Tablas ================ -->
+  <div class="tabular--wrapper" style="margin-top: 10px; padding-top: 10px;">
+    <h3 class="main--title">Equipos Asignados</h3>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Sede</th>
+            <th>Equipo</th>
+            <th>Cantidad</th>
+            <th>Estatus</th>
+          </tr>
+        </thead>
+
+        <tbody data-inventories>
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_script %}
+  <script src="{% static 'js/libs/jquery-3.7.1.min.js' %}"></script>
+  <script>
+    $(document).ready(() => {
+      const url = '{{ urlIfoApi }}'
+      const socialActivity = document.querySelector('[data-social-activity]')
+      $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json'
+      })
+        .done(function (data) {
+          socialMediaCard (data.account)
+          socialActivityCard (data.activity)
+          tableInventories (data.inventroies)
+        })
+        .fail((jqXHR, textStatus, errorThrown) => console.error({ jqXHR, textStatus, errorThrown }))
+    })
+
+    function socialMediaCard (accounts) {
+      const socialMedia = document.querySelector('[data-social-media]')
+
+      accounts.forEach(({platform, total_followers, total_publications}) => {
+        let div = document.createElement("div");
+        div.setAttribute("class","card-detail gc-detail-info");
+
+        let divPlataform = document.createElement("div")
+        let spanIconPlataform = document.createElement("span")
+        let spanPlataform = document.createElement("span")        
+        spanIconPlataform.innerHTML = `<ion-icon name="logo-${platform.toLowerCase()}"></ion-icon> `
+        spanPlataform.innerHTML = `${platform}`
+        divPlataform.appendChild(spanIconPlataform)
+        divPlataform.appendChild(spanPlataform)
+        
+        let divFollowers = document.createElement("div")
+        let spanIconFollowers = document.createElement("span")
+        let spanFollowers = document.createElement("span")
+        spanIconFollowers.innerHTML = `<ion-icon name="people-outline"></ion-icon> `
+        spanFollowers.innerHTML = `${total_followers}`
+        divFollowers.appendChild(spanIconFollowers)
+        divFollowers.appendChild(spanFollowers)
+        
+        let divPublications = document.createElement("div")
+        let spanIconPublications = document.createElement("span")
+        let spanPublications = document.createElement("span")
+        spanIconPublications.innerHTML = `<ion-icon name="file-tray-full-outline"></ion-icon> `
+        spanPublications.innerHTML = total_publications
+        divPublications.appendChild(spanIconPublications)
+        divPublications.appendChild(spanPublications)
+        
+        div.appendChild(divPlataform)
+        div.appendChild(divFollowers)
+        div.appendChild(divPublications)
+
+        socialMedia.appendChild(div)
+      })
+      
+    }
+
+    function socialActivityCard ({activities, beneficiaries}) {
+      const socialActivity = document.querySelector('[data-social-activity]')
+      let div = document.createElement("div")
+      div.setAttribute("class","card-detail gc-detail-info")
+
+      let divActivities = document.createElement("div")
+      let spanActivitiesTitle = document.createElement("span")
+      let spanActivitiesBody = document.createElement("span")
+      spanActivitiesTitle.innerHTML = 'Actividades Realizadas'
+      spanActivitiesBody.innerHTML = `${activities}`
+      divActivities.appendChild(spanActivitiesTitle)
+      divActivities.appendChild(spanActivitiesBody)
+
+      let divBeneficiaries = document.createElement("div")
+      let spanBeneficiariesTitle = document.createElement("span")
+      let spanBeneficiariesBody = document.createElement("span")
+      spanBeneficiariesTitle.innerHTML = 'Beneficiarios de las actividades'
+      spanBeneficiariesBody.innerHTML = `${beneficiaries}`
+      divBeneficiaries.appendChild(spanBeneficiariesTitle)
+      divBeneficiaries.appendChild(spanBeneficiariesBody)
+        
+      div.appendChild(divActivities)
+      div.appendChild(divBeneficiaries)
+
+      socialActivity.appendChild(div)
+    }
+
+    function tableInventories (inventories) {
+      const tBody = document.querySelector('[data-inventories]')
+      console.info({ inventories })
+
+      inventories.forEach(({sede__sede, nombre, cantidad, estatus}) => {
+        let tr = document.createElement("tr");
+        let tdSede = document.createElement("td");
+        let tdNombre = document.createElement("td");
+        let tdCantidad = document.createElement("td");
+        let tdEstatus = document.createElement("td");
+
+        tdSede.innerHTML = sede__sede;
+        tdNombre.innerHTML = nombre;
+        tdCantidad.innerHTML = cantidad;
+        tdEstatus.innerHTML = estatus;
+
+        tr.appendChild(tdSede)
+        tr.appendChild(tdNombre)
+        tr.appendChild(tdCantidad)
+        tr.appendChild(tdEstatus)
+        
+        tBody.appendChild(tr)
+      })
+    }
+  </script>
+{% endblock %}

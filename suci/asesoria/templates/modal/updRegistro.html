@@ -1,0 +1,64 @@
+<div class="modal fade" id="updregistro" tabindex="-1" role="dialog" aria-labelledby="modal-editar-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="close closeupd" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+            <div class="modal-header">
+                <h2>Editar Solicitud</h2>
+            </div>
+            <br>
+
+            <form id="form-editar" action="{% url 'registros' accion='editar' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="id_e" name="id" value="">
+
+                    <div class="col-md-12">
+                        <label for="estatus">Estatus</label>
+                        <select class='form-control' id="estatus_e" name="estatus" readOnly>
+                            <option value="ACTIVA" readOnly>ACTIVA</option>
+                            <option value="EN CURSO" readOnly>EN CURSO</option>
+                            <option value="CULMINADA" readOnly>CULMINADA</option>
+                            <option value="ANULADA" readOnly>ANULADA</option>
+                        </select>
+                    </div>
+                        
+                    <div class="col-md-12">
+                        <label>Dirección</label>
+                        <input type="text" class="form-control" id="direccion_e" name="direccion" >
+                    </div>
+                      
+                    <div class="col-md-12">
+                        <label>Cámara.</label>
+                        <input type="text" class="form-control" id="camara_e" name="camara" readOnly>
+                    </div>
+                        
+                    
+                    <div class="col-md-12">
+                        <label>Motivo de la solicitud.</label>    
+                        <input type="text" class="form-control" id="motivo_solicitud_e" name="motivo_solicitud">
+                    </div>
+                        
+                    <div class="col-md-12">
+                        <label>Ente que solicita.</label>
+                        <input type="text" class="form-control" id="ente_solicita_e" name="ente_solicita" readOnly>
+                    </div>
+                     
+                    <div class="col-md-12">
+                        <label for="fecha_solicitud">Fecha de la Solicitud.</label>
+                        <input type="date" class="form-control" id="fecha_solicitud_e" name="fecha_solicitud">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="fecha_culminacion">Fecha de Culminación.</label>
+                        <input type="date" class="form-control" id="fecha_culminacion_e" name="fecha_culminacion">
+                    </div>
+                        
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn">Actualizar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

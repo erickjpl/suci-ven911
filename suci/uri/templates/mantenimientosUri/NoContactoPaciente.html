@@ -1,0 +1,53 @@
+{% extends "mantenimientosUri/baseMantenimientosUri.html" %}
+
+{% block title %} S.U.C.I | Mantenimiento/Servicios donde "No hubo Contacto con el Paciente" {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2>Mantenimiento /<small> Servicios donde "No hubo Contacto con el Paciente" </small></h2>
+        </div>
+        <div class="user--info">
+            <img src="{% static 'img/ven911.jpg' %}">
+            <h2 class="title">V{{request.user.username}}</h2>
+        </div>
+    </div>
+
+    <div align="right" style="margin-right: 100px; margin-bottom: -10px;">
+        <button id="addNoContacto" class="btn">Agregar</button>
+        <input type="hidden" class="btn" onclick="location.href='{% url 'noContacto' accion='todos'  %}'"></input>
+    </div>
+
+
+    <div class="tabular--wrapper">
+        <h3 class="main--title">Recientes</h3>
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Servicios donde no hubo contacto con el Paciente</th>
+                    </tr>
+                <tbody>
+                    {% for no_contactos in no_contacto %}
+                    <tr>
+                        <td>{{ no_contactos.id }}</td>
+                        <td>{{ no_contactos.no_contacto }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
+    {% include "modal/addNoContactoPaciente.html" %}
+
+    <script src="{% static 'js/NoContactoPaciente.js' %}"></script> 
+    
+    {% endblock %}

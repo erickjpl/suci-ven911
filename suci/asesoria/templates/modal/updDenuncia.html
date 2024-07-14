@@ -1,0 +1,105 @@
+<div class="modal fade" id="updDenuncia" tabindex="-1" role="dialog" aria-labelledby="modal-editar-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="close closeupd" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+            <div class="modal-header">
+                <h2>Editar Denuncias</h2>
+            </div>
+            <br>
+            <form id="form-editar" action="{% url 'denuncias' accion='editar' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="id_e" name="id" value="">
+
+                    <div class="col-md-12">
+                        <label for="estatus">Estatus</label>
+                        <select class='form-control' id="estatus_e" name="estatus" readOnly>
+                            <option value="ACTIVA" readOnly>ACTIVA</option>
+                            <option value="EN CURSO" readOnly>EN CURSO</option>
+                            <option value="CULMINADA" readOnly>CULMINADA</option>
+                            <option value="ANULADA" readOnly>ANULADA</option>
+                        </select>
+                    </div>
+                        
+                    <div class="col-md-12">
+                        <label>Ente</label>
+                        <input type="text" class="form-control" id="ente_e" name="ente" readOnly>
+                    </div>
+                      
+                    <div class="col-md-12">
+                        <label>Nombres del denunciante.</label>
+                        <input type="text" class="form-control" id="nombres_d_e" name="nombres_d" readOnly>
+                    </div>
+                        
+                    
+                    <div class="col-md-12">
+                        <label>Apellidos del denunciante.</label>    
+                        <input type="text" class="form-control" id="apellidos_d_e" name="apellidos_d" readOnly>
+                    </div>
+                       
+                    <div class="col-md-12">
+                        <label>Cédula del denunciante.</label>
+                        <input type="number" class="form-control" id="cedula_d_e" name="cedula_d" readOnly>
+                    </div>
+                        
+                    <div class="col-md-12">
+                        <label>Teléfono del denunciante.</label>
+                        <input type="number" class="form-control" id="telefono_d_e" name="telefono" readOnly>
+                    </div>
+                       
+                    <div class="col-md-12">
+                        <label>Correo electrónico.</label>
+                        <input type="text" class="form-control" id="correo_e" name="email">
+                    </div>
+                   
+
+                    <div class="col-md-12">
+                        <label>Dirección.</label>
+                        <input type="text" class="form-control" id="direccion_e" name="direccion_d" readOnly>
+                    </div>
+                
+                    <div class="col-md-12">
+                        <label>Nombres del denunciado.</label>
+                        <input type="text" class="form-control" id="nombres_denunciado_e" name="nombres_denunciado">
+                    </div>
+                     
+                    <div class="col-md-12">
+                        <label for="apellidos_denunciado">Apellidos del denunciado.</label>
+                        <input type="text" class="form-control" id="apellidos_denunciado_e" name="apellidos_denunciado" >
+                    </div>
+                        
+                    <div class="col-md-12">
+                        <label for="cedula_denunciado">Cédula del denunciado.</label>
+                        <input type="number" class="form-control" id="cedula_denunciado_e" name="cedula_denunciado" >
+                    </div>
+                      
+                    <div class="col-md-12">
+                        <label for="motivo">Motivo.</label>
+                        <input type="text" class="form-control" id="motivo_e" name="motivo" >
+                    </div>
+                        
+                    <div class="col-md-12">
+                        <label for="zona">Zona del incidente.</label>
+                        <input type="text" class="form-control" id="zona_e" name="zona" >
+                    </div>
+                        
+                    <div class="col-md-12">
+                        <label for="fecha_incidente">Fecha del incidente.</label>
+                        <input type="date" class="form-control" id="fecha_incidente_e" name="fecha_incidente">
+                    </div>
+                        
+                    <div class="col-md-12">
+                        <label for="fecha_denuncia">Fecha de la denuncia.</label>
+                        <input type="date" class="form-control" id="fecha_denuncia_e" name="fecha_denuncia" readOnly>
+                    </div>
+                        
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn">Actualizar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

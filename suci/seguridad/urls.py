@@ -6,7 +6,7 @@ from django.conf import settings
 urlpatterns = [
     path('seguridad/', views.seguridad, name="seguridad"),
     path('entradap/', views.entradap, name="entradap"),
-    #path('entradap<str:accion>', views.entradap_consultar, name="entradap_consultar"),
+    path('entradap<str:accion>', views.entradap_consultar, name="entradap_consultar"),
     path('entradap/update/<int:id>', views.update_entradap, name="update_entradap"),
     path('entradap/delete/<int:id>', views.del_entradap, name="del_entradap"),
     path('salidap', views.salidap, name="salidap"),
@@ -17,10 +17,10 @@ urlpatterns = [
     path('gestion/<str:accion>', views.gestion_consultar, name="gestion_consultar"),
     path('gestion/update/<int:id>', views.update_gestion, name="update_gestion"),
     path('gestion/delete/<int:id>', views.del_gestion, name="del_gestion"),
-    path('ambulancia/', views.ambulancia, name="ambulancia"),
-    path('ambulancia<str:accion>', views.ambulancia_consultar, name="ambulancia_consultar"),
-    path('ambulancia/update/<int:id>', views.update_ambulancia, name="update_ambulancia"),
-    path('ambulancia/delete/<int:id>', views.del_ambulancia, name="del_ambulancia"),
+    path('vehiculos/', views.vehiculos, name="vehiculos"),
+    path('vehiculos<str:accion>', views.vehiculos_consultar, name="vehiculos_consultar"),
+    path('vehiculos/update/<int:id>', views.update_vehiculos, name="update_vehiculos"),
+    path('vehiculos/delete/<int:id>', views.del_vehiculos, name="del_vehiculos"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

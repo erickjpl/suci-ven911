@@ -1,0 +1,29 @@
+<div class="modal fade" id="updIntervencion" tabindex="-1" role="dialog" aria-labelledby="modal-editar-label">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <span class="close closeupd" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
+            <div class="modal-header">
+                <h2>Editar Tipo de Intervención</h2>
+            </div>
+            <br>
+            <form id="form-editar" action="{% url 'intervencion' accion='editar' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" class="form-control" id="id_e" name="id" value="">
+
+                    <div class="col-md-6">
+                        <label for="servicio">Tipo de Intervención</label>
+                        <input type="text" class="form-control" id="intervencion_e" name="intervencion" maxlength="40">
+                    </div>
+
+                    
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

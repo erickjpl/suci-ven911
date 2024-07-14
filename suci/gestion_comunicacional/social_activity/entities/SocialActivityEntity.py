@@ -1,20 +1,25 @@
-from index.mixins.BaseModelMixin import BaseModel
+from gestion_comunicacional.mixins.BaseModelMixin import BaseModel
 
 from django.db.models import CharField, DateField, IntegerField, TextField
 from django.forms import model_to_dict
 
 
 class SocialActivityEntity(BaseModel):
+    PERMISSION_VIEW_SOCIAL_ACTIVITY = "view_social_activity"
+    PERMISSION_ADD_SOCIAL_ACTIVITY = "add_social_activity"
+    PERMISSION_CHANGE_SOCIAL_ACTIVITY = "change_social_activity"
+    PERMISSION_DELETE_SOCIAL_ACTIVITY = "delete_social_activity"
+    
+    VIEW_SOCIAL_ACTIVITY = "gc:view_social_activity"
+    ADD_SOCIAL_ACTIVITY = "gc:add_social_activity"
+    CHANGE_SOCIAL_ACTIVITY = "gc:change_social_activity"
+    DELETE_SOCIAL_ACTIVITY = "gc:delete_social_activity"
+
     ACTIVITY_TYPE_CHOICES = [
         ("workshop", "Taller"),
         ("conference", "Conferencia"),
         ("campaign", "Campaña"),
     ]
-
-    VIEW_SOCIAL_ACTIVITY = "gc:view_social_activity"
-    ADD_SOCIAL_ACTIVITY = "gc:add_social_activity"
-    CHANGE_SOCIAL_ACTIVITY = "gc:change_social_activity"
-    DELETE_SOCIAL_ACTIVITY = "gc:delete_social_activity"
 
     activity_type = CharField(max_length=50, verbose_name="Tipo de actividad", choices=ACTIVITY_TYPE_CHOICES)
     date = DateField(verbose_name="Fecha de la actividad")

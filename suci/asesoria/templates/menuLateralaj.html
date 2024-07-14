@@ -1,0 +1,40 @@
+{% load static %}
+<!-- =============== Navigation ================ -->
+<div class="sidebar">
+    <div class="logo"></div>
+    <ul class="menu">
+        <li class="active">
+            <a href="/modulos"> <!--  HOME / MODULOS  -->
+                <img style="width:20px; height: 30px;" src="{% static 'img/favicon.png' %}">
+                <span class="title">S.U.C.I</span>
+            </a>
+        </li>
+        <li class="activado">
+            <a href="/asesoria/denuncias/todos" class="activadoa">
+                <i class="fa-solid fa-pen"></i>
+                <span>Denuncias</span>
+            </a>
+        </li>
+        <li class="activado">
+            <a href="/asesoria/registros/todos" class="activadoa">
+                <i class="fa-solid fa-camera"></i>
+                <span>Registro Fílmico</span>
+            </a>
+        </li>
+        
+       
+        <li class="logout.new">
+            <a href="/modulos"><!--  HOME / MODULOS  -->
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Volver</span>
+            </a>
+        </li>
+        
+        <li class="logout">
+            <a href="#">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span class="title">Salir</span>
+            </a>
+        </li>
+    </ul>
+</div>

@@ -152,7 +152,7 @@
     <div class="modal-content">
         <span class="close" style="margin-top: -10px;">&times;</span>
         <div class="modal-header">
-            <h2>Agregar Nuevo Proyecto</h2>
+            <h2 align="center">Agregar Nuevo Proyecto</h2>
         </div>
         <br>
         <form method="POST" enctype="multipart/form-data" >
@@ -176,12 +176,12 @@
                 <div class="form-items">
                     <label>Situación Presupuestaria</label>
                     <br>
-                    <input required type="text" class="form-control" name="{{form14.situacionp.html_name}}" placeholder="Ingrese Situación" required>
+                    <input required type="number" class="form-control" name="{{form14.situacionp.html_name}}" placeholder="Ingrese Situación" required>
                 </div>
                 <div class="form-items">
                     <label>Monto Total del Proyecto</label>
                     <br>
-                    <input required type="text" class="form-control" name="{{form14.montoproyecto.html_name}}" placeholder="Ingrese Monto" required>
+                    <input required type="number" class="form-control" name="{{form14.montoproyecto.html_name}}" placeholder="Ingrese Monto" required>
                 </div>
                 <div class="form-items">
                     <label>Responsable Gerente</label>
@@ -253,19 +253,27 @@
                             <td>{{ archivo.responsablet }}</td>
                             <td>{{ archivo.responsabler }}</td>
                             <td>{{ archivo.responsablea }}</td>
-                            <td><p class="negado">{{ archivo.estatus }}</p></td>
                             <td>
-                                <a href="#" id="myBtnn3{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                {% if archivo.estatus == 'Aprobado' %}
+                                    <p class="aprobado" style="color: #1a4204; background-color: #b5ec97; border-radius: 1rem; width: 80px;">{{ archivo.estatus }}</p>
+                                {% elif archivo.estatus == 'Negado' %}
+                                    <p class="negado" style="color: #b30021; background-color: #d893a3; width: 80px; border-radius: 1rem;">{{ archivo.estatus }}</p>
+                                {% elif archivo.estatus == 'En proceso' %}
+                                    <p class="negado" style="color: #5c4f18; background-color: #f8f298; width: 80px; border-radius: 1rem;">{{ archivo.estatus }}</p>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="#" title="Editar" id="myBtnn3{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-pen-to-square"></i></a>
                                 &nbsp;&nbsp;&nbsp;
-                                <a href="#" id="myBtnn2{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-trash"></i></a>
+                                <a href="#" title="Eliminar" id="myBtnn2{{ archivo.id }}" style="color: black;"><i class="fa-solid fa-trash"></i></a>
                                 <div id="myModall3{{ archivo.id }}" class="modal">
                                     <div class="modal-content">
                                         <span class="closee3{{ archivo.id }} close" style="margin-top: -10px;">&times;</span>
                                         <div class="modal-header">
-                                            <h2>Modificar Proyecto</h2>
+                                            <h2 align="center">Modificar Proyecto</h2>
                                         </div>
                                         <br>
-                                        <form method="POST" action="acciones/update/{{ archivo.pk }}">
+                                        <form method="POST" action="update/{{ archivo.pk }}">
                                             {% csrf_token %}
                                             <div class="form-group">
                                                 <div class="form-items">
@@ -281,17 +289,17 @@
                                                 <div class="form-items">
                                                     <label>Fecha de Culminación</label>
                                                     <br>
-                                                    <input required type="date" class="form-control" name="{{ formacc.fechac.html_name }}" placeholder="Ingrese la cédula" value="{{ archivo.fechac|date:"Y-m-d" }}" required>
+                                                    <input required type="date" class="form-control" name="{{ formacc.fechac.html_name }}" placeholder="Ingrese la fecha" value="{{ archivo.fechac|date:"Y-m-d" }}" required>
                                                 </div>
                                                 <div class="form-items">
                                                     <label>Situación Presupuestaria</label>
                                                     <br>
-                                                    <input required type="text" class="form-control" name="{{ formacc.situacionp.html_name }}" placeholder="Ingrese la situación" value="{{ archivo.situacionp }}" required>
+                                                    <input required type="number" class="form-control" name="{{ formacc.situacionp.html_name }}" placeholder="Ingrese la situación" value="{{ archivo.situacionp }}" required>
                                                 </div>
                                                 <div class="form-items">
                                                     <label>Monto Total del Proyecto</label>
                                                     <br>
-                                                    <input required type="text" class="form-control" name="{{ formacc.montoproyecto.html_name }}" placeholder="Ingrese el monto" value="{{ archivo.montoproyecto }}" required>
+                                                    <input required type="number" class="form-control" name="{{ formacc.montoproyecto.html_name }}" placeholder="Ingrese el monto" value="{{ archivo.montoproyecto }}" required>
                                                 </div>
                                                 <div class="form-items">
                                                     <label>Gerente Responsable</label>
@@ -356,7 +364,7 @@
                                     <div class="modal-content">
                                         <span class="closee2{{ archivo.id }} close" style="margin-top: -10px;">&times;</span>
                                         <div class="modal-header">
-                                            <form action="acciones/delete/{{ archivo.id }}" method="POST">
+                                            <form action="delete/{{ archivo.id }}" method="POST">
                                                 {% csrf_token %}
                                                 <br>
                                                 <div align="center">

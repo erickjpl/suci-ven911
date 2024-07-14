@@ -301,13 +301,14 @@ th, td {
   text-align: center;
 }
 
-.status {
+.aprobado {
   width: 80px;
   border-radius: 1rem;
   text-align: center;
-  background-color: #86e49d;
+  background-color: #87e056;
   color: #070707;
 }
+
 .negado {
   width: 80px;
   border-radius: 1rem;

@@ -1,28 +1,30 @@
+from gestion_comunicacional.mixins.CheckPermisosMixin import CheckPermisosMixin
+from gestion_comunicacional.mixins.ControllerMixin import UpdateController
+from gestion_comunicacional.social_media.entities.SocialMediaAccountEntity import SocialMediaAccountEntity
 from gestion_comunicacional.social_media.forms.SocialMediaAccountForm import SocialMediaAccountForm
 from gestion_comunicacional.social_media.services.SocialMediaAccountService import SocialMediaAccountService
-from index.mixins.ControllerMixin import UpdateController
-from templates.sneat import TemplateLayout
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.urls import reverse_lazy
+from django.views.generic import TemplateView
 
 
-class UpdateSocialMediaAccount(UpdateController):
+class UpdateSocialMediaAccount(LoginRequiredMixin, CheckPermisosMixin, TemplateView):
+    permission_required = SocialMediaAccountEntity.CHANGE_SOCIAL_MEDIA
+
+    def get(self, request, *arg, **kwargs):
+        context = {}
+        context["modalTitle"] = "Editar Red Social"
+        context["urlApi"] = reverse_lazy("api-gc:sm:update-account", args=[self.kwargs.get("pk")])
+        context["methodForm"] = "PUT"
+        return JsonResponse(context)
+
+
+class UpdateSocialMediaAccountApi(UpdateController, CheckPermisosMixin):
     form_class = SocialMediaAccountForm
-    template_name = "gc/social-media/accounts/update.html"
-    redirect_not_found = reverse_lazy("gc:sm:listing-account")
+    redirect_not_found = reverse_lazy("gc:sm:list-account")
+    permission_required = SocialMediaAccountEntity.CHANGE_SOCIAL_MEDIA
 
     def __init__(self):
         self.service = SocialMediaAccountService()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["titlePage"] = "gc_sm_account_title_page"
-        context["indexUrl"] = reverse_lazy("gc:info")
-        context["module"] = "gc_module_name"
-        context["submodule"] = "gc_sm_module_name"
-        context["titleForm"] = "gc_sm_account_title_form"
-        context["tag"] = "Editar"
-        context["listUrl"] = reverse_lazy("gc:sm:listing-account")
-        context["urlForm"] = reverse_lazy("gc:sm:updater-account", args=[self.kwargs.get("pk")])
-        context["methodForm"] = "PUT"
-        return TemplateLayout.init(self, context)

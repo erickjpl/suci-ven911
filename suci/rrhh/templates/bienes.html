@@ -1,0 +1,101 @@
+{% extends "baserrhh.html" %}
+
+{% block title %} S.U.C.I | Bienes Nacionales {% endblock %}
+
+{% load static %}
+
+
+{% block content %}
+
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2>Gestión Humana /<small> Bienes Nacionales</small></h2>
+        </div>
+        <div class="user--info">
+            <img src="{% static 'img/ven911.jpg' %}">
+            <h2 class="title">V{{request.user.username}}</h2>
+        </div>
+    </div>
+
+    <div align="right" style="margin-right: 100px; margin-bottom: -10px;">
+        <button type="button" class="btn" onclick="location.href='{% url 'descargar-excel-bienes' %}'">Descargar Excel</button>
+        <button type="button" class="btn" onclick="window.location.href='{% url 'generar-pdf-bienes' %}'">Descargar PDF</button>
+        <button id="myBtnAdd" class="btn">Agregar</button>
+    </div>
+
+
+    <div class="tabular--wrapper">
+        <h3 class="main--title"></h3>
+        
+        <div class="user--info">
+            <div class="col-md-12">
+                        
+                <select class='form-control' id="departamento_filtro" name="departamento" onchange="filtro();">
+                    <option value="">Filtrar por departamento</option>
+                    {% for departamento in departamentos %}
+                    <option value="{{ departamento.id }}">{{ departamento.departamento }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <form id="formConsulta" method="GET" action="{% url 'bienes' accion='consultar' departamentofilter=1 %}">
+                <div class="searh--box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" name="nombre" id="inputNombre" placeholder="Ingrese el nombre">
+                    <button type="submit" class="btn">Consultar</button>
+                    <button type="button" class="btn" onclick="location.href='{% url 'bienes' accion='todos' departamentofilter=0 %}'">Limpiar</button>
+                    
+                </div>
+                
+            </form>
+        </div>
+        
+        <br>
+        <div class="table-container-x">
+            <table class="table-x table-bordered">
+                <thead>
+                    <tr>
+                        <th>Estatus</th>
+                        <th>Sede</th>
+                        <th>Departamento</th>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Creado</th>
+                        <th>Actualizado</th>
+                        <th colspan="2">Acciones</th>
+                    </tr>
+                <tbody>
+                    {% for bien in bienes %}
+                    <tr>
+                        <td>{{ bien.estatus }}</td>
+                        <td>{{ bien.sede }}</td>
+                        <td>{{ bien.departamento }}</td>
+                        <td>{{ bien.nombre }}</td>
+                        <td>{{ bien.cantidad }}</td>
+                        <td>{{ bien.created }}</td>
+                        <td>{{ bien.updated }}</td>
+                        <td>
+                            <a href="#" title="Editar Bienes" id="myBtnUpd" data-toggle="modal" data-id='{{ bien.id }}'
+                                class="btn-editar"
+                                style="color: black;">
+                                <ion-icon name="create-outline" style="font-size: 22px;"></ion-icon>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
+    {% include "modal/addBienes.html" %}
+    {% include "modal/updBienes.html" %}
+
+  
+    <script src="{% static 'js/bienes.js' %}"></script> 
+
+
+    {% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base/modal.html' %}
+
+{% block modalId %}modal-delete{% endblock %}
+
+{% block modalBody %}
+  <p class="text-danger">Estas seguro que desea eliminar el registro <span id="entity-id"></span>.</p>
+{% endblock %}
+
+{% block modalFooter %}
+  <div class="d-flex gap-2 justify-content-end">
+    <button type="button" class="btn btn-danger mr-2" id="delete-record"><i class="bx bx-save scaleX-n1-rtl bx-sm me-1"></i>Eliminar</button>
+
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+  </div>
+{% endblock %}

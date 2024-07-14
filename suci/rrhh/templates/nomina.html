@@ -1,0 +1,100 @@
+{% extends "suciApp/base.html" %}
+
+{% block title %} S.U.C.I | Ingreso Personal {% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2>Gestión Humana /<small> Nómina </small></h2>
+        </div>
+        <div class="user--info">
+            <img src="{% static 'img/ven911.jpg' %}">
+            <h2 class="title">V{{request.user.username}}</h2>
+        </div>
+    </div>
+
+    <div align="right" style="margin-right: 100px; margin-bottom: -10px;">
+        <button type="button" class="btn" onclick="location.href='{% url 'descargar-excel' %}'">Descargar Excel</button>
+    </div>
+
+    <div class="tabular--wrapper">
+        <h3 class="main--title"></h3>
+        <div class="user--info">
+            <form id="formConsulta" method="GET" action="{% url 'ingresosPersonal' accion='consultar' %}">
+                <div class="searh--box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" name="cedula" id="inputCedula" placeholder="Ingrese la cédula">
+                    <button type="submit" class="btn">Consultar</button>
+                    <button type="button" class="btn" onclick="location.href='{% url 'ingresosPersonal' accion='todos' %}'">Limpiar</button>
+                </div>
+            </form>
+        </div>
+        
+        <br>
+        <div class="table-container-x">
+            <table class="table-x table-bordered">
+                <thead>
+                    <tr>
+                        <th>Estatus</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Cédula</th>
+                        <th>Nacionalidad</th>
+                        <th>Sexo</th>
+                        <th>Edad</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Cargo</th>
+                        <th colspan="2">Acciones</th>
+                    </tr>
+                <tbody>
+                    {% for personal in personales %}
+                    <tr>
+                        <td>{{ personal.estatus }}</td>
+                        <td>{{ personal.nombres }}</td>
+                        <td>{{ personal.apellidos }}</td>
+                        <td>{{ personal.cedula }}</td>
+                        <td>{{ personal.nacionalidad }}</td>
+                        <td>{{ personal.sexo }}</td>
+                        <td>{{ personal.edad }}</td>
+                        <td>{{ personal.telefono }}</td>
+                        <td>{{ personal.email }}</td>
+                        <td>{{ personal.cargo }}</td>
+                        <td>
+                            <a href="#" title="Editar Personal" id="myBtnUpd" data-toggle="modal" data-id='{{ personal.id }}'
+                                class="btn-editar"
+                                style="color: black;">
+                                <ion-icon name="create-outline" style="font-size: 22px;"></ion-icon>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" title="Movimiento de Personal" id="myBtnUpdMov" data-toggle="modal" data-id='{{ personal.id }}'
+                                class="btn-editar-mov"
+                                style="color: black;">
+                                <ion-icon name="folder-open" style="font-size: 22px;"></ion-icon>
+                            </a>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!--    INCLUYE MODAL PARA AGREGAR, MODIFICAR, ELIMINAR PERSONAL     -->
+    {% include "modal/addPersonal.html" %}
+    {% include "modal/updPersonal.html" %}
+    {% include "modal/updMovimientoPersonal.html" %}
+    {% include "modal/delPersonal.html" %}
+
+  
+    <script src="{% static 'js/personal.js' %}"></script> 
+
+
+    {% endblock %}

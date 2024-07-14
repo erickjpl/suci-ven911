@@ -1,15 +1,22 @@
 <div id="addTallaZapato" class="modal">
     <div class="modal-content">
-        <span class="close" style="margin-top: -10px;">&times;</span>
+        <span class="close" style="margin-top: -10px;" data-dismiss="modal">&times;</span>
         <div class="modal-header">
             <h2>Agregar Talla Zapato</h2>
         </div>
         <br>
-        <form method="POST">
+        <form method="POST" action="{% url 'tallaZapato' accion='agregar'%}">
             {% csrf_token %}
+            <div class="col-md-12">
+                <label>Estatus</label>
+                <br>
+                <input type="text" class="form-control" name="{{form.estatus.html_name}}"
+                    placeholder="Ingrese el nombre" value="ACTIVO" readonly required/>
+            </div>
             <div class="form-group">
                 <div class="col-md-6">
                     <label>Talla Zapato</label>
+                    <br>
                     <br>
                     <input type="text" class="form-group" name="{{ form.talla_zapato.name}}" value=""
                         placeholder="Ingrese una talla">
