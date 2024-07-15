@@ -66,13 +66,21 @@ cd ./suci
 
 ## Paso 6
 
+#### Crear el archivo .env
+
+```
+cp ./suci/.env.example ./suci/.env
+```
+
+## Paso 7
+
 #### Instalar dependencias
 
 ```
 pip install -r requirements.txt
 ```
 
-## Paso 7
+## Paso 8
 
 #### Ejecutar las migraciones (Crear las tablas en la DB)
 
@@ -80,7 +88,7 @@ pip install -r requirements.txt
 python manage.py migrate
 ```
 
-## Paso 8
+## Paso 9
 
 #### Crear un superusuario
 
@@ -98,11 +106,24 @@ user-guest: 200
 pass: guest
 ```
 
-## Paso 9
+## Paso 10
 
-#### Iniciar la aplicacion
+#### Iniciar la aplicacion en modo desarrollo
+
+**_Cambiar la variable DEBUG a True en el archivo .env_**
 
 ```
+python manage.py runserver
+```
+
+## Paso 9
+
+#### Iniciar la aplicacion en modo prod
+
+**_Cambiar la variable DEBUG a false en el archivo .env_**
+
+```
+python manage.py collectstatic
 python manage.py runserver
 ```
 
