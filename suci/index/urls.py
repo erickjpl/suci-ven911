@@ -9,6 +9,4 @@ urlpatterns = [
     path('login', views.loginf, name="login"),
     path('logout', views.logoutUser, name="logout"),
     path('403', views.loginf403, name="403"),
-    path('correo/', views.correo, name="correo"),    
-    path('recuperar-password/', views.recuperar, name="recuperar-password"),
 ]

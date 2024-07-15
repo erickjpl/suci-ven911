@@ -925,6 +925,12 @@
     scale:1;
     transition:scale .3s
    }
+   a .card__p {
+    background-color:var(--color-primary-system);
+    border-radius:.625em;
+    justify-content:center;
+    display:flex;
+   }
    .redirect {
     font-size:1rem;
     display:flex;

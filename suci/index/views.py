@@ -8,17 +8,10 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     return render(request, "modulos.html")
 
+# VISTAS DE MODULOS
 @login_required(login_url='login')
 def modulos(request):
     return render(request, "modulos.html")
-
-# VISTA DE RECUPERAR CONTRASEÑA
-def recuperar(request):
-    return render(request, "recuperar-password.html")
-
-# VISTA DE ENVIO DE CORREO
-def correo(request):
-    return render(request, "correo.html")
 
 # VISTAS DE 403
 def loginf403(request):
@@ -37,7 +30,7 @@ def loginf(request):
             auth_login(request, user)
             return redirect('/modulos')
         else:
-            return render(request, "login_error.html")
+            return render(request, "404.html")
     
     context = {}
     return render(request, "login.html", context)
