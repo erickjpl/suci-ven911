@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>404 - Página no encontrada</title>
+	<style>
+		:root {
+			--color-white: #f8f9fa;
+			--color-red: #dc3545;
+			--color-gray: #6c757d;
+			--color-blue: #007bff;
+		}
+
+		.error-container {
+			font-size: 1rem;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+			background-color: var(--color);
+			text-align: center;
+			font-family: Arial, sans-serif;
+		}
+
+		.error-code {
+			font-size: 7.5em;
+			font-weight: bold;
+			color: var(--color-red);
+			margin: 0;
+		}
+
+		.error-message {
+			font-size: 1.5em;
+			color: var(--color-gray);
+			margin: 1.25em 0;
+		}
+
+		.home-link {
+			display: inline-block;
+			padding: 0.75em 1.5em;
+			background-color: var(--color-blue);
+			color: var(--color-white);
+			text-decoration: none;
+			border-radius: 0.3125em;
+			transition: background-color 0.3s;
+		}
+
+		.home-link:hover {
+			background-color: var(--color-blue);
+			text-decoration: none;
+			color: var(--color-white);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="error-container">
+		<h1 class="error-code">404</h1>
+		<p class="error-message">Lo sentimos, la página que buscas no existe.</p>
+		<a href="/" class="home-link">Volver al inicio</a>
+	</div>
+</body>
+
+</html>
