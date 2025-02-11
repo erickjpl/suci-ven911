@@ -17,9 +17,9 @@ class ReglamentoListView(LoginRequiredMixin, CheckPermisosMixin, TemplateView):
     def get_context_data(self, **kwargs):
         columns = Reglamento.objects.all()
         context = super().get_context_data(**kwargs)
-        context["titlePage"] = "Organización"
+        context["titlePage"] = "Organizacion"
         context["indexUrl"] = reverse_lazy("organizacion")
-        context["module"] = "Organización"
+        context["module"] = "Organizacion"
         context["submodule"] = "Reglamentos"
         context["createBtn"] = "Añadir"
         context["createUrl"] = reverse_lazy("reglamentos:create")

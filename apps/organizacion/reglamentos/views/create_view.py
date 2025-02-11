@@ -16,9 +16,9 @@ class ReglamentoCreateView(LoginRequiredMixin, CheckPermisosMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["titlePage"] = "Organización"
+        context["titlePage"] = "Organizacion"
         context["indexUrl"] = reverse_lazy("organizacion")
-        context["module"] = "Organización"
+        context["module"] = "Organizacion"
         context["submodule"] = "Reglamentos"
         context["titleForm"] = "Añadir un reglamento"
         context["tag"] = "Registrar"

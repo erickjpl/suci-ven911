@@ -4,12 +4,8 @@ from helpers.BaseModelMixin import BaseModel
 
 
 class Reglamento(BaseModel):
-    name = models.CharField(
-        max_length=64, verbose_name="Nombre de Reglamento:", default=""
-    )
-    file = models.FileField(
-        upload_to="reglamentos/", verbose_name="Archivo", default=""
-    )
+    name = models.CharField(max_length=64, verbose_name="Nombre de Reglamento:", default="")
+    file = models.FileField(upload_to="reglamentos/", verbose_name="Archivo", default="")
     user = models.CharField(max_length=64, verbose_name="Usuario", default="")
     date = models.DateField(verbose_name="Fecha", blank=True)
     progre = models.CharField(max_length=64, verbose_name="Progreso:", default="")

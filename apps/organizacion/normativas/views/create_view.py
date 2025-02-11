@@ -16,9 +16,9 @@ class NormativaCreateView(LoginRequiredMixin, CheckPermisosMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["titlePage"] = "Organización"
+        context["titlePage"] = "Organizacion"
         context["indexUrl"] = reverse_lazy("organizacion")
-        context["module"] = "Organización"
+        context["module"] = "Organizacion"
         context["submodule"] = "Normativas"
         context["titleForm"] = "Añadir una normativa"
         context["tag"] = "Registrar"
