@@ -36,9 +36,9 @@ class ReglamentoUpdateView(LoginRequiredMixin, CheckPermisosMixin, View):
         id = self.kwargs.get("pk")
         data = Reglamento.objects.filter(pk=id).all
         context = kwargs
-        context["titlePage"] = "Organizacion"
+        context["titlePage"] = "Organización"
         context["indexUrl"] = reverse_lazy("organizacion")
-        context["module"] = "Organizacion"
+        context["module"] = "Organización"
         context["submodule"] = "Reglamentos"
         context["titleForm"] = "Actualizar reglamento"
         context["tag"] = "Editar"

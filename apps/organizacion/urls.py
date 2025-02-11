@@ -1,7 +1,5 @@
 from django.urls import include, path
 from .views import OrganizacionView
-from django.conf.urls.static import static
-from django.conf import settings
 
 urlpatterns = [
     path("", OrganizacionView.as_view(), name="organizacion",),

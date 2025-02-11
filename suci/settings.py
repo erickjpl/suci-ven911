@@ -118,11 +118,9 @@ if os.environ.get("DB_BACKEND").lower() == "postgresql":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.environ.get("DB_DATABASE", default="suci_ven911").lower(),
-            "USER": os.environ.get("DB_USERNAME", default="suci").lower(),
-            "PASSWORD": os.environ.get("DB_PASSWORD", default="123456").lower(),
-            "HOST": os.environ.get("DB_HOST", default="localhost"),
-            "PORT": os.environ.get("DB_PORT", default="5432"),
+            "NAME": os.environ.get("DB_BACKEND", default="suci_ven911").lower(),
+            "USER": os.environ.get("DB_BACKEND", default="suci").lower(),
+            "PASSWORD": os.environ.get("DB_BACKEND", default="123456").lower(),
         }
     }
 

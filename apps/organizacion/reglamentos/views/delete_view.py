@@ -16,9 +16,9 @@ class ReglamentoDeleteView(LoginRequiredMixin, CheckPermisosMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["titlePage"] = "Organizacion"
+        context["titlePage"] = "Organización"
         context["indexUrl"] = reverse_lazy("organizacion")
-        context["module"] = "Organizacion"
+        context["module"] = "Organización"
         context["submodule"] = "Reglamentos"
         context["titleForm"] = "Eliminar reglamento"
         context["tag"] = "Eliminar"

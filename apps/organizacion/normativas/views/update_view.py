@@ -36,9 +36,9 @@ class NormativaUpdateView(LoginRequiredMixin, CheckPermisosMixin, View):
         id = self.kwargs.get("pk")
         data = Normativa.objects.filter(pk=id).all
         context = kwargs
-        context["titlePage"] = "Organizacion"
+        context["titlePage"] = "Organización"
         context["indexUrl"] = reverse_lazy("organizacion")
-        context["module"] = "Organizacion"
+        context["module"] = "Organización"
         context["submodule"] = "Normativas"
         context["titleForm"] = "Actualizar normativa"
         context["tag"] = "Editar"
